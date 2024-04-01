@@ -1,0 +1,48 @@
+import User from '../models/user.js'
+import { generateToken } from '../config/jwtUtils.js'
+
+export const signup = async (req, res) => {
+    try {
+        let user = await User.findOne({ $or: [{ email: req.body.email }, { username: req.body.username }] });
+        if (user) {
+            return res.status(409).json({ error: 'User already exists!'});
+        }
+        
+        user = await User.create(req.body);
+
+        return res.status(201).json({ message: 'User created successfully!' });
+
+    } catch (error) {
+        console.log(error.message);
+        return res.status(500).send({ error: error.message });
+    }
+}
+
+export const create_session = async (req, res) => {
+    try {
+        const { emailUsername, password } = req.body;
+        let user = await User.findOne({ $or: [{ email: emailUsername }, { username: emailUsername }] });
+        
+        console.log(user);
+        
+        if (!user || password !== user.password) {
+            return res.status(401).json({ error: 'Invalid Email/Username or Password!' });
+        }
+
+        const token = generateToken(user);
+        return res.status(200).json({ token: token });
+
+    } catch (error) {
+        console.log('Error: ', error);
+        return res.status(500).json({ error: error });
+    }
+};
+
+export const logout = (req, res) => {
+    req.logout(function (err) {
+        if (err) {
+            return res.status(401).send({error: err});
+        }
+        res.status(200).send({ message: 'Logged Out Successfully!' });
+    });
+};
