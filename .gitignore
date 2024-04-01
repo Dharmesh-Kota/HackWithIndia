@@ -21,5 +21,8 @@
 /frontend/yarn-debug.log*
 /frontend/yarn-error.log*
 
-#Backend
+# Backend
 /backend/node_modules
+
+# Environment Variables
+/.env
