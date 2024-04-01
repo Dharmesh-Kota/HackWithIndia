@@ -19,7 +19,7 @@ const userScehma = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ['compositeAgency', 'ngo', 'donor'],
+        enum: ['compostAgency', 'ngo', 'donor'],
         required: true
     },
     location: String,
