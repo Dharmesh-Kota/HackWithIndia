@@ -8,6 +8,7 @@ const SignUp = () => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [repassword, setRePassword] = useState('');
+  const [role, setRole] = useState('');
 
   const navigate = useNavigate();
 
@@ -19,11 +20,12 @@ const SignUp = () => {
         username: username,
         email: email,
         name: name,
-        password: password
+        password: password,
+        role: role
       })
       .then((response) => {
         if (response.status === 201) {
-          navigate('/');
+          navigate('/login');
         }
       })
       .catch((error) => {
@@ -54,6 +56,14 @@ const SignUp = () => {
         <div>
           <label>Name: </label>
           <input type='text' value={name} onChange={(e) => setName(e.target.value)} />
+        </div>
+        <div>
+          <label>Role: </label>
+          <select id="roleSelect" onChange={(e) => { setRole(e.target.value) }}>
+            <option value="compositeAgency">Composting Agency</option>
+            <option value="ngo">NGO</option>
+            <option value="donor" selected>Donor</option>
+        </select>
         </div>
         <div>
           <label>Password: </label>

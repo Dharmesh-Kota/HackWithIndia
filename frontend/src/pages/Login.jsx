@@ -16,8 +16,8 @@ const Login = () => {
         password: password
       })
       .then((response) => {
-        const { user } = response.data;
-        localStorage.setItem('user', JSON.stringify(user));
+        const { token } = response.data;
+        localStorage.setItem('token', JSON.stringify(token));
         navigate('/');
       })
       .catch((error) => {
