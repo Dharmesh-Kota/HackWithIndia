@@ -6,7 +6,9 @@ export const authenticateToken = (req, res, next) => {
     if(!authHeader) {
         return res.status(401).json({ message: "Missing Token!" });
     }
-    const [bearer, token] = authHeader.split(" ");
+    let [bearer, token] = authHeader.split(" ");
+    token = token.replace(/"/g, '');
+
     if(bearer != "Bearer" || !token) {
         return res.status(401).json({ message: "Invalid token format!" });
     }
@@ -26,6 +28,7 @@ export const authenticateDonorToken = (req, res, next) => {
         return res.status(401).json({ message: "Missing Token!" });
     }
     const [bearer, token] = authHeader.split(" ");
+    token = token.replace(/"/g, '');
     if(bearer != "Bearer" || !token) {
         return res.status(401).json({ message: "Invalid token format!" });
     }
@@ -49,6 +52,8 @@ export const authenticateNgoToken = (req, res, next) => {
         return res.status(401).json({ message: "Missing Token!" });
     }
     const [bearer, token] = authHeader.split(" ");
+    token = token.replace(/"/g, '');
+
     if(bearer != "Bearer" || !token) {
         return res.status(401).json({ message: "Invalid token format!" });
     }
@@ -72,6 +77,8 @@ export const authenticateAgencyToken = (req, res, next) => {
         return res.status(401).json({ message: "Missing Token!" });
     }
     const [bearer, token] = authHeader.split(" ");
+    token = token.replace(/"/g, '');
+
     if(bearer != "Bearer" || !token) {
         return res.status(401).json({ message: "Invalid token format!" });
     }
