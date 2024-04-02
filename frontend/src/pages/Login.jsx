@@ -25,6 +25,7 @@ import Alert from "@mui/material/Alert";
 // import Alert from "react-bootstrap/Alert";
 // import "../CSS/Login.css";
 
+import { useAuth } from "../context/auth";
 import axios from "axios";
 
 const defaultTheme = createTheme();
@@ -38,6 +39,7 @@ export default function Login() {
   //   const [email, setEmail] = useState("");
   //   const [password, setPassword] = useState("");
   const [validPassword, setValidPassword] = useState(false);
+  const { setIsLoggedIn } = useAuth();
   // const navigate = useNavigate();
 
   //   const handleSubmit = async (e) => {};
@@ -58,10 +60,10 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setloading(true);
-    axios
+    await axios
       .post("http://localhost:8000/create-session", {
         emailUsername: emailUsername,
         password: password,
@@ -69,13 +71,14 @@ export default function Login() {
       .then((response) => {
         const { token } = response.data;
         localStorage.setItem("token", JSON.stringify(token));
+        setIsLoggedIn(true);
         navigate("/");
       })
       .catch((error) => {
         setJustVerify(true);
         if (error.response.status === 401) {
-          setEmailUsername("");
-          setPassword("");
+          // setEmailUsername("");
+          // setPassword("");
           //   alert("Invalid Username/Email or Password!");
         } else {
           console.error("Error: ", error);
@@ -175,7 +178,37 @@ export default function Login() {
                   autoComplete="off"
                 />
               )}
-              {validPassword ? (
+              <TextField
+                id="standard-basic-2"
+                variant="standard"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                onChange={handlePasswordofLogin}
+                value={password}
+                InputProps={{
+                  style: {
+                    fontFamily: "Quicksand",
+                    fontWeight: "bold",
+                    color: !validPassword ? "#f44336" : "#25396F", // Change color to red if there's an error
+                  },
+                }}
+                error={
+                  (!password && passwordcheck) || (!validPassword && password)
+                }
+                helperText={
+                  !password && passwordcheck
+                    ? "This field cannot be empty."
+                    : !validPassword && password
+                    ? "The password must contain at least 8 digits."
+                    : ""
+                }
+                autoComplete="off"
+              />
+              {/* {validPassword ? (
                 <TextField
                   id="standard-basic-2"
                   variant="standard"
@@ -224,7 +257,7 @@ export default function Login() {
                   }}
                   autoComplete="off"
                 />
-              )}
+              )} */}
               <Button
                 type="submit"
                 fullWidth

@@ -23,6 +23,8 @@ import {
 import AOS from "aos";
 import "aos/dist/aos.css";
 
+import { useAuth } from "../context/auth";
+
 const Profile = () => {
   const imageURL =
     "https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o=";
@@ -35,6 +37,8 @@ const Profile = () => {
   const [phoneNumber, setPhoneNumber] = useState(1234567890);
 
   const [isValidPhone, setIsValidPhone] = useState(false);
+  const navigate = useNavigate();
+  const { setIsLoggedIn } = useAuth();
 
   const validatePhoneNumber = (input) => {
     const value = input.replace(/\D/g, "");
@@ -43,6 +47,11 @@ const Profile = () => {
   };
 
   const UpdateProfile = () => {};
+  const LogOut = () => {
+    setIsLoggedIn(false);
+    window.localStorage.removeItem("token");
+    navigate("/");
+  };
 
   const theme = createTheme({
     typography: {
@@ -253,7 +262,7 @@ const Profile = () => {
               <Button
                 variant="contained"
                 color="error"
-                // onClick={handleLogIn}
+                onClick={LogOut}
                 style={{ marginTop: "1em" }}
                 sx={{ fontFamily: "Quicksand", fontWeight: "bold" }}
               >

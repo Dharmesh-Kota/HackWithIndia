@@ -59,11 +59,11 @@ export default function Register() {
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setloading(true);
     if (password === repassword) {
-      axios
+      await axios
         .post("http://localhost:8000/signup", {
           username: username,
           email: email,
@@ -78,12 +78,12 @@ export default function Register() {
         })
         .catch((error) => {
           if (error.response.status === 409) {
-            setUsername("");
-            setEmail("");
-            setName("");
-            setPassword("");
-            setRePassword("");
-            setRole("");
+            // setUsername("");
+            // setEmail("");
+            // setName("");
+            // setPassword("");
+            // setRePassword("");
+            // setRole("");
             setJustVerify(true);
           } else {
             console.error("Error: ", error);
@@ -109,6 +109,7 @@ export default function Register() {
           <Box
             sx={{
               marginTop: 12,
+              marginBottom: 12,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
