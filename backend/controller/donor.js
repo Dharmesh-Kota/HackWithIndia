@@ -113,22 +113,16 @@ export const donate_supplies = async (req, res) => {
 // Displaying the list of agencies where user has donated from where he can get the reward
 export const reward_store = async (req, res) => {
     try {
-        let agencies = await Points.findOne({ user: req.user.id }, { availablePoints: 1 });
-        let userPoints = 0;
-        if (agencies && agencies.availablePoints) {
-            for (let agency of agencies.availablePoints) {
-                // Increment userPoints by the points attribute of each object
-                userPoints += agency.points;
-            }
-        }
+        let agencies = await Points.findOne({ user: req.user.id }, { availablePoints: 1 }); 
+        
         let userRewards = [];
         for (let agency of agencies) {
-            let rewards = await Agency.find({ user: agency.user }, { reward: 1 });
-            let { username, name } = await User.findById(agency.user, {username: 1, name: 1});
-            userRewards.push({ username: username, name: name, rewards });
+            let rewards = await Agency.find({ user: agency.agency }, { reward: 1 });
+            let { username, name } = await User.findById(agency.agency, {username: 1, name: 1});
+            userRewards.push({ username: username, name: name, rewards: rewards, userPoints: agency.availablePoints });
         }
 
-        return res.status(200).json({ message: 'Agency data fetched!', userRewards: userRewards, userPoints: userPoints});
+        return res.status(200).json({ message: 'Agency data fetched!', userRewards: userRewards});
 
     } catch (error) {
         console.log('Error: ', error);
