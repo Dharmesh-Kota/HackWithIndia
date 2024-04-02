@@ -29,12 +29,14 @@ export const authenticateDonorToken = (req, res, next) => {
     }
     let [bearer, token] = authHeader.split(" ");
     token = token.replace(/"/g, '');
+
     if(bearer != "Bearer" || !token) {
         return res.status(401).json({ message: "Invalid token format!" });
     }
 
     jwt.verify(token, secretKey, (err, user) => {
         if (err) {
+          console.log(err);
             return res.status(403).json({ message: "Invalid token!" });
         }
         if(user.role === 'donor'){
