@@ -3,6 +3,8 @@ import Points from "../models/userPoints.js";
 import Agency from "../models/compostAgency.js";
 import History from "../models/history.js";
 import Transaction from "../models/transaction.js";
+import { redeemReward } from "../mailer/rewardRedeem.js";
+import { suppliesRequest } from "../mailer/suppliesRequest.js";
 
 // Controller to provide the list of all nearby composting agencies to the user
 export const nearby_agency = async (req, res) => {
@@ -85,10 +87,11 @@ export const nearby_agency = async (req, res) => {
 export const donate_supplies = async (req, res) => {
     try {
         const { data } = req.body;
+        let agency = await User.findOne({ username: data.username });
         let status = 'pending';
         if (data.type === 'ngo')
             status = 'confirm';
-        await Transaction.create({
+        let transaction = await Transaction.create({
             sender: req.user.username,
             receiver: req.data.username,
             type: data.role,
@@ -96,6 +99,8 @@ export const donate_supplies = async (req, res) => {
             points: data.quantity*10, //1kg = 10points
             status: status
         });
+
+        suppliesRequest(agency, req.user, transaction);
 
         return res.status(200).json({ message: "Request sent to Agency/NGO!" });
 
@@ -140,6 +145,8 @@ export const reedem_reward = async (req, res) => {
             { $set: { "reward.$.points": -reward.point } },
             { new: true }
           );
+
+        redeemReward(sender, req.user, reward);
           
         return res.status(200).json({ message: "Points updated successfully!" });
 
