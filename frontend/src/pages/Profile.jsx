@@ -30,12 +30,14 @@ const Profile = () => {
   const imageURL =
     "https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o=";
 
+  const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
   const [userName, setUserName] = useState("abc");
   const [email, setEmail] = useState("abc@gmail.com");
   const [type, setType] = useState("User");
   const [address, setAddress] = useState("123");
   const [phoneNumber, setPhoneNumber] = useState(1234567890);
+  const [location, setLocation] = useState("");
 
   const [isValidPhone, setIsValidPhone] = useState(false);
   const navigate = useNavigate();
@@ -47,7 +49,6 @@ const Profile = () => {
     setIsValidPhone(isvalid);
   };
 
-  const UpdateProfile = () => {};
   const LogOut = () => {
     setIsLoggedIn(false);
     window.localStorage.removeItem("token");
@@ -62,6 +63,23 @@ const Profile = () => {
       },
     },
   });
+  const UpdateProfile = async () => {
+    setLoading(true);
+    try {
+      const result = await axios.post("http://localhost:8000/updateprofile", {
+        name,
+        username: userName,
+        email,
+        role: type,
+        contact: phoneNumber,
+        address,
+        location: 1,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+    setLoading(false);
+  };
 
   const getProfile = async () => {
     const headers = {
@@ -248,6 +266,19 @@ const Profile = () => {
                         }
                       />
                     </Grid>
+                    <Grid item xs={10} style={{ marginTop: "0.4em" }}>
+                      <div class="form-group my-2" id="searchBoxContainer">
+                        <label for="location">Location:</label>
+                        <input
+                          class="form-control"
+                          type="text"
+                          id="location"
+                          name="location"
+                          // value={location == "" ? "hidden" : location}
+                          // <%if(user.location !== null) {%> value="<%=user.location%>" <%}else{%> hidden <%}%>
+                        />
+                      </div>
+                    </Grid>
                   </Grid>
                   <div style={{ textAlign: "center", marginTop: "1em" }}>
                     <Button
@@ -257,8 +288,7 @@ const Profile = () => {
                       style={{ marginTop: "1em", backgroundColor: "#2A386B" }}
                       sx={{ fontFamily: "Quicksand", fontWeight: "bold" }}
                     >
-                      UPDATE
-                      {/* {!loading ? "UPDATE" : "Updating..."} */}
+                      {!loading ? "UPDATE" : "Updating..."}
                     </Button>
                   </div>
                 </CardContent>
