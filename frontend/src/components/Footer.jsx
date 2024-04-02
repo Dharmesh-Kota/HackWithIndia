@@ -10,7 +10,7 @@ import {
 export default function Footer() {
   return (
     <MDBFooter
-      className="text-center text-lg-start text-muted mt-5"
+      className="text-center text-lg-start text-muted"
       style={{ backgroundColor: "#DFFFFF" }}
     >
       <section className="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">

@@ -22,6 +22,9 @@ import {
 } from "@mui/material";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import axios from "axios";
+
+import { useAuth } from "../context/auth";
 
 const Profile = () => {
   const imageURL =
@@ -35,6 +38,8 @@ const Profile = () => {
   const [phoneNumber, setPhoneNumber] = useState(1234567890);
 
   const [isValidPhone, setIsValidPhone] = useState(false);
+  const navigate = useNavigate();
+  const { setIsLoggedIn } = useAuth();
 
   const validatePhoneNumber = (input) => {
     const value = input.replace(/\D/g, "");
@@ -43,6 +48,11 @@ const Profile = () => {
   };
 
   const UpdateProfile = () => {};
+  const LogOut = () => {
+    setIsLoggedIn(false);
+    window.localStorage.removeItem("token");
+    navigate("/");
+  };
 
   const theme = createTheme({
     typography: {
@@ -52,6 +62,26 @@ const Profile = () => {
       },
     },
   });
+
+  const getProfile = async () => {
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+    };
+
+    try {
+      const result = await axios.get("http://localhost:8000/profile", {
+        headers,
+      });
+      console.log("result", result);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getProfile();
+  }, []);
 
   useEffect(() => {
     AOS.init({
@@ -253,7 +283,7 @@ const Profile = () => {
               <Button
                 variant="contained"
                 color="error"
-                // onClick={handleLogIn}
+                onClick={LogOut}
                 style={{ marginTop: "1em" }}
                 sx={{ fontFamily: "Quicksand", fontWeight: "bold" }}
               >
