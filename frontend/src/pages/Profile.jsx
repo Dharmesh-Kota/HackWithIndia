@@ -296,14 +296,17 @@ const Profile = () => {
                         }
                       />
                     </Grid>
+                    <Grid item xs={10} style={{ marginTop: "0.4em" }} id="searchBoxContainer">
+                    </Grid>
                     <Grid item xs={10} style={{ marginTop: "0.4em" }}>
                       <TextField
-                        id="standard-helperText-8"
+                        id="location"
                         label="Location"
                         value={location}
                         onChange={(e) => {
                           setLocation(e.target.value);
                         }}
+                        style={{visibility: "hidden"}}
                         error={justVerify && location === ""}
                         helperText={
                           justVerify && location === ""
@@ -311,8 +314,9 @@ const Profile = () => {
                             : ""
                         }
                         fullWidth
-                      />
+                    />
                     </Grid>
+                    
                   </Grid>
                   <div style={{ textAlign: "center", marginTop: "1em" }}>
                     <Button
