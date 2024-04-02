@@ -5,7 +5,12 @@ import { authenticateDonorToken } from '../config/authMiddleware.js'
 
 const router = express.Router();
 
-router.use(cors());
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    allowedHeaders: ['Authorization', 'Content-Type'],
+  };
+  
+router.use(cors(corsOptions));
 
 router.get('/nearby-agency', authenticateDonorToken, controller.nearby_agency);
 router.get('/reward-store', authenticateDonorToken, controller.reward_store);

@@ -8,7 +8,12 @@ import { authenticateToken } from '../config/authMiddleware.js';
 
 const router = express.Router();
 
-router.use(cors());
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    allowedHeaders: ['Authorization', 'Content-Type'],
+  };
+  
+router.use(cors(corsOptions));
 
 router.use('/donor', donorRouter);
 router.use('/agency', agencyRouter);
