@@ -56,19 +56,24 @@
       crossorigin="anonymous"
     ></script>
 
-    <!-- TomTom api location search box for profile -->
+    <!-- TomTom api search box for location -->
     <script>
       let apiKey = "";
+      const headers = {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${window.localStorage.getItem("token")}`,
+      };
       // Fetch the API key
-      axios
-        .get('/getTomTomApiKey')
-        .then((response) => {
-          apiKey = response.data.apiKey.trim();
+      fetch('http://localhost:8000/getTomTomApiKey', {headers: headers})
+          .then(response => response.json())
+          .then(data => {
+          console.log(data);
+          apiKey = data.apiKey.trim();
+  
+          // Initialize TomTom SearchBox after fetching the API key
           initializeTomTomSearchBox(apiKey);
-        })
-        .catch((err) => {
-          console.error("Error: ", error);
-        });
+      })
+      .catch((error) => {console.error('Error fetching API key:', error)});
   
       function initializeTomTomSearchBox(apiKey) {
           var options = {

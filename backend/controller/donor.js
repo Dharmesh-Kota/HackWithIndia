@@ -10,6 +10,7 @@ import { suppliesRequest } from "../mailer/suppliesRequest.js";
 export const nearby_agency = async (req, res) => {
     try {
         const role = req.params.role;
+
         let users = await User.find({ role: role }, {name: 1, username: 1, role: 1});
         let nearbyAgency = [];
     
@@ -57,6 +58,7 @@ export const nearby_agency = async (req, res) => {
 // Making a donation request to compost agency or ngo
 export const donate_supplies = async (req, res) => {
     try {
+        console.log(data);
         const { data } = req.body;
         let agency = await User.findOne({ username: data.username });
         let status = 'pending';
