@@ -5,6 +5,7 @@ import Profile from "./pages/Profile";
 import Store from "./pages/Store";
 import History from "./pages/History";
 import Navbar from "./components/Navbar";
+import Guidlines from "./pages/Guidlines";
 
 function App() {
   return (
@@ -15,6 +16,8 @@ function App() {
         <Route exact path="/profile" element={<Profile />} />
         <Route exact path="/store" element={<Store />} />
         <Route exact path="/history" element={<History />} />
+        <Route exact path="/guidelines" element={<Guidlines />} />
+        
       </Routes>
     </>
   );
