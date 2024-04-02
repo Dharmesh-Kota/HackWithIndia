@@ -1,8 +1,14 @@
 import User from "../models/user.js";
+import Points from "../models/userPoints.js";
+import Agency from "../models/compostAgency.js";
+import History from "../models/history.js";
+import Transaction from "../models/transaction.js";
 
+// Controller to provide the list of all nearby composting agencies to the user
 export const nearby_agency = async (req, res) => {
     try {
-        let users = await User.find({ role: "compostAgency" });
+        const role = req.body.role;
+        let users = await User.find({ role: role }, {name: 1, username: 1, role: 1});
         let nearbyAgency = [];
     
         if (Object.keys(req.query).length > 0) {
@@ -73,5 +79,72 @@ export const nearby_agency = async (req, res) => {
         console.log('Error: ', error.message);
         return res.status(500).json({ error: 'Server Error!' });
     }
+}
 
+// Making a donation request to compost agency or ngo
+export const donate_supplies = async (req, res) => {
+    try {
+        const { data } = req.body;
+        let status = 'pending';
+        if (data.type === 'ngo')
+            status = 'confirm';
+        await Transaction.create({
+            sender: req.user.username,
+            receiver: req.data.username,
+            type: data.role,
+            quantity: data.quantity,
+            points: data.quantity*10, //1kg = 10points
+            status: status
+        });
+
+        return res.status(200).json({ message: "Request sent to Agency/NGO!" });
+
+    } catch (error) {
+        console.log('Error: ', error.message);
+        return res.status(500).json({ error: 'Server Error!' });
+    }
+}
+
+// Displaying the list of agencies where user has donated from where he can get the reward
+export const reward_store = async (req, res) => {
+    try {
+        let agencies = await Points.findOne({ user: req.user.id }, { availablePoints: 1 });
+        let userRewards = [];
+        for (let agency of agencies) {
+            let rewards = await Agency.find({ user: agency.user }, { reward: 1 });
+            let { username, name } = await User.findById(agency.user, {username: 1, name: 1});
+            userRewards.push({ username: username, name: name, rewards });
+        }
+
+        return res.status(200).json({ message: 'Agency data fetched!', userRewards: userRewards});
+
+    } catch (error) {
+        console.log('Error: ', error);
+        return res.status(500).json({ error: error });
+    }
+}
+
+// Reedem the reward and subtract the money
+export const reedem_reward = async (req, res) => {
+    try {
+        const { reward } = req.body;
+        let sender = await User.findOne({ username: req.body.username });
+        await History.create({
+            sender: req.body.username,
+            receiver: req.user.username,
+            reward: reward
+        });
+    
+        await Points.findOneAndUpdate(
+            { user: req.body.user.id, "reward.agency": sender.id },
+            { $set: { "reward.$.points": -reward.point } },
+            { new: true }
+          );
+          
+        return res.status(200).json({ message: "Points updated successfully!" });
+
+    } catch (error) {
+        console.log('Error: ', error);
+        return res.status(500).json({ error: error });
+    }
 }

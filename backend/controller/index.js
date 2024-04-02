@@ -38,11 +38,37 @@ export const create_session = async (req, res) => {
     }
 };
 
-export const logout = (req, res) => {
-    req.logout(function (err) {
-        if (err) {
-            return res.status(401).send({error: err});
-        }
-        res.status(200).send({ message: 'Logged Out Successfully!' });
-    });
-};
+// Profile details of the user
+export const profile = async (req, res) => {
+    try {
+        let user = await User.findById(req.user.id, {name: 1, username: 1, email: 1, role: 1, contact: 1, address: 1, location: 1});
+        return res.status(200).json({ message: 'User found!', user: user });
+    } catch (error) {
+        console.log('Error: ', error);
+        return res.status(500).json({ error: error });
+    }
+}
+
+// Update the user's profile
+export const update_profile = async (req, res) => {
+    try {
+        await User.findByIdAndUpdate(
+            { _id: req.user.id },
+            req.body,
+            { new: true }
+        );
+        return res.status(200).json({ message: 'User data updated!' });
+    } catch (error) {
+        console.log('Error: ', error);
+        return res.status(500).json({ error: error });
+    }
+}
+
+// export const logout = (req, res) => {
+//     req.logout(function (err) {
+//         if (err) {
+//             return res.status(401).send({error: err});
+//         }
+//         res.status(200).send({ message: 'Logged Out Successfully!' });
+//     });
+// };

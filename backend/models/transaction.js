@@ -11,7 +11,7 @@ const transactionSchema = new mongoose.Schema({
     },
     type: {
         type: String,
-        enum: ['distribution', 'composting'],
+        enum: ['ngo', 'compostAgency'],
         required: true
     },
     quantity: {

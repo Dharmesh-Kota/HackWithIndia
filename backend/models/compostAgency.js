@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
 const agencyScehma = new mongoose.Schema({
-    reward: {
-        type: {
+    reward: [
+        {
             name: {
                 type: String,
                 required: true
@@ -11,9 +11,8 @@ const agencyScehma = new mongoose.Schema({
                 type: Number,
                 required: true
             }
-        },
-        required: true
-    },
+        }
+    ],
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
