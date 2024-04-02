@@ -22,6 +22,7 @@ import {
 } from "@mui/material";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import axios from "axios";
 
 import { useAuth } from "../context/auth";
 
@@ -61,6 +62,26 @@ const Profile = () => {
       },
     },
   });
+
+  const getProfile = async () => {
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+    };
+
+    try {
+      const result = await axios.get("http://localhost:8000/profile", {
+        headers,
+      });
+      console.log("result", result);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getProfile();
+  }, []);
 
   useEffect(() => {
     AOS.init({
