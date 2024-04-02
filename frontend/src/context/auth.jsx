@@ -6,6 +6,7 @@ const authContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [theme, setTheme] = useState("light");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [role, setRole] = useState("");
   const navigate = useNavigate();
 
   const toggleTheme = () => {
@@ -18,7 +19,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <authContext.Provider
-      value={{ theme, toggleTheme, isLoggedIn, setIsLoggedIn }}
+      value={{ theme, toggleTheme, isLoggedIn, setIsLoggedIn, role, setRole }}
     >
       {children}
     </authContext.Provider>

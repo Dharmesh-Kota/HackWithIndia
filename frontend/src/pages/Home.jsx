@@ -4,11 +4,12 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
+import Agency from "../components/Agency";
 
 export default function Home() {
   return (
     <>
-      <Card sx={{ maxWidth: 345 }}>
+      {/* <Card sx={{ maxWidth: 345 }}>
         <CardActionArea>
           <CardMedia
             component="img"
@@ -64,7 +65,8 @@ export default function Home() {
             </Typography>
           </CardContent>
         </CardActionArea>
-      </Card>
+      </Card> */}
+      <Agency />
     </>
   );
 }

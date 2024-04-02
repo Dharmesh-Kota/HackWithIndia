@@ -39,7 +39,7 @@ export default function Login() {
   //   const [email, setEmail] = useState("");
   //   const [password, setPassword] = useState("");
   const [validPassword, setValidPassword] = useState(false);
-  const { setIsLoggedIn } = useAuth();
+  const { setIsLoggedIn, setRole } = useAuth();
 
   const [isAlert, setIsAlert] = useState(false);
   // const navigate = useNavigate();
@@ -76,9 +76,10 @@ export default function Login() {
         password: password,
       })
       .then((response) => {
-        const { token } = response.data;
+        const { token, role } = response.data;
         localStorage.setItem("token", JSON.stringify(token));
         setIsLoggedIn(true);
+        setRole(role);
         navigate("/");
       })
       .catch((error) => {
