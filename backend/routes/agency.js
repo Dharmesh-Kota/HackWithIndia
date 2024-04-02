@@ -5,7 +5,12 @@ import { authenticateAgencyToken } from '../config/authMiddleware.js'
 
 const router = express.Router();
 
-router.use(cors());
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    allowedHeaders: ['Authorization', 'Content-Type'],
+  };
+  
+router.use(cors(corsOptions));
 
 router.get('/', authenticateAgencyToken, controller.queue);
 router.post('/confirm-supplies', authenticateAgencyToken, controller.cofirm_supplies);
