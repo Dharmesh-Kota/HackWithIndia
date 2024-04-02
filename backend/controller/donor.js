@@ -16,6 +16,10 @@ export const nearby_agency = async (req, res) => {
         let location = await User.findById(req.user.id);
         location = location.location;
 
+        if(!location) {
+            return res.status(422).json({message: "Location not updated!"});
+        }
+
         // find the nearby hospitals
         for (const user of users) {
             const apiKey = process.env.apiKey;

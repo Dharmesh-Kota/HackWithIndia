@@ -56,6 +56,48 @@
       crossorigin="anonymous"
     ></script>
 
+    <!-- TomTom api location search box for profile -->
+    <script>
+      let apiKey = "";
+      // Fetch the API key
+      axios
+        .get('/getTomTomApiKey')
+        .then((response) => {
+          apiKey = response.data.apiKey.trim();
+          initializeTomTomSearchBox(apiKey);
+        })
+        .catch((err) => {
+          console.error("Error: ", error);
+        });
+  
+      function initializeTomTomSearchBox(apiKey) {
+          var options = {
+              searchOptions: {
+                  key: apiKey,
+                  language: "en-GB",
+                  limit: 5,
+                  placeholder: "Search for Nearby Location"
+              },
+              autocompleteOptions: {
+                  key: apiKey,
+                  language: "en-GB",
+              }
+          };
+  
+          // Set the container to the ID of the div
+          options.container = "#searchBoxContainer";
+  
+          var ttSearchBox = new tt.plugins.SearchBox(tt.services, options);
+  
+          ttSearchBox.on("tomtom.searchbox.resultselected", function (data) {
+              document.getElementById("location").value = String(data.data.result.position.lat) + ',' + String(data.data.result.position.lng);
+          });
+  
+          var searchBoxHTML = ttSearchBox.getSearchBoxHTML();
+          document.getElementById("searchBoxContainer").appendChild(searchBoxHTML);
+      }
+  </script>
+
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
