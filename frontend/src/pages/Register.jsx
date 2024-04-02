@@ -36,6 +36,7 @@ export default function Register() {
   //   const [email, setEmail] = useState("");
   //   const [password, setPassword] = useState("");
   const [validPassword, setValidPassword] = useState(false);
+  const [isAlert, setIsAlert] = useState(false);
   //   const navigate = useNavigate();
 
   const handlePasswordofLogin = (e) => {
@@ -61,6 +62,19 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setJustVerify(true);
+
+    if (
+      username === "" ||
+      email === "" ||
+      name === "" ||
+      !validPassword ||
+      password !== repassword ||
+      role === ""
+    ) {
+      return;
+    }
+
     setloading(true);
     if (password === repassword) {
       await axios
@@ -77,6 +91,7 @@ export default function Register() {
           }
         })
         .catch((error) => {
+          setIsAlert(true);
           if (error.response.status === 409) {
             // setUsername("");
             // setEmail("");
@@ -84,7 +99,6 @@ export default function Register() {
             // setPassword("");
             // setRePassword("");
             // setRole("");
-            setJustVerify(true);
           } else {
             console.error("Error: ", error);
           }
@@ -154,14 +168,15 @@ export default function Register() {
                     fontWeight: "bold",
                   },
                 }}
-                error={username === null}
+                error={justVerify && username === ""}
                 helperText={
-                  username === null ? "This field cannot be empty." : ""
+                  justVerify &&
+                  (username === "" ? "This field cannot be empty." : "")
                 }
                 autoComplete="off"
               />
               <TextField
-                id="standard-basic-1"
+                id="standard-basic-2"
                 variant="standard"
                 margin="normal"
                 required
@@ -179,12 +194,15 @@ export default function Register() {
                     fontWeight: "bold",
                   },
                 }}
-                error={name === null}
-                helperText={name === null ? "This field cannot be empty." : ""}
+                error={justVerify && name === ""}
+                helperText={
+                  justVerify &&
+                  (name === "" ? "This field cannot be empty." : "")
+                }
                 autoComplete="off"
               />
               <TextField
-                id="standard-basic-1"
+                id="standard-basic-3"
                 variant="standard"
                 margin="normal"
                 required
@@ -193,7 +211,6 @@ export default function Register() {
                 name="email"
                 autoFocus
                 onChange={(e) => {
-                  setEmailcheck(true);
                   setEmail(e.target.value);
                 }}
                 value={email}
@@ -201,18 +218,18 @@ export default function Register() {
                   style: {
                     fontFamily: "Quicksand",
                     fontWeight: "bold",
-                    color: !email && Emailcheck ? "#f44336" : "#25396F",
                   },
                 }}
-                error={!email && Emailcheck}
+                error={justVerify && email === ""}
                 helperText={
-                  !email && Emailcheck ? "This field cannot be empty." : ""
+                  justVerify &&
+                  (email === "" ? "This field cannot be empty." : "")
                 }
                 autoComplete="off"
               />
 
               <TextField
-                id="standard-basic-2"
+                id="standard-basic-4"
                 variant="standard"
                 margin="normal"
                 required
@@ -226,24 +243,22 @@ export default function Register() {
                   style: {
                     fontFamily: "Quicksand",
                     fontWeight: "bold",
-                    color: !validPassword ? "#f44336" : "#25396F", // Change color to red if there's an error
+                    color: !validPassword ? "#f44336" : "#25396F",
                   },
                 }}
-                error={
-                  (!password && passwordcheck) || (!validPassword && password)
-                }
+                error={justVerify && (!validPassword || password === "")}
                 helperText={
-                  !password && passwordcheck
+                  justVerify &&
+                  (password === ""
                     ? "This field cannot be empty."
-                    : !validPassword && password
+                    : !validPassword
                     ? "The password must contain at least 8 digits."
-                    : ""
+                    : "")
                 }
                 autoComplete="off"
               />
-
               <TextField
-                id="standard-basic-2"
+                id="standard-basic-5"
                 variant="standard"
                 margin="normal"
                 required
@@ -262,9 +277,10 @@ export default function Register() {
                     color: repassword !== password ? "#f44336" : "#25396F",
                   },
                 }}
-                error={repassword !== password}
+                error={justVerify && (repassword !== password)}
                 helperText={
-                  repassword !== password && "password is not mathing"
+                  justVerify &&
+                  (repassword !== password ? "password is not mathing" : "")
                 }
                 autoComplete="off"
               />
@@ -276,6 +292,7 @@ export default function Register() {
                 displayEmpty
                 inputProps={{ "aria-label": "Without label" }}
                 fullWidth
+                error={justVerify && role === ""}
               >
                 <MenuItem value="compostAgency">Compost Agency</MenuItem>
                 <MenuItem value="ngo">NGO</MenuItem>
@@ -297,7 +314,7 @@ export default function Register() {
               </Button>
               <Grid container>
                 <Grid item xs={12}>
-                  {justVerify && (
+                  {isAlert && (
                     <Alert
                       variant="filled"
                       severity="error"

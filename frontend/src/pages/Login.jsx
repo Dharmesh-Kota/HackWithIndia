@@ -40,13 +40,15 @@ export default function Login() {
   //   const [password, setPassword] = useState("");
   const [validPassword, setValidPassword] = useState(false);
   const { setIsLoggedIn } = useAuth();
+
+  const [isAlert, setIsAlert] = useState(false);
   // const navigate = useNavigate();
 
   //   const handleSubmit = async (e) => {};
 
   const handlePasswordofLogin = (e) => {
     const input = e.target.value;
-    setpasswordcheck(true);
+    // setpasswordcheck(true);
     setPassword(input);
     if (input.length < 8) {
       setValidPassword(false);
@@ -62,6 +64,11 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setJustVerify(true);
+    if (emailUsername === "" || password === "" || !validPassword) {
+      return;
+    }
     setloading(true);
     await axios
       .post("http://localhost:8000/create-session", {
@@ -75,11 +82,12 @@ export default function Login() {
         navigate("/");
       })
       .catch((error) => {
-        setJustVerify(true);
+        setIsAlert(true);
         if (error.response.status === 401) {
           // setEmailUsername("");
           // setPassword("");
           //   alert("Invalid Username/Email or Password!");
+          console.log("Error: 401 -> Login");
         } else {
           console.error("Error: ", error);
         }
@@ -124,60 +132,33 @@ export default function Login() {
               noValidate
               sx={{ mt: 1, width: "100%" }}
             >
-              {!(!emailUsername && Emailcheck) ? (
-                <TextField
-                  id="standard-basic-1"
-                  variant="standard"
-                  margin="normal"
-                  required
-                  fullWidth
-                  label="Username / Email Address"
-                  name="email"
-                  // autoComplete="email"
-                  autoFocus
-                  onChange={(e) => {
-                    setEmailcheck(true);
-                    setEmailUsername(e.target.value);
-                  }}
-                  value={emailUsername}
-                  InputProps={{
-                    style: {
-                      fontFamily: "Quicksand",
-                      fontWeight: "bold",
-                      color: "#25396F",
-                    },
-                  }}
-                  autoComplete="off"
-                />
-              ) : (
-                <TextField
-                  error
-                  helperText={
-                    !emailUsername && Emailcheck
-                      ? "This field cannot be empty."
-                      : ""
-                  }
-                  id="standard-basic-1"
-                  variant="standard"
-                  margin="normal"
-                  required
-                  fullWidth
-                  label="Username / Email Address"
-                  name="email"
-                  // autoComplete="email"
-                  autoFocus
-                  color="secondary"
-                  onChange={(e) => {
-                    setEmailcheck(true);
-                    setEmailUsername(e.target.value);
-                  }}
-                  value={emailUsername}
-                  InputProps={{
-                    style: { fontFamily: "Quicksand", fontWeight: "bold" },
-                  }}
-                  autoComplete="off"
-                />
-              )}
+              <TextField
+                id="standard-basic-1"
+                variant="standard"
+                margin="normal"
+                required
+                fullWidth
+                label="Username / Email Address"
+                name="email"
+                autoFocus
+                value={emailUsername}
+                onChange={(e) => {
+                  setEmailUsername(e.target.value);
+                }}
+                InputProps={{
+                  style: {
+                    fontFamily: "Quicksand",
+                    fontWeight: "bold",
+                    color: "#25396F",
+                  },
+                }}
+                error={justVerify && emailUsername === ""}
+                helperText={
+                  justVerify &&
+                  (emailUsername == "" ? "This field cannot be empty." : "")
+                }
+                autoComplete="off"
+              />
               <TextField
                 id="standard-basic-2"
                 variant="standard"
@@ -193,71 +174,20 @@ export default function Login() {
                   style: {
                     fontFamily: "Quicksand",
                     fontWeight: "bold",
-                    color: !validPassword ? "#f44336" : "#25396F", // Change color to red if there's an error
+                    color: !validPassword ? "#f44336" : "#25396F",
                   },
                 }}
-                error={
-                  (!password && passwordcheck) || (!validPassword && password)
-                }
+                error={justVerify && (!validPassword || password === "")}
                 helperText={
-                  !password && passwordcheck
+                  justVerify &&
+                  (password === ""
                     ? "This field cannot be empty."
-                    : !validPassword && password
+                    : !validPassword
                     ? "The password must contain at least 8 digits."
-                    : ""
+                    : "")
                 }
                 autoComplete="off"
               />
-              {/* {validPassword ? (
-                <TextField
-                  id="standard-basic-2"
-                  variant="standard"
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  // autoComplete="current-password"
-                  onChange={handlePasswordofLogin}
-                  value={password}
-                  InputProps={{
-                    style: {
-                      fontFamily: "Quicksand",
-                      fontWeight: "bold",
-                      color: "#25396F",
-                    },
-                  }}
-                  autoComplete="off"
-                />
-              ) : (
-                <TextField
-                  error
-                  helperText={
-                    !password && passwordcheck
-                      ? "This field cannot be empty."
-                      : !validPassword && password
-                      ? "The password must contain at least 8 digits."
-                      : ""
-                  }
-                  id="standard-basic-2"
-                  variant="standard"
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  color="secondary"
-                  // autoComplete="current-password"
-                  onChange={handlePasswordofLogin}
-                  value={password}
-                  InputProps={{
-                    style: { fontFamily: "Quicksand", fontWeight: "bold" },
-                  }}
-                  autoComplete="off"
-                />
-              )} */}
               <Button
                 type="submit"
                 fullWidth
@@ -273,16 +203,15 @@ export default function Login() {
               </Button>
               <Grid container>
                 <Grid item xs={12}>
-                  {window.localStorage.getItem("token") === null &&
-                    justVerify && (
-                      <Alert
-                        variant="filled"
-                        severity="error"
-                        style={{ fontFamily: "Quicksand", fontWeight: "600" }}
-                      >
-                        Invalid Email and/or Password
-                      </Alert>
-                    )}
+                  {window.localStorage.getItem("token") === null && isAlert && (
+                    <Alert
+                      variant="filled"
+                      severity="error"
+                      style={{ fontFamily: "Quicksand", fontWeight: "600" }}
+                    >
+                      Invalid Email and/or Password
+                    </Alert>
+                  )}
                 </Grid>
                 <Grid item xs={12}>
                   <Button

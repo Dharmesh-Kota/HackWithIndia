@@ -35,13 +35,15 @@ const Profile = () => {
   const [userName, setUserName] = useState("abc");
   const [email, setEmail] = useState("abc@gmail.com");
   const [type, setType] = useState("User");
-  const [address, setAddress] = useState("123");
-  const [phoneNumber, setPhoneNumber] = useState(1234567890);
+  const [address, setAddress] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [location, setLocation] = useState("");
 
   const [isValidPhone, setIsValidPhone] = useState(false);
   const navigate = useNavigate();
   const { setIsLoggedIn } = useAuth();
+
+  const [justVerify, setJustVerify] = useState(false);
 
   const validatePhoneNumber = (input) => {
     const value = input.replace(/\D/g, "");
@@ -64,17 +66,32 @@ const Profile = () => {
     },
   });
   const UpdateProfile = async () => {
+    setJustVerify(true);
+    if (name == "" || address == "" || !isValidPhone || location === "") {
+      return;
+    }
     setLoading(true);
+
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+    };
     try {
-      const result = await axios.post("http://localhost:8000/updateprofile", {
-        name,
-        username: userName,
-        email,
-        role: type,
-        contact: phoneNumber,
-        address,
-        location: 1,
-      });
+      const results = await axios.post(
+        "http://localhost:8000/update-profile",
+        {
+          name,
+          username: userName,
+          email,
+          role: type,
+          contact: phoneNumber,
+          address,
+          location,
+        },
+        { headers }
+      );
+
+      console.log(results);
     } catch (err) {
       console.log(err);
     }
@@ -91,7 +108,16 @@ const Profile = () => {
       const result = await axios.get("http://localhost:8000/profile", {
         headers,
       });
-      console.log("result", result);
+      console.log("result", result.data.user);
+      const { user } = result.data;
+      setName(user.name);
+      setEmail(user.email);
+      setUserName(user.username);
+      setType(user.role);
+      setPhoneNumber(user.contact);
+      setAddress(user.address);
+      setLocation(user.location);
+      validatePhoneNumber(user.contact);
     } catch (err) {
       console.log(err);
     }
@@ -187,9 +213,9 @@ const Profile = () => {
                         }}
                         fullWidth
                         autoComplete="off"
-                        error={name === ""}
+                        error={justVerify && name === ""}
                         helperText={
-                          name === ""
+                          name === "" && justVerify
                             ? "Please enter a valid name containing only letters."
                             : ""
                         }
@@ -241,9 +267,11 @@ const Profile = () => {
                         }}
                         fullWidth
                         autoComplete="off"
-                        error={address === ""}
+                        error={justVerify && address === ""}
                         helperText={
-                          address === "" ? "address cnnnot be empty." : ""
+                          address === "" && justVerify
+                            ? "address cnnnot be empty."
+                            : ""
                         }
                         multiline
                         rows={3}
@@ -260,24 +288,30 @@ const Profile = () => {
                         }}
                         fullWidth
                         autoComplete="off"
-                        error={!isValidPhone}
+                        error={!isValidPhone && justVerify}
                         helperText={
-                          !isValidPhone ? "Please enter a 10-digit number." : ""
+                          !isValidPhone && justVerify
+                            ? "Please enter a 10-digit number."
+                            : ""
                         }
                       />
                     </Grid>
                     <Grid item xs={10} style={{ marginTop: "0.4em" }}>
-                      <div class="form-group my-2" id="searchBoxContainer">
-                        <label for="location">Location:</label>
-                        <input
-                          class="form-control"
-                          type="text"
-                          id="location"
-                          name="location"
-                          // value={location == "" ? "hidden" : location}
-                          // <%if(user.location !== null) {%> value="<%=user.location%>" <%}else{%> hidden <%}%>
-                        />
-                      </div>
+                      <TextField
+                        id="standard-helperText-8"
+                        label="Location"
+                        value={location}
+                        onChange={(e) => {
+                          setLocation(e.target.value);
+                        }}
+                        error={justVerify && location === ""}
+                        helperText={
+                          justVerify && location === ""
+                            ? "Please select your location"
+                            : ""
+                        }
+                        fullWidth
+                      />
                     </Grid>
                   </Grid>
                   <div style={{ textAlign: "center", marginTop: "1em" }}>
@@ -317,7 +351,7 @@ const Profile = () => {
                 style={{ marginTop: "1em" }}
                 sx={{ fontFamily: "Quicksand", fontWeight: "bold" }}
               >
-                Logout
+                Logout &nbsp;
                 <LogoutIcon />
               </Button>
             </Grid>
