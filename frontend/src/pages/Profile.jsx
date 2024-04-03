@@ -123,50 +123,6 @@ const Profile = () => {
     }
   };
 
-  // function initializeTomTomSearchBox(apiKey) {
-  //   var options = {
-  //     searchOptions: {
-  //       key: apiKey,
-  //       language: "en-GB",
-  //       limit: 5,
-  //       placeholder: "Search for Nearby Location",
-  //     },
-  //     autocompleteOptions: {
-  //       key: apiKey,
-  //       language: "en-GB",
-  //     },
-  //   };
-
-  //   // Set the container to the ID of the div
-  //   options.container = "#searchBoxContainer";
-
-  //   var ttSearchBox = new tt.plugins.SearchBox(tt.services, options);
-
-  //   ttSearchBox.on("tomtom.searchbox.resultselected", function (data) {
-  //     document.getElementById("location").value =
-  //       String(data.data.result.position.lat) +
-  //       "," +
-  //       String(data.data.result.position.lng);
-  //   });
-
-  //   var searchBoxHTML = ttSearchBox.getSearchBoxHTML();
-  //   document.getElementById("searchBoxContainer").appendChild(searchBoxHTML);
-  // }
-
-  // const getLocation = () => {
-  //   let apiKey = "";
-  //   // Fetch the API key
-  //   axios
-  //     .get("/getTomTomApiKey")
-  //     .then((response) => {
-  //       apiKey = response.data.apiKey.trim();
-  //       initializeTomTomSearchBox(apiKey);
-  //     })
-  //     .catch((err) => {
-  //       console.error("Error: ", err);
-  //     });
-  // };
-
   useEffect(() => {
     getProfile();
   }, []);
@@ -259,9 +215,10 @@ const Profile = () => {
                         autoComplete="off"
                         error={justVerify && name === ""}
                         helperText={
-                          name === "" && justVerify
+                          justVerify &&
+                          (name === ""
                             ? "Please enter a valid name containing only letters."
-                            : ""
+                            : "")
                         }
                       />
                     </Grid>
@@ -313,9 +270,8 @@ const Profile = () => {
                         autoComplete="off"
                         error={justVerify && address === ""}
                         helperText={
-                          address === "" && justVerify
-                            ? "address cnnnot be empty."
-                            : ""
+                          justVerify &&
+                          (address === "" ? "address cnnnot be empty." : "")
                         }
                         multiline
                         rows={3}
@@ -334,14 +290,19 @@ const Profile = () => {
                         autoComplete="off"
                         error={!isValidPhone && justVerify}
                         helperText={
-                          !isValidPhone && justVerify
+                          justVerify &&
+                          (!isValidPhone
                             ? "Please enter a 10-digit number."
-                            : ""
+                            : "")
                         }
                       />
                     </Grid>
-                    <Grid item xs={10} style={{ marginTop: "0.4em" }} id="searchBoxContainer">
-                    </Grid>
+                    <Grid
+                      item
+                      xs={10}
+                      style={{ marginTop: "0.4em" }}
+                      id="searchBoxContainer"
+                    ></Grid>
                     <Grid item xs={10} style={{ marginTop: "0.4em" }}>
                       <TextField
                         id="location"
@@ -350,17 +311,15 @@ const Profile = () => {
                         onChange={(e) => {
                           setLocation(e.target.value);
                         }}
-                        style={{visibility: "hidden"}}
+                        style={{ visibility: "hidden" }}
                         error={justVerify && location === ""}
                         helperText={
-                          justVerify && location === ""
-                            ? "Please select your location"
-                            : ""
+                          justVerify &&
+                          (location === "" ? "Please select your location" : "")
                         }
                         fullWidth
-                    />
+                      />
                     </Grid>
-                    
                   </Grid>
                   <div style={{ textAlign: "center", marginTop: "1em" }}>
                     <Button
