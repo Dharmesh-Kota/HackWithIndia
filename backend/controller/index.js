@@ -23,8 +23,6 @@ export const create_session = async (req, res) => {
         const { emailUsername, password } = req.body;
         let user = await User.findOne({ $or: [{ email: emailUsername }, { username: emailUsername }] });
         
-        console.log(user);
-        
         if (!user || password !== user.password) {
             return res.status(401).json({ error: 'Invalid Email/Username or Password!' });
         }

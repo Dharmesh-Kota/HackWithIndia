@@ -67,7 +67,7 @@ const Profile = () => {
   });
   const UpdateProfile = async () => {
     setJustVerify(true);
-    if (name == "" || address == "" || !isValidPhone || location === "") {
+    if (name === "" || address === "" || !isValidPhone || location === "") {
       return;
     }
     setLoading(true);
@@ -90,8 +90,6 @@ const Profile = () => {
         },
         { headers }
       );
-
-      console.log(results);
     } catch (err) {
       console.log(err);
     }
@@ -108,7 +106,6 @@ const Profile = () => {
       const result = await axios.get("http://localhost:8000/profile", {
         headers,
       });
-      console.log("result", result.data.user);
       const { user } = result.data;
       setName(user.name);
       setEmail(user.email);
@@ -125,15 +122,74 @@ const Profile = () => {
 
   useEffect(() => {
     getProfile();
-  }, []);
-
-  useEffect(() => {
     AOS.init({
       duration: 800,
       easing: "ease-in-out",
       once: true,
     });
   }, []);
+
+  const [apiKey, setApiKey] = useState("");
+
+  useEffect(() => {
+    const fetchApiKey = async () => {
+      try {
+        const headers = {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+        };
+        const response = await fetch("http://localhost:8000/getTomTomApiKey", {
+          headers,
+        });
+        const data = await response.json();
+        setApiKey(data.apiKey.trim());
+      } catch (error) {
+        console.error("Error fetching API key:", error);
+      }
+    };
+    fetchApiKey();
+  }, []);
+
+  const initializeTomTomSearchBox = (apiKey) => {
+    var options = {
+      searchOptions: {
+        key: apiKey,
+        language: "en-GB",
+        limit: 5,
+        placeholder: "Search for Nearby Location",
+      },
+      autocompleteOptions: {
+        key: apiKey,
+        language: "en-GB",
+      },
+    };
+
+    // Set the container to the ID of the div
+    options.container = "#searchBoxContainer";
+
+    var ttSearchBox = new window.tt.plugins.SearchBox(
+      window.tt.services,
+      options
+    );
+
+    ttSearchBox.on("tomtom.searchbox.resultselected", function (data) {
+      const newLocation =
+        String(data.data.result.position.lat) +
+        "," +
+        String(data.data.result.position.lng);
+      document.getElementById("location").value = newLocation;
+      setLocation(newLocation);
+    });
+
+    var searchBoxHTML = ttSearchBox.getSearchBoxHTML();
+    document.getElementById("searchBoxContainer").appendChild(searchBoxHTML);
+  };
+
+  useEffect(() => {
+    if (apiKey) {
+      initializeTomTomSearchBox(apiKey);
+    }
+  }, [apiKey]);
 
   return (
     <>
@@ -303,6 +359,15 @@ const Profile = () => {
                       style={{ marginTop: "0.4em" }}
                       id="searchBoxContainer"
                     ></Grid>
+                    <Grid
+                      item
+                      xs={10}
+                      style={{ marginTop: "0.4em" }}
+                      id="searchBoxContainer"
+                    ></Grid>
+
+                    <Grid></Grid>
+
                     <Grid item xs={10} style={{ marginTop: "0.4em" }}>
                       <TextField
                         id="location"
