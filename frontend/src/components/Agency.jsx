@@ -37,6 +37,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
+import "../CSS/Agency.css";
+
 function Agency() {
   const [queue, setQueue] = useState([
     { sender: "a", quantity: 1 },
@@ -49,6 +51,7 @@ function Agency() {
 
   const [open1, setOpen1] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
+  const [hoveredIndex, setHoveredIndex] = useState(-1);
 
   const handleClickOpen1 = () => {
     setOpen1(true);
@@ -185,7 +188,17 @@ function Agency() {
                 <Grid container spacing={2}>
                   {queue.map((row, index) => (
                     <Grid key={index} item xs={12} md={10}>
-                      <Accordion style={{ backgroundColor: "ghostwhite" }}>
+                      <Accordion
+                        style={{
+                          backgroundColor:
+                            hoveredIndex === index ? "#119da4" : "ghostwhite",
+                          transform:
+                            hoveredIndex === index ? "scale(1.01)" : "scale(1)",
+                          transition: "all 0.15s ease",
+                        }}
+                        onMouseEnter={() => setHoveredIndex(index)}
+                        onMouseLeave={() => setHoveredIndex(-1)}
+                      >
                         <AccordionSummary
                           aria-controls="panel1a-content"
                           id="panel1a-header"

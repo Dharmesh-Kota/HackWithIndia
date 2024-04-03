@@ -55,7 +55,7 @@ function Navbar() {
               <div className="my-button">
                 <Link
                   className="nav-link"
-                  to="/booklist"
+                  to="#"
                   style={{ color: "white" }}
                 >
                   Booklist
