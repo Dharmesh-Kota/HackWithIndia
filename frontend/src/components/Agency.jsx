@@ -38,17 +38,10 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
 import "../CSS/Agency.css";
-import config from '../config.js';
+import config from "../config.js";
 
 function Agency() {
-  const [queue, setQueue] = useState([
-    { sender: "a", quantity: 1 },
-    { sender: "b", quantity: 2 },
-    { sender: "c", quantity: 3 },
-    { sender: "d", quantity: 4 },
-    { sender: "e", quantity: 5 },
-    { sender: "f", quantity: 6 },
-  ]);
+  const [queue, setQueue] = useState([]);
 
   const [open1, setOpen1] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
@@ -71,46 +64,46 @@ function Agency() {
   };
 
   const acceptSupply = async (e) => {
-    // const headers = {
-    //   "Content-Type": "application/json",
-    //   Authorization: `Bearer ${window.localStorage.getItem("token")}`,
-    // };
-    // try {
-    //   const results = await axios.get(
-    //     (config.BACKEND_API || "http://localhost:8000") + "/confirm-supplies",
-    //     {
-    //       sender: e.sender,
-    //       quantity: e.quantity,
-    //     },
-    //     {
-    //       headers,
-    //     }
-    //   );
-    //   //   console.log("results", results);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+    };
+    try {
+      const results = await axios.get(
+        (config.BACKEND_API || "http://localhost:8000") + "/confirm-supplies",
+        {
+          sender: e.sender,
+          quantity: e.quantity,
+        },
+        {
+          headers,
+        }
+      );
+      //   console.log("results", results);
+    } catch (error) {
+      console.log(error);
+    }
   };
   const rejectSupply = async (e) => {
-    // const headers = {
-    //   "Content-Type": "application/json",
-    //   Authorization: `Bearer ${window.localStorage.getItem("token")}`,
-    // };
-    // try {
-    //   const results = await axios.get(
-    //     (config.BACKEND_API || "http://localhost:8000") + "/reject-request",
-    //     {
-    //       sender: e.sender,
-    //       quantity: e.quantity,
-    //     },
-    //     {
-    //       headers,
-    //     }
-    //   );
-    //   //   console.log("results", results);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+    };
+    try {
+      const results = await axios.get(
+        (config.BACKEND_API || "http://localhost:8000") + "/reject-request",
+        {
+          sender: e.sender,
+          quantity: e.quantity,
+        },
+        {
+          headers,
+        }
+      );
+      //   console.log("results", results);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getQueue = async () => {
@@ -120,9 +113,12 @@ function Agency() {
     };
 
     try {
-      const results = await axios.get((config.BACKEND_API || "http://localhost:8000") + "/agency", {
-        headers,
-      });
+      const results = await axios.get(
+        (config.BACKEND_API || "http://localhost:8000") + "/agency",
+        {
+          headers,
+        }
+      );
       //   console.log("results", results.data);
       setQueue(results.data.requests);
     } catch (error) {
@@ -130,9 +126,9 @@ function Agency() {
     }
   };
 
-  //   useEffect(() => {
-  //     getQueue();
-  //   }, []);
+  useEffect(() => {
+    getQueue();
+  }, []);
 
   const theme = createTheme({
     typography: {
