@@ -27,9 +27,8 @@ import Alert from "@mui/material/Alert";
 
 import { useAuth } from "../context/auth";
 import axios from "axios";
-import dotenv from 'dotenv';
+import config from '../config.js';
 
-dotenv.config();
 const defaultTheme = createTheme();
 
 export default function Login() {
@@ -73,7 +72,7 @@ export default function Login() {
     }
     setloading(true);
     await axios
-      .post((process.env.BACKEND_API || "http://localhost:8000") + "/create-session", {
+      .post((config.BACKEND_API || "http://localhost:8000") + "/create-session", {
         emailUsername: emailUsername,
         password: password,
       })

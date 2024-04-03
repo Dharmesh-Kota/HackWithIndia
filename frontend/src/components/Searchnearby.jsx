@@ -15,6 +15,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import FormHelperText from "@mui/material/FormHelperText";
 import Button from "@mui/material/Button";
+import config from '../config.js';
 
 function Searchnearby() {
   const [type, setType] = useState("");
@@ -37,7 +38,7 @@ function Searchnearby() {
     };
 
     const data = await axios
-      .get(`http://localhost:8000/donor/nearby-agency/${e.target.value}`, {
+      .get(`${(config.BACKEND_API || "http://localhost:8000")}/donor/nearby-agency/${e.target.value}`, {
         headers,
       })
       .then((res) => {
@@ -88,7 +89,7 @@ function Searchnearby() {
       };
 
       await axios
-        .post("http://localhost:8000/donor/donate-supplies", data, { headers })
+        .post((config.BACKEND_API || "http://localhost:8000") + "/donor/donate-supplies", data, { headers })
         .then((res) => {
           // alert user that the transaction initallized successfully
           // redirect to home page or history page

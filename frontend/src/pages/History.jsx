@@ -1,7 +1,5 @@
 import React from 'react'
-import dotenv from 'dotenv';
-
-dotenv.config();
+import config from '../config.js';
 
 const history = () => {
   return (

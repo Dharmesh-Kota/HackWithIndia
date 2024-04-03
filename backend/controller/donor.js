@@ -5,6 +5,8 @@ import History from "../models/history.js";
 import Transaction from "../models/transaction.js";
 import { redeemReward } from "../mailer/rewardRedeem.js";
 import { suppliesRequest } from "../mailer/suppliesRequest.js";
+import dotenv from 'dotenv'
+dotenv.config();
 
 // Controller to provide the list of all nearby composting agencies to the user
 export const nearby_agency = async (req, res) => {

@@ -8,9 +8,7 @@ import Agency from "../components/Agency";
 import Searchnearby from "../components/Searchnearby";
 import { useAuth } from "../context/auth";
 import Temp from "../components/Temp";
-import dotenv from 'dotenv';
-
-dotenv.config();
+import config from '../config.js';
 
 export default function Home() {
   const { isLoggedIn } = useAuth();

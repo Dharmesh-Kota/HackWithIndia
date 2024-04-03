@@ -4,9 +4,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../CSS/AboutUs.css";
-import dotenv from 'dotenv';
-
-dotenv.config();
+import config from '../config.js';
 
 function AboutUS() {
   const theme = createTheme({

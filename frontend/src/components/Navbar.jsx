@@ -5,6 +5,7 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import MenuIcon from "@mui/icons-material/Menu";
 import { Button } from "@mui/material";
 import { useAuth } from "../context/auth";
+import config from '../config.js';
 
 function Navbar() {
   const navbarStyle = {

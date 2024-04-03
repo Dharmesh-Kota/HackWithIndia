@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import dotenv from 'dotenv';
-
-dotenv.config();
+import config from '../config.js';
 
 const Rewards = () => {
     const navigate = useNavigate();
@@ -15,7 +13,7 @@ const Rewards = () => {
 
     const getRewards = async () => {
         await axios
-            .get((process.env.BACKEND_API || "http://localhost:8000") + "/agency/rewards", {
+            .get((config.BACKEND_API || "http://localhost:8000") + "/agency/rewards", {
                 headers,
             })
             .then((response) => {
@@ -34,7 +32,7 @@ const Rewards = () => {
 
     const addRewardHandler = async () => {
         axios
-            .post((process.env.BACKEND_API || "http://localhost:8000") + '/agency/add-reward', {
+            .post((config.BACKEND_API || "http://localhost:8000") + '/agency/add-reward', {
                 name: rewardName,
                 point: rewardPoint
             }, {

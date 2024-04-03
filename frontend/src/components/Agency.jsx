@@ -38,6 +38,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
 import "../CSS/Agency.css";
+import config from '../config.js';
 
 function Agency() {
   const [queue, setQueue] = useState([
@@ -76,7 +77,7 @@ function Agency() {
     // };
     // try {
     //   const results = await axios.get(
-    //     "http://localhost:8000/confirm-supplies",
+    //     (config.BACKEND_API || "http://localhost:8000") + "/confirm-supplies",
     //     {
     //       sender: e.sender,
     //       quantity: e.quantity,
@@ -97,7 +98,7 @@ function Agency() {
     // };
     // try {
     //   const results = await axios.get(
-    //     "http://localhost:8000/reject-request",
+    //     (config.BACKEND_API || "http://localhost:8000") + "/reject-request",
     //     {
     //       sender: e.sender,
     //       quantity: e.quantity,
@@ -119,7 +120,7 @@ function Agency() {
     };
 
     try {
-      const results = await axios.get("http://localhost:8000/agency", {
+      const results = await axios.get((config.BACKEND_API || "http://localhost:8000") + "/agency", {
         headers,
       });
       //   console.log("results", results.data);
