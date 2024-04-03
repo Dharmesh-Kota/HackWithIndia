@@ -93,7 +93,6 @@ const Profile = () => {
         },
         { headers }
       );
-
     } catch (err) {
       console.log(err);
     }
@@ -140,13 +139,14 @@ const Profile = () => {
       try {
         const headers = {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${window.localStorage.getItem("token")}`,
+          Authorization: `Bearer ${window.localStorage.getItem("token")}`,
         };
+
         const response = await fetch((process.env.BACKEND_API || "http://localhost:8000") + '/getTomTomApiKey', { headers });
         const data = await response.json();
         setApiKey(data.apiKey.trim());
       } catch (error) {
-        console.error('Error fetching API key:', error);
+        console.error("Error fetching API key:", error);
       }
     };
     fetchApiKey();
@@ -158,21 +158,27 @@ const Profile = () => {
         key: apiKey,
         language: "en-GB",
         limit: 5,
-        placeholder: "Search for Nearby Location"
+        placeholder: "Search for Nearby Location",
       },
       autocompleteOptions: {
         key: apiKey,
         language: "en-GB",
-      }
+      },
     };
 
     // Set the container to the ID of the div
     options.container = "#searchBoxContainer";
 
-    var ttSearchBox = new window.tt.plugins.SearchBox(window.tt.services, options);
+    var ttSearchBox = new window.tt.plugins.SearchBox(
+      window.tt.services,
+      options
+    );
 
     ttSearchBox.on("tomtom.searchbox.resultselected", function (data) {
-      const newLocation = String(data.data.result.position.lat) + ',' + String(data.data.result.position.lng);
+      const newLocation =
+        String(data.data.result.position.lat) +
+        "," +
+        String(data.data.result.position.lng);
       document.getElementById("location").value = newLocation;
       setLocation(newLocation);
     });
@@ -180,7 +186,7 @@ const Profile = () => {
     var searchBoxHTML = ttSearchBox.getSearchBoxHTML();
     document.getElementById("searchBoxContainer").appendChild(searchBoxHTML);
   };
-  
+
   useEffect(() => {
     if (apiKey) {
       initializeTomTomSearchBox(apiKey);
@@ -267,9 +273,10 @@ const Profile = () => {
                         autoComplete="off"
                         error={justVerify && name === ""}
                         helperText={
-                          name === "" && justVerify
+                          justVerify &&
+                          (name === ""
                             ? "Please enter a valid name containing only letters."
-                            : ""
+                            : "")
                         }
                       />
                     </Grid>
@@ -321,9 +328,8 @@ const Profile = () => {
                         autoComplete="off"
                         error={justVerify && address === ""}
                         helperText={
-                          address === "" && justVerify
-                            ? "address cnnnot be empty."
-                            : ""
+                          justVerify &&
+                          (address === "" ? "address cnnnot be empty." : "")
                         }
                         multiline
                         rows={3}
@@ -342,18 +348,27 @@ const Profile = () => {
                         autoComplete="off"
                         error={!isValidPhone && justVerify}
                         helperText={
-                          !isValidPhone && justVerify
+                          justVerify &&
+                          (!isValidPhone
                             ? "Please enter a 10-digit number."
-                            : ""
+                            : "")
                         }
                       />
                     </Grid>
-                    <Grid item xs={10} style={{ marginTop: "0.4em" }} id="searchBoxContainer">
-                    </Grid>
+                    <Grid
+                      item
+                      xs={10}
+                      style={{ marginTop: "0.4em" }}
+                      id="searchBoxContainer"
+                    ></Grid>
+                    <Grid
+                      item
+                      xs={10}
+                      style={{ marginTop: "0.4em" }}
+                      id="searchBoxContainer"
+                    ></Grid>
 
-                    <Grid>
-                    
-                    </Grid>
+                    <Grid></Grid>
 
                     <Grid item xs={10} style={{ marginTop: "0.4em" }}>
                       <TextField
@@ -363,16 +378,15 @@ const Profile = () => {
                         onChange={(e) => {
                           setLocation(e.target.value);
                         }}
+                        style={{ visibility: "hidden" }}
                         error={justVerify && location === ""}
                         helperText={
-                          justVerify && location === ""
-                            ? "Please select your location"
-                            : ""
+                          justVerify &&
+                          (location === "" ? "Please select your location" : "")
                         }
                         fullWidth
-                    />
+                      />
                     </Grid>
-                    
                   </Grid>
                   <div style={{ textAlign: "center", marginTop: "1em" }}>
                     <Button

@@ -28,6 +28,16 @@ import "aos/dist/aos.css";
 import axios from "axios";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
 import NotInterestedIcon from "@mui/icons-material/NotInterested";
+import Tooltip from "@mui/material/Tooltip";
+import Zoom from "@mui/material/Zoom";
+
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+
+import "../CSS/Agency.css";
 
 function Agency() {
   const [queue, setQueue] = useState([
@@ -39,49 +49,67 @@ function Agency() {
     { sender: "f", quantity: 6 },
   ]);
 
-  const acceptSupply = async (e) => {
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${window.localStorage.getItem("token")}`,
-    };
+  const [open1, setOpen1] = React.useState(false);
+  const [open2, setOpen2] = React.useState(false);
+  const [hoveredIndex, setHoveredIndex] = useState(-1);
 
-    try {
-      const results = await axios.get(
-        "http://localhost:8000/confirm-supplies",
-        {
-          sender: e.sender,
-          quantity: e.quantity,
-        },
-        {
-          headers,
-        }
-      );
-      //   console.log("results", results);
-    } catch (error) {
-      console.log(error);
-    }
+  const handleClickOpen1 = () => {
+    setOpen1(true);
+  };
+
+  const handleClose1 = () => {
+    setOpen1(false);
+  };
+
+  const handleClickOpen2 = () => {
+    setOpen2(true);
+  };
+
+  const handleClose2 = () => {
+    setOpen2(false);
+  };
+
+  const acceptSupply = async (e) => {
+    // const headers = {
+    //   "Content-Type": "application/json",
+    //   Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+    // };
+    // try {
+    //   const results = await axios.get(
+    //     "http://localhost:8000/confirm-supplies",
+    //     {
+    //       sender: e.sender,
+    //       quantity: e.quantity,
+    //     },
+    //     {
+    //       headers,
+    //     }
+    //   );
+    //   //   console.log("results", results);
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
   const rejectSupply = async (e) => {
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${window.localStorage.getItem("token")}`,
-    };
-
-    try {
-      const results = await axios.get(
-        "http://localhost:8000/reject-request",
-        {
-          sender: e.sender,
-          quantity: e.quantity,
-        },
-        {
-          headers,
-        }
-      );
-      //   console.log("results", results);
-    } catch (error) {
-      console.log(error);
-    }
+    // const headers = {
+    //   "Content-Type": "application/json",
+    //   Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+    // };
+    // try {
+    //   const results = await axios.get(
+    //     "http://localhost:8000/reject-request",
+    //     {
+    //       sender: e.sender,
+    //       quantity: e.quantity,
+    //     },
+    //     {
+    //       headers,
+    //     }
+    //   );
+    //   //   console.log("results", results);
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   const getQueue = async () => {
@@ -160,9 +188,18 @@ function Agency() {
                 <Grid container spacing={2}>
                   {queue.map((row, index) => (
                     <Grid key={index} item xs={12} md={10}>
-                      <Accordion style={{ backgroundColor: "ghostwhite" }}>
+                      <Accordion
+                        style={{
+                          backgroundColor:
+                            hoveredIndex === index ? "#119da4" : "ghostwhite",
+                          transform:
+                            hoveredIndex === index ? "scale(1.01)" : "scale(1)",
+                          transition: "all 0.15s ease",
+                        }}
+                        onMouseEnter={() => setHoveredIndex(index)}
+                        onMouseLeave={() => setHoveredIndex(-1)}
+                      >
                         <AccordionSummary
-                          expandIcon={<ExpandMoreIcon />}
                           aria-controls="panel1a-content"
                           id="panel1a-header"
                         >
@@ -212,51 +249,121 @@ function Agency() {
                               </Button>
                             </div>
                             <div>
-                              <Button
-                                onClick={() => {
-                                  acceptSupply(row);
-                                }}
-                                className="mx-2 px-4"
-                                style={{
-                                  backgroundColor: "#83f28f",
-                                  color: "#00ab41",
-                                  borderRadius: "1em",
-                                  fontWeight: "600",
-                                  fontSize: "large",
-                                }}
+                              <Tooltip
+                                TransitionComponent={Zoom}
+                                title="Accept"
                               >
-                                <HowToRegIcon />
-                              </Button>
-                              <Button
-                                onClick={() => {
-                                  rejectSupply(row);
-                                }}
-                                className="mx-2 px-4"
-                                style={{
-                                  backgroundColor: "#ffe5ec",
-                                  color: "red",
-                                  borderRadius: "1em",
-                                  fontWeight: "600",
-                                  fontSize: "large",
-                                }}
+                                <Button
+                                  onClick={handleClickOpen1}
+                                  className="mx-2 px-4"
+                                  style={{
+                                    backgroundColor: "#83f28f",
+                                    color: "#00ab41",
+                                    borderRadius: "1em",
+                                    fontWeight: "600",
+                                    fontSize: "large",
+                                  }}
+                                >
+                                  <HowToRegIcon />
+                                </Button>
+                              </Tooltip>
+                              <Dialog
+                                open={open1}
+                                onClose={handleClose1}
+                                aria-labelledby="alert-dialog-title"
+                                aria-describedby="alert-dialog-description"
                               >
-                                <NotInterestedIcon />
-                              </Button>
+                                <DialogTitle id="alert-dialog-title">
+                                  Are you sure?
+                                </DialogTitle>
+                                <DialogContent>
+                                  <DialogContentText id="alert-dialog-description">
+                                    Do you really want Accept the request? This
+                                    process cannot be undone.
+                                  </DialogContentText>
+                                </DialogContent>
+                                <DialogActions>
+                                  <Button
+                                    onClick={handleClose1}
+                                    style={{ fontWeight: "bold" }}
+                                    variant="outlined"
+                                    color="info"
+                                  >
+                                    Ignore
+                                  </Button>
+                                  <Button
+                                    autoFocus
+                                    style={{ fontWeight: "bold" }}
+                                    onClick={() => {
+                                      handleClose1();
+                                      acceptSupply(row);
+                                    }}
+                                    variant="contained"
+                                    color="success"
+                                  >
+                                    Accept
+                                  </Button>
+                                </DialogActions>
+                              </Dialog>
+                              <Tooltip
+                                TransitionComponent={Zoom}
+                                title="Reject"
+                              >
+                                <Button
+                                  onClick={handleClickOpen2}
+                                  className="mx-2 px-4"
+                                  style={{
+                                    backgroundColor: "#ffe5ec",
+                                    color: "red",
+                                    borderRadius: "1em",
+                                    fontWeight: "600",
+                                    fontSize: "large",
+                                  }}
+                                >
+                                  <NotInterestedIcon />
+                                </Button>
+                              </Tooltip>
+                              <Dialog
+                                open={open2}
+                                onClose={handleClose2}
+                                aria-labelledby="alert-dialog-title"
+                                aria-describedby="alert-dialog-description"
+                              >
+                                <DialogTitle id="alert-dialog-title">
+                                  Are you sure?
+                                </DialogTitle>
+                                <DialogContent>
+                                  <DialogContentText id="alert-dialog-description">
+                                    Do you really want Deline the request? This
+                                    process cannot be undone.
+                                  </DialogContentText>
+                                </DialogContent>
+                                <DialogActions>
+                                  <Button
+                                    onClick={handleClose2}
+                                    style={{ fontWeight: "bold" }}
+                                    variant="outlined"
+                                    color="info"
+                                  >
+                                    Ignore
+                                  </Button>
+                                  <Button
+                                    autoFocus
+                                    style={{ fontWeight: "bold" }}
+                                    onClick={() => {
+                                      handleClose2();
+                                      rejectSupply(row);
+                                    }}
+                                    variant="contained"
+                                    color="error"
+                                  >
+                                    Decline
+                                  </Button>
+                                </DialogActions>
+                              </Dialog>
                             </div>
                           </Typography>
                         </AccordionSummary>
-                        <AccordionDetails>
-                          <Box
-                            sx={{ flexGrow: 1 }}
-                            style={{
-                              border: "1.5px solid black",
-                              padding: "2em",
-                              borderRadius: "1em",
-                            }}
-                          >
-                            hello
-                          </Box>
-                        </AccordionDetails>
                       </Accordion>
                     </Grid>
                   ))}
