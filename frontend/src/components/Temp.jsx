@@ -14,7 +14,7 @@ export default function Temp() {
           height="140"
           image="https://static1.hdwallpapers.net/wallpapers/2019/02/25/1179/thumb_purple-waves.jpg"
           alt="green iguana"
-        />
+        />  
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             Lizard

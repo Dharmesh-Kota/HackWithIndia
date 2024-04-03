@@ -4,6 +4,8 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../CSS/AboutUs.css";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/auth";
 
 function AboutUS() {
   const theme = createTheme({
@@ -15,6 +17,25 @@ function AboutUS() {
       },
     },
   });
+
+  const { isLoggedIn, setIsLoggedIn, setRole } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (
+      isLoggedIn &&
+      !(
+        window.localStorage.getItem("token") !== null &&
+        window.localStorage.getItem("role") !== null
+      )
+    ) {
+      window.localStorage.removeItem("token");
+      window.localStorage.removeItem("role");
+      setIsLoggedIn(false);
+      setRole("");
+      navigate("/");
+    }
+  }, []);
 
   useEffect(() => {
     AOS.init({

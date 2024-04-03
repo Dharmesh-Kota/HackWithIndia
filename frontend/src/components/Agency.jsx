@@ -278,7 +278,7 @@ function Agency() {
                                 </DialogTitle>
                                 <DialogContent>
                                   <DialogContentText id="alert-dialog-description">
-                                    Do you really want Accept the request? This
+                                    Do you really want Accept this request? This
                                     process cannot be undone.
                                   </DialogContentText>
                                 </DialogContent>

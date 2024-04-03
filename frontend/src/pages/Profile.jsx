@@ -7,6 +7,8 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CircularProgress from "@mui/material/CircularProgress";
+import PlaceIcon from "@mui/icons-material/Place";
+import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 
 import {
   Grid,
@@ -41,7 +43,7 @@ const Profile = () => {
 
   const [isValidPhone, setIsValidPhone] = useState(false);
   const navigate = useNavigate();
-  const { setIsLoggedIn } = useAuth();
+  const { setIsLoggedIn, setRole } = useAuth();
 
   const [justVerify, setJustVerify] = useState(false);
 
@@ -119,6 +121,21 @@ const Profile = () => {
       console.log(err);
     }
   };
+
+  useEffect(() => {
+    if (
+      !(
+        window.localStorage.getItem("token") !== null &&
+        window.localStorage.getItem("role") !== null
+      )
+    ) {
+      window.localStorage.removeItem("token");
+      window.localStorage.removeItem("role");
+      setIsLoggedIn(false);
+      setRole("");
+      navigate("/");
+    }
+  }, []);
 
   useEffect(() => {
     getProfile();
@@ -358,7 +375,9 @@ const Profile = () => {
                       xs={10}
                       style={{ marginTop: "0.4em" }}
                       id="searchBoxContainer"
-                    ></Grid>
+                    >
+                      <PlaceOutlinedIcon /> Location
+                    </Grid>
                     <Grid
                       item
                       xs={10}
