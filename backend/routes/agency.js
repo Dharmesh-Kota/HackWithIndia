@@ -2,11 +2,13 @@ import express from 'express';
 import cors from 'cors';
 import * as controller from '../controller/agency.js';
 import { authenticateAgencyToken } from '../config/authMiddleware.js'
+import dotenv from 'dotenv'
 
 const router = express.Router();
+dotenv.config();
 
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
     allowedHeaders: ['Authorization', 'Content-Type'],
   };
   

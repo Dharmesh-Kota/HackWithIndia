@@ -7,6 +7,9 @@ import { CardActionArea } from "@mui/material";
 import Agency from "../components/Agency";
 import Searchnearby from "../components/Searchnearby";
 import { useAuth } from "../context/auth";
+import dotenv from 'dotenv';
+
+dotenv.config();
 export default function Home() {
   const { isLoggedIn } = useAuth();
   return (

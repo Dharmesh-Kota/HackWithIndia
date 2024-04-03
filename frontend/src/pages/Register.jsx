@@ -25,6 +25,9 @@ import axios from "axios";
 // import '../CSS/Login.css';
 
 import { Select, MenuItem } from "@mui/material";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const defaultTheme = createTheme();
 
@@ -78,7 +81,7 @@ export default function Register() {
     setloading(true);
     if (password === repassword) {
       await axios
-        .post("http://localhost:8000/signup", {
+        .post((process.env.BACKEND_API || "http://localhost:8000") + "/signup", {
           username: username,
           email: email,
           name: name,
