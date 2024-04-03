@@ -6,7 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../CSS/AboutUs.css";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/auth";
-
+import config from '../config.js';
 function AboutUS() {
   const theme = createTheme({
     typography: {

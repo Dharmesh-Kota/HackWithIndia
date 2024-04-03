@@ -25,6 +25,7 @@ import axios from "axios";
 // import '../CSS/Login.css';
 
 import { Select, MenuItem } from "@mui/material";
+import config from '../config.js';
 
 const defaultTheme = createTheme();
 
@@ -78,7 +79,7 @@ export default function Register() {
     setloading(true);
     if (password === repassword) {
       await axios
-        .post("http://localhost:8000/signup", {
+        .post((config.BACKEND_API || "http://localhost:8000") + "/signup", {
           username: username,
           email: email,
           name: name,

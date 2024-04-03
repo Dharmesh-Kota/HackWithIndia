@@ -27,6 +27,7 @@ import Alert from "@mui/material/Alert";
 
 import { useAuth } from "../context/auth";
 import axios from "axios";
+import config from '../config.js';
 
 const defaultTheme = createTheme();
 
@@ -71,7 +72,7 @@ export default function Login() {
     }
     setloading(true);
     await axios
-      .post("http://localhost:8000/create-session", {
+      .post((config.BACKEND_API || "http://localhost:8000") + "/create-session", {
         emailUsername: emailUsername,
         password: password,
       })

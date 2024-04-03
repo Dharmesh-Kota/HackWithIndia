@@ -21,6 +21,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import TextField from "@mui/material/TextField";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import config from '../config.js';
 
 const Rewards = () => {
   const [rewards, setRewards] = useState([
@@ -61,7 +62,7 @@ const Rewards = () => {
 
   const getRewards = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/agency/rewards", {
+      const response = await axios.get((config.BACKEND_API || "http://localhost:8000") + "/agency/rewards", {
         headers,
       });
       setRewards(response.data.rewards);
@@ -82,9 +83,7 @@ const Rewards = () => {
 
     setVisibleBtn(false);
     try {
-      const response = await axios.post(
-        "http://localhost:8000/agency/add-reward",
-        {
+      const response = await axios.post((config.BACKEND_API || "http://localhost:8000") + '/agency/add-reward', {
           name: rewardName,
           point: rewardPoint,
         },

@@ -27,6 +27,7 @@ import "aos/dist/aos.css";
 import axios from "axios";
 
 import { useAuth } from "../context/auth";
+import config from '../config.js';
 
 const Profile = () => {
   const imageURL =
@@ -80,7 +81,7 @@ const Profile = () => {
     };
     try {
       const results = await axios.post(
-        "http://localhost:8000/update-profile",
+        (config.BACKEND_API || "http://localhost:8000") + "/update-profile",
         {
           name,
           username: userName,
@@ -105,7 +106,7 @@ const Profile = () => {
     };
 
     try {
-      const result = await axios.get("http://localhost:8000/profile", {
+      const result = await axios.get((config.BACKEND_API || "http://localhost:8000") + "/profile", {
         headers,
       });
       const { user } = result.data;
@@ -155,9 +156,8 @@ const Profile = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${window.localStorage.getItem("token")}`,
         };
-        const response = await fetch("http://localhost:8000/getTomTomApiKey", {
-          headers,
-        });
+
+        const response = await fetch((config.BACKEND_API || "http://localhost:8000") + '/getTomTomApiKey', { headers });
         const data = await response.json();
         setApiKey(data.apiKey.trim());
       } catch (error) {
