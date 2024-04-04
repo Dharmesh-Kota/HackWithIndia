@@ -19,6 +19,7 @@ router.post('/confirm-supplies', authenticateAgencyToken, controller.cofirm_supp
 router.post('/reject-supplies', authenticateAgencyToken, controller.reject_supplies);
 router.get('/history', authenticateAgencyToken, controller.history);
 router.post('/add-reward', authenticateAgencyToken, controller.add_reward);
+router.post('/delete-reward', authenticateAgencyToken, controller.delete_reward);
 router.get('/rewards', authenticateAgencyToken, controller.rewards);
 
 export default router;
