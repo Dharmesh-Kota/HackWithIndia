@@ -15,12 +15,12 @@ import InputAdornment from "@mui/material/InputAdornment";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import FormHelperText from "@mui/material/FormHelperText";
 import Button from "@mui/material/Button";
-import config from '../config.js';
+import config from "../config.js";
 
 function Searchnearby() {
   const [type, setType] = useState("");
   const [openModal, setOpenModal] = useState(false);
-  const [dataList, setDataList] = useState([]);
+  const [dataList, setDataList] = useState(null);
   const [amount, setAmount] = useState(0);
   const [username, setUsername] = useState("");
 
@@ -37,12 +37,18 @@ function Searchnearby() {
       Authorization: `Bearer ${window.localStorage.getItem("token")}`,
     };
 
-    const data = await axios
-      .get(`${(config.BACKEND_API || "http://localhost:8000")}/donor/nearby-agency/${e.target.value}`, {
-        headers,
-      })
+    await axios
+      .get(
+        `${config.BACKEND_API || "http://localhost:8000"}/donor/nearby-agency/${
+          e.target.value
+        }`,
+        {
+          headers,
+        }
+      )
       .then((res) => {
-        console.log(res);
+        console.log(res.data.nearbyAgency);
+        setDataList(res.data.nearbyAgency);
       })
       .catch((err) => {
         if (err.response.status === 422) {
@@ -54,8 +60,6 @@ function Searchnearby() {
         console.log(err);
         // console.log("Error Occured");
       });
-
-    setDataList(data);
   }
 
   function changeAmount(e) {
@@ -89,7 +93,12 @@ function Searchnearby() {
       };
 
       await axios
-        .post((config.BACKEND_API || "http://localhost:8000") + "/donor/donate-supplies", data, { headers })
+        .post(
+          (config.BACKEND_API || "http://localhost:8000") +
+            "/donor/donate-supplies",
+          data,
+          { headers }
+        )
         .then((res) => {
           // alert user that the transaction initallized successfully
           // redirect to home page or history page
@@ -115,6 +124,13 @@ function Searchnearby() {
     pt: 2,
     px: 4,
     pb: 3,
+  };
+
+  const disStyle = {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    margin: "1rem",
   };
 
   return (
@@ -171,12 +187,12 @@ function Searchnearby() {
       </Box>
 
       <div style={{ marginTop: "1rem" }}>
-        <Card
+        {/* <Card
           sx={{ maxWidth: "full" }}
           style={{ marginTop: "1rem" }}
           onClick={() => handleOpenModal("demoagency", "ngo")}
         >
-          <CardActionArea>
+          <CardActionArea style={{ position: "relative" }}>
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
                 {`Hello  (+91 1111111111)`}
@@ -185,8 +201,18 @@ function Searchnearby() {
                 Demo Agency Address
               </Typography>
             </CardContent>
+            <div style={disStyle}>
+              <Typography variant="h6">{"15 km away"}</Typography>
+              <Typography variant="h6" color="text.secondary">
+                {"25 min"}
+              </Typography>
+            </div>
           </CardActionArea>
-        </Card>
+        </Card> */}
+
+        {dataList && dataList.length === 0 && (
+          <p>There are no Agencies / NGOs.</p>
+        )}
 
         {dataList &&
           dataList.map((card) => {
@@ -195,6 +221,7 @@ function Searchnearby() {
                 sx={{ maxWidth: "full" }}
                 style={{ marginTop: "1rem" }}
                 onClick={() => handleOpenModal(card.username, card.role)}
+                key={card._id}
               >
                 <CardActionArea>
                   <CardContent>
@@ -205,6 +232,13 @@ function Searchnearby() {
                       {card.address}
                     </Typography>
                   </CardContent>
+
+                  <div style={disStyle}>
+                    <Typography variant="h6">{`${card.distance} km away`}</Typography>
+                    <Typography variant="h6" color="text.secondary">
+                      {`${card.travelTime} min`}
+                    </Typography>
+                  </div>
                 </CardActionArea>
               </Card>
             );
