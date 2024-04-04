@@ -14,7 +14,7 @@ function Title() {
       fontFamily: "Quicksand",
       body1: {
         fontWeight: "600",
-        fontSize: "large",
+        fontSize: "small",
       },
     },
   });

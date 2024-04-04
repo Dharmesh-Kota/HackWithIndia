@@ -44,7 +44,7 @@ const Profile = () => {
 
   const [isValidPhone, setIsValidPhone] = useState(false);
   const navigate = useNavigate();
-  const { setIsLoggedIn, setRole } = useAuth();
+  const { setIsLoggedIn, setRole, LogOut } = useAuth();
 
   const [justVerify, setJustVerify] = useState(false);
 
@@ -52,12 +52,6 @@ const Profile = () => {
     const value = input.replace(/\D/g, "");
     const isvalid = /^\d{10}$/.test(value);
     setIsValidPhone(isvalid);
-  };
-
-  const LogOut = () => {
-    setIsLoggedIn(false);
-    window.localStorage.removeItem("token");
-    navigate("/");
   };
 
   const theme = createTheme({
@@ -94,6 +88,9 @@ const Profile = () => {
         { headers }
       );
     } catch (err) {
+      if (err.response.status === 403) {
+        LogOut();
+      }
       console.log(err);
     }
     setLoading(false);
@@ -122,6 +119,9 @@ const Profile = () => {
       setLocation(user.location);
       validatePhoneNumber(user.contact);
     } catch (err) {
+      if (err.response.status === 403) {
+        LogOut();
+      }
       console.log(err);
     }
   };
@@ -401,7 +401,6 @@ const Profile = () => {
                         onChange={(e) => {
                           setLocation(e.target.value);
                         }}
-                        style={{ visibility: "hidden" }}
                         error={justVerify && location === ""}
                         helperText={
                           justVerify &&

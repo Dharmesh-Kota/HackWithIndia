@@ -27,7 +27,7 @@ import Alert from "@mui/material/Alert";
 
 import { useAuth } from "../context/auth";
 import axios from "axios";
-import config from '../config.js';
+import config from "../config.js";
 
 const defaultTheme = createTheme();
 
@@ -40,7 +40,7 @@ export default function Login() {
   //   const [email, setEmail] = useState("");
   //   const [password, setPassword] = useState("");
   const [validPassword, setValidPassword] = useState(false);
-  const { setIsLoggedIn, setRole } = useAuth();
+  const { setIsLoggedIn, setRole, LogOut } = useAuth();
 
   const [isAlert, setIsAlert] = useState(false);
   // const navigate = useNavigate();
@@ -72,10 +72,13 @@ export default function Login() {
     }
     setloading(true);
     await axios
-      .post((config.BACKEND_API || "http://localhost:8000") + "/create-session", {
-        emailUsername: emailUsername,
-        password: password,
-      })
+      .post(
+        (config.BACKEND_API || "http://localhost:8000") + "/create-session",
+        {
+          emailUsername: emailUsername,
+          password: password,
+        }
+      )
       .then((response) => {
         const { token, role } = response.data;
         localStorage.setItem("token", JSON.stringify(token));
@@ -86,6 +89,9 @@ export default function Login() {
       })
       .catch((error) => {
         setIsAlert(true);
+        if (error.response.status === 403) {
+          LogOut();
+        }
         if (error.response.status === 401) {
           // setEmailUsername("");
           // setPassword("");

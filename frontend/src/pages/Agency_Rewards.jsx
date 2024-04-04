@@ -22,19 +22,36 @@ import TextField from "@mui/material/TextField";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import config from "../config.js";
+import { useAuth } from "../context/auth.jsx";
+import DeleteIcon from "@mui/icons-material/Delete";
+
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const Rewards = () => {
   const [rewards, setRewards] = useState([]);
 
   const [rewardName, setRewardName] = useState("");
   const [rewardPoint, setRewardPoint] = useState("");
-
   const [hoveredIndex, setHoveredIndex] = useState(-1);
   const [hovered, setHovered] = useState(false);
   const [visibleBtn, setVisibleBtn] = useState(false);
   const [justVerify, setJustVerify] = useState(false);
 
   const navigate = useNavigate();
+  const { setIsLoggedIn, setRole, LogOut } = useAuth();
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const headers = {
     "Content-Type": "application/json",
@@ -62,8 +79,10 @@ const Rewards = () => {
         }
       );
       setRewards(response.data.rewards.reward);
-    //   console.log(response.data);
     } catch (err) {
+      // if (err.response.status === 403) {
+      //   LogOut();
+      // }
       console.log("Error -> ", err);
     }
   };
@@ -71,6 +90,27 @@ const Rewards = () => {
   useEffect(() => {
     getRewards();
   }, []);
+
+  const deleteReward = async (row) => {
+    try {
+      const results = await axios.post(
+        (config.BACKEND_API || "http://localhost:8000") +
+          "/agency/delete-reward",
+        {
+          name: row.name,
+          point: row.point,
+        },
+        {
+          headers: headers,
+        }
+      );
+    } catch (err) {
+      if (err.response.status === 403) {
+        LogOut();
+      }
+      console.log(err);
+    }
+  };
 
   const addRewardHandler = async () => {
     if (rewardName === "" || rewardPoint === "") {
@@ -95,6 +135,9 @@ const Rewards = () => {
       // Assuming you want to refresh the rewards list after adding a reward
       getRewards();
     } catch (err) {
+      if (err.response.status === 403) {
+        LogOut();
+      }
       console.log("Error -> ", err);
     }
   };
@@ -196,6 +239,59 @@ const Rewards = () => {
                           >
                             Points : {row.point}
                           </Button>
+                          <Tooltip TransitionComponent={Zoom} title="Delete">
+                            <Button
+                              onClick={handleClickOpen}
+                              className="mx-2 px-4"
+                              style={{
+                                backgroundColor: "#ffe5ec",
+                                color: "red",
+                                borderRadius: "1em",
+                                fontWeight: "600",
+                                fontSize: "large",
+                              }}
+                            >
+                              <DeleteIcon />
+                            </Button>
+                          </Tooltip>
+                          <Dialog
+                            open={open}
+                            onClose={handleClose}
+                            aria-labelledby="alert-dialog-title"
+                            aria-describedby="alert-dialog-description"
+                          >
+                            <DialogTitle id="alert-dialog-title">
+                              Are you sure?
+                            </DialogTitle>
+                            <DialogContent>
+                              <DialogContentText id="alert-dialog-description">
+                                Do you really want Delete this Reward? This
+                                process cannot be undone.
+                              </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                              <Button
+                                onClick={handleClose}
+                                style={{ fontWeight: "bold" }}
+                                variant="outlined"
+                                color="info"
+                              >
+                                Ignore
+                              </Button>
+                              <Button
+                                autoFocus
+                                style={{ fontWeight: "bold" }}
+                                onClick={() => {
+                                  handleClose();
+                                  deleteReward(row);
+                                }}
+                                variant="contained"
+                                color="error"
+                              >
+                                Delete
+                              </Button>
+                            </DialogActions>
+                          </Dialog>
                         </Typography>
                       </AccordionSummary>
                     </Accordion>
