@@ -11,6 +11,8 @@ import Agency from "../components/Agency";
 import Ngo from "../components/Ngo.jsx";
 import Searchnearby from "../components/Searchnearby";
 import { useAuth } from "../context/auth";
+import Title from "../components/Title.jsx";
+import ExtraInfo from "../components/ExtraInfo.jsx";
 import Temp from "../components/Temp";
 import config from "../config.js";
 
@@ -35,6 +37,7 @@ export default function Home() {
 
   return (
     <>
+      <Title />
       {isLoggedIn ? (
         <>
           {window.localStorage.getItem("role") === '"compostAgency"' && (
@@ -48,11 +51,9 @@ export default function Home() {
       ) : (
         <>
           <Temp />
-          <Temp />
-          <Temp />
-          <Temp />
         </>
       )}
+      <ExtraInfo />
     </>
   );
 }
