@@ -43,7 +43,7 @@ export const cofirm_supplies = async (req, res) => {
 }
 
 // Reject the supplies request sent by a user
-export const reject_reward = async (req, res) => {
+export const reject_supplies = async (req, res) => {
     try {
         await Transaction.findOneAndUpdate(
             { sender: req.body.sender, receiver: req.user.username, quantity: req.body.quantity },
