@@ -1,7 +1,7 @@
 const config = {
-    BACKEND_API: null
+    BACKEND_API: 'https://compostify-api.vercel.app'
   };
   
 export default config;
-// https://compostify-api.vercel.app
+
   
