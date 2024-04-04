@@ -401,7 +401,6 @@ const Profile = () => {
                         onChange={(e) => {
                           setLocation(e.target.value);
                         }}
-                        style={{ visibility: "hidden" }}
                         error={justVerify && location === ""}
                         helperText={
                           justVerify &&
