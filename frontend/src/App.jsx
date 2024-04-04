@@ -24,6 +24,7 @@ function App() {
         <Route exact path="/store" element={<Store />} />
         <Route exact path="/history" element={<History />} />
         <Route exact path="/reward" element={<Rewards />} />
+        <Route exact path="/history" element={<History />} />
       </Routes>
       <Footer />
     </>
