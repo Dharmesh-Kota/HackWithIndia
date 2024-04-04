@@ -5,7 +5,8 @@ import History from "../models/history.js";
 import Transaction from "../models/transaction.js";
 import { redeemReward } from "../mailer/rewardRedeem.js";
 import { suppliesRequest } from "../mailer/suppliesRequest.js";
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
+import axios from 'axios';
 dotenv.config();
 
 // Controller to provide the list of all nearby composting agencies to the user
@@ -13,7 +14,7 @@ export const nearby_agency = async (req, res) => {
     try {
         const role = req.params.role;
 
-        let users = await User.find({ role: role }, {name: 1, username: 1, role: 1});
+        let users = await User.find({ role: role }, {name: 1, username: 1, role: 1, location: 1});
         let nearbyAgency = [];
     
         let location = await User.findById(req.user.id);
@@ -28,6 +29,11 @@ export const nearby_agency = async (req, res) => {
             const apiKey = process.env.apiKey;
 
             const startCoordinates = location;
+            const endCoordinates = user.location;
+            console.log(startCoordinates, '&', endCoordinates);
+            if (!endCoordinates) {
+                continue;
+            }
             const traffic = true;
 
             const tomtomApiEndpoint = 'https://api.tomtom.com/routing/1/calculateRoute/';
