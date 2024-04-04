@@ -89,9 +89,9 @@ export default function Login() {
       })
       .catch((error) => {
         setIsAlert(true);
-        if (error.response.status === 403) {
-          LogOut();
-        }
+        // if (error.response.status === 403) {
+        //   LogOut();
+        // }
         if (error.response.status === 401) {
           // setEmailUsername("");
           // setPassword("");

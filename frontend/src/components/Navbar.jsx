@@ -51,7 +51,7 @@ function Navbar() {
             fontFamily: "Quicksand",
           }}
         >
-          <i class="fa-solid fa-seedling"></i> Compostify
+          <i className="fa-solid fa-seedling"></i> Compostify
         </Link>
         <button
           className="navbar-toggler"

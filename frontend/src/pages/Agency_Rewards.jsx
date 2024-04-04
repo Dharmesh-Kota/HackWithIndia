@@ -104,10 +104,11 @@ const Rewards = () => {
           headers: headers,
         }
       );
+      getRewards();
     } catch (err) {
-      if (err.response.status === 403) {
-        LogOut();
-      }
+      // if (err.results.status === 403) {
+      //   LogOut();
+      // }
       console.log(err);
     }
   };
@@ -135,9 +136,9 @@ const Rewards = () => {
       // Assuming you want to refresh the rewards list after adding a reward
       getRewards();
     } catch (err) {
-      if (err.response.status === 403) {
-        LogOut();
-      }
+      // if (err.response.status === 403) {
+      //   LogOut();
+      // }
       console.log("Error -> ", err);
     }
   };
