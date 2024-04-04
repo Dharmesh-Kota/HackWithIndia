@@ -8,7 +8,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 function Title() {
-  const ImgURL = "./image/earth.jpg";
+  const ImgURL = "https://i.pinimg.com/564x/d1/a8/e5/d1a8e5b53acc375d139bc839ca5062f0.jpg";
   const theme = createTheme({
     typography: {
       fontFamily: "Quicksand",
@@ -33,10 +33,10 @@ function Title() {
       className="my-title"
       style={{
         background: "linear-gradient(to bottom, rgba(255, 255, 255), #00b4d8)",
-        borderBottomLeftRadius: ["0em", "16em", "32em"],
-        borderBottomRightRadius: ["0em", "16em", "32em"],
+        borderBottomLeftRadius: ["0em", "12em", "28em"],
+        borderBottomRightRadius: ["0em", "12em", "28em"],
         height: "auto",
-        minHeight: "86vh",
+        minHeight: "76vh",
         overflow: "hidden",
         paddingBottom: ["4em", "8em", "16em"],
       }}
@@ -48,21 +48,18 @@ function Title() {
               <Typography
                 data-aos="fade-left"
                 variant="h2"
-                sx={{ textAlign: "center", fontWeight: "500" }}
+                sx={{ textAlign: "center", fontWeight: "600", fontSize:"67px",marginTop:"30px",  }}
               >
-                Welcome,
+                Compostify
               </Typography>
               <Typography
-                className="mt-2"
+                className="mt-4"
                 data-aos="fade-left"
                 variant="body1"
                 component="div"
-                sx={{ width: "100%", textAlign: "center" }}
+                sx={{ width: "100%", textAlign: "center",fontSize:"23px" }}
               >
-                Revolutionize your travel experience with our train travel
-                website, offering seamless booking, real-time updates, and
-                curated itineraries. Explore the world by rail, where every
-                journey is a story waiting to be written.
+                Where leftovers become opportunities and sustainability thrives through innovation
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -84,7 +81,8 @@ function Title() {
                   image={ImgURL}
                   style={{
                     maxWidth: "100%",
-                    height: "auto",
+                    height: "100%",
+                    objectFit: "cover",
                     borderBottomLeftRadius: "25%",
                     borderTopRightRadius: "25%",
                   }}

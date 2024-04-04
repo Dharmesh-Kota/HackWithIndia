@@ -71,9 +71,10 @@ function ExtraInfo() {
               display: "flex",
               justifyContent: "center",
               fontWeight: "bold",
-              fontSize: "xxx-large",
+              fontSize: "xx-large",
               textDecoration: "none",
-              textShadow: "3px 3px 0px #2dc7ff"
+              fontFamily:"Quicksand"
+              // textShadow: "3px 3px 0px #2dc7ff"
 
             }}
           >
@@ -98,7 +99,7 @@ function ExtraInfo() {
               <Card
                 data-aos="fade-right"
                 elevation={0}
-                style={{ width: "65%" }}
+                style={{ width: "100%" }}
               >
                 <CardMedia component="img" alt="green iguana" image={Gif22} />
               </Card>
@@ -156,7 +157,7 @@ function ExtraInfo() {
               lg={4}
               style={{ display: "flex", justifyContent: "center" }}
             >
-              <Card data-aos="fade-left" elevation={0} style={{ width: "65%" }}>
+              <Card data-aos="fade-left" elevation={0} style={{ width: "88%" }}>
                 <CardMedia component="img" alt="green iguana" image={Gif23} />
               </Card>
             </Grid>
@@ -214,7 +215,7 @@ function ExtraInfo() {
               <Card
                 data-aos="fade-right"
                 elevation={0}
-                style={{ width: "65%" }}
+                style={{ width: "80%"}}
               >
                 <CardMedia component="img" alt="green iguana" image={Gif20} />
               </Card>
@@ -271,7 +272,7 @@ function ExtraInfo() {
               lg={4}
               style={{ display: "flex", justifyContent: "center" }}
             >
-              <Card data-aos="fade-left" elevation={0} style={{ width: "65%" }}>
+              <Card data-aos="fade-left" elevation={0} style={{ width: "83%" }}>
                 <CardMedia component="img" alt="green iguana" image={Gif24} />
               </Card>
             </Grid>
@@ -317,7 +318,7 @@ function ExtraInfo() {
           spacing={2}
           justifyContent="center"
           className="mt-5"
-          style={{ marginBottom: "3em", marginTop: "3em" }}
+          style={{ marginBottom: "0em", marginTop: "3em" }}
         >
           <Grid
             item
@@ -328,9 +329,10 @@ function ExtraInfo() {
               display: "flex",
               justifyContent: "center",
               fontWeight: "bold",
-              fontSize: "xxx-large",
+              fontSize: "xx-large",
               textDecoration: "none",
-              textShadow: "3px 3px 0px #2dc7ff"
+              fontFamily:"Quicksand",
+              marginTop:"20px"
             }}
           >
             What We Do
@@ -341,7 +343,7 @@ function ExtraInfo() {
             container
             spacing={2}
             justifyContent="center"
-            className="mt-5"
+            className="mt-1"
             style={{ marginBottom: "3em" }}
           >
             <Grid
@@ -354,7 +356,7 @@ function ExtraInfo() {
               <Card
                 data-aos="fade-right"
                 elevation={0}
-                style={{ width: "35%" }}
+                style={{ width: "45%" }}
               >
                 <CardMedia component="img" alt="green iguana" image={Gifuser} />
               </Card>
