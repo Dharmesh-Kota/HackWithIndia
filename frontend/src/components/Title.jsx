@@ -1,33 +1,14 @@
 import React, { useEffect } from "react";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-
-// import homeTrain from '../images/homeTrain.jpg'
-// import traingif from "../images/train.gif";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
-import {
-  Container,
-  Grid,
-  Typography,
-  TextField,
-  Button,
-  FormControlLabel,
-  RadioGroup,
-  Radio,
-  FormLabel,
-  Select,
-  MenuItem,
-} from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
 import "../CSS/Title.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
 function Title() {
-  const ImgURL =
-    "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+  const ImgURL = "./image/earth.jpg";
   const theme = createTheme({
     typography: {
       fontFamily: "Quicksand",
@@ -45,6 +26,7 @@ function Title() {
       once: true,
     });
   }, []);
+
   return (
     <div
       data-aos="fade-up"
@@ -61,12 +43,7 @@ function Title() {
     >
       <ThemeProvider theme={theme}>
         <Container sx={{ p: [4, 6, 9] }}>
-          <Grid
-            container
-            justifyContent="center"
-            alignItems="center"
-            spacing={3}
-          >
+          <Grid container justifyContent="center" alignItems="center" spacing={3}>
             <Grid item xs={12} md={6} mb={4} className="mt-5">
               <Typography
                 data-aos="fade-left"
@@ -101,7 +78,6 @@ function Title() {
               >
                 <CardMedia
                   data-aos="zoom-in-up"
-                  className="trainImg"
                   component="img"
                   alt="profile"
                   height="100"

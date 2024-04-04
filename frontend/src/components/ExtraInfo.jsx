@@ -21,13 +21,17 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 function ExtraInfo() {
   const Gif22 =
-    "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8NXx8fGVufDB8fHx8fA%3D%3D";
+    "./image/garbage.jpg";
   const Gif23 =
-    "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8NXx8fGVufDB8fHx8fA%3D%3D";
+    "./image/compost.jpg";
   const Gif24 =
-    "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8NXx8fGVufDB8fHx8fA%3D%3D";
+    "./image/veg.jpg";
   const Gif20 =
-    "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8NXx8fGVufDB8fHx8fA%3D%3D";
+    "./image/ngo.jpg";
+  const Gifuser = "./GIF/user.gif";
+  const Gifbot = "./GIF/chat-bot.gif";
+  const Gifpoint = "./GIF/points.gif";
+  const Giflocation = "./GIF/location.gif";
 
   const theme = createTheme({
     typography: {
@@ -38,6 +42,8 @@ function ExtraInfo() {
       },
     },
   });
+
+  const yourList = ['Item 1', 'Item 2', 'Item 3'];
 
   useEffect(() => {
     AOS.init({
@@ -53,8 +59,8 @@ function ExtraInfo() {
           container
           spacing={2}
           justifyContent="center"
-          className="mt-5"
-          style={{ marginBottom: "3em", marginTop: "3em" }}
+          className="mt-3"
+          style={{ marginBottom: "1em", marginTop: "1em" }}
         >
           <Grid
             item
@@ -65,11 +71,13 @@ function ExtraInfo() {
               display: "flex",
               justifyContent: "center",
               fontWeight: "bold",
-              fontSize: "xx-large",
-              textDecoration: "underline",
+              fontSize: "xxx-large",
+              textDecoration: "none",
+              textShadow: "3px 3px 0px #2dc7ff"
+
             }}
           >
-            Our Expertise
+            What Happens When...
           </Grid>
         </Grid>
         <Grid container spacing={2} justifyContent="center">
@@ -110,16 +118,22 @@ function ExtraInfo() {
                 }}
               >
                 <Typography
-                  variant="h4"
+                  variant="h5"
                   gutterBottom
                   style={{ fontWeight: "bold", textAlign: "center" }}
                 >
-                  User-Friendly Interface
+                   you throw away leftovers and rotten food ?
                 </Typography>
-                <List>
+                <List >
                   <ListItem disablePadding>
                     <ListItemButton>
-                      <ListItemText primary="Our app boasts an incredibly intuitive and user-friendly interface, ensuring that the process of searching, selecting, and booking train tickets is a breeze. With a clean and organized design, users can navigate effortlessly, making their booking experience enjoyable and efficient." />
+                      <ListItemText primary={
+                        <ul>
+                          <li>Resource waste</li>
+                          <li>Biodiversity loss</li>
+                          <li>Increase in global warming from gases released by decomposing food</li>
+                        </ul>
+                      } />
                     </ListItemButton>
                   </ListItem>
                 </List>
@@ -161,16 +175,22 @@ function ExtraInfo() {
                 }}
               >
                 <Typography
-                  variant="h4"
+                  variant="h5"
                   gutterBottom
                   style={{ fontWeight: "bold", textAlign: "center" }}
                 >
-                  Extensive Train Options
+                  you use rotten food for composting and renewable energy ?
                 </Typography>
                 <List>
                   <ListItem disablePadding>
                     <ListItemButton>
-                      <ListItemText primary="Gain access to an extensive database of train schedules and routes, providing users with a comprehensive list of options. Our app's advanced filtering and sorting features empower users to quickly find the most suitable trains based on their preferences, ensuring a tailored and convenient booking experience." />
+                      <ListItemText primary={
+                        <ul>
+                          <li> Nutrient recycling</li>
+                          <li>Soil enrichment</li>
+                          <li> Biogas production</li>
+                        </ul>
+                      } />
                     </ListItemButton>
                   </ListItem>
                 </List>
@@ -214,16 +234,22 @@ function ExtraInfo() {
                 }}
               >
                 <Typography
-                  variant="h4"
+                  variant="h5"
                   gutterBottom
                   style={{ fontWeight: "bold", textAlign: "center" }}
                 >
-                  Real-Time Availability
+                 you give leftover foods to NGOs ?
                 </Typography>
                 <List>
                   <ListItem disablePadding>
                     <ListItemButton>
-                      <ListItemText primary="Stay informed with real-time updates on seat availability and ticket status. Receive instant confirmation for booked tickets, eliminating any uncertainty and allowing users to plan their journeys with confidence." />
+                      <ListItemText primary={
+                        <ul>
+                          <li>Hunger relief</li>
+                          <li>Food redistribution</li>
+                          <li>Social impact</li>
+                        </ul>
+                      } />
                     </ListItemButton>
                   </ListItem>
                 </List>
@@ -264,22 +290,247 @@ function ExtraInfo() {
                 }}
               >
                 <Typography
-                  variant="h4"
+                  variant="h5"
                   gutterBottom
                   style={{ fontWeight: "bold", textAlign: "center" }}
                 >
-                  Personalized User Accounts
+                  you use Compostify ?
+
                 </Typography>
                 <List>
                   <ListItem disablePadding>
                     <ListItemButton>
-                      <ListItemText primary="Enjoy the benefits of a personalized user account, allowing for quick and efficient bookings. Save preferences, access booking history, and tailor the app to individual needs, providing a seamless and personalized experience for every user." />
+                      <ListItemText primary={
+                        <ul>
+                          <li>Help Other people</li>
+                          <li>Help Mother Earth</li>
+                          <li>Help your self by getting points from Composting Agencies</li>
+                        </ul>
+                      }/>
                     </ListItemButton>
                   </ListItem>
                 </List>
               </Container>
             </Grid>
+            <Grid
+          container
+          spacing={2}
+          justifyContent="center"
+          className="mt-5"
+          style={{ marginBottom: "3em", marginTop: "3em" }}
+        >
+          <Grid
+            item
+            xs={12}
+            md={6}
+            lg={4}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              fontWeight: "bold",
+              fontSize: "xxx-large",
+              textDecoration: "none",
+              textShadow: "3px 3px 0px #2dc7ff"
+            }}
+          >
+            What We Do
           </Grid>
+        </Grid>
+          </Grid>
+          <Grid
+            container
+            spacing={2}
+            justifyContent="center"
+            className="mt-5"
+            style={{ marginBottom: "3em" }}
+          >
+            <Grid
+              item
+              xs={12}
+              md={6}
+              lg={4}
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <Card
+                data-aos="fade-right"
+                elevation={0}
+                style={{ width: "35%" }}
+              >
+                <CardMedia component="img" alt="green iguana" image={Gifuser} />
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={6} lg={5}>
+              <Container
+                data-aos="fade-left"
+                maxWidth="sm"
+                style={{
+                  backgroundColor: "#dfffff",
+                  margin: "auto",
+                  border: "2px solid white",
+                  padding: "2em",
+                  paddingTop: "2em",
+                  paddingBottom: "2em",
+                  borderRadius: "1em",
+                }}
+              >
+                <Typography
+                  variant="h5"
+                  gutterBottom
+                  style={{ fontWeight: "bold", textAlign: "center" }}
+                >
+                  Connect Users to Composting Agencies and NGOs
+                </Typography>
+                
+              </Container>
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            spacing={2}
+            justifyContent="center"
+            className="mt-5"
+            flexDirection="row-reverse"
+            style={{ marginBottom: "3em" }}
+          >
+            <Grid
+              item
+              xs={12}
+              md={6}
+              lg={4}
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <Card
+                data-aos="fade-right"
+                elevation={0}
+                style={{ width: "35%" }}
+              >
+                <CardMedia component="img" alt="green iguana" image={Giflocation} />
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={6} lg={5}>
+              <Container
+                data-aos="fade-left"
+                maxWidth="sm"
+                style={{
+                  backgroundColor: "#dfffff",
+                  margin: "auto",
+                  border: "2px solid white",
+                  padding: "2em",
+                  paddingTop: "2em",
+                  paddingBottom: "2em",
+                  borderRadius: "1em",
+                }}
+              >
+                <Typography
+                  variant="h5"
+                  gutterBottom
+                  style={{ fontWeight: "bold", textAlign: "center" }}
+                >
+                  Provide Users with ease in finding nearby NGOs and Composting Agencies using GPS
+
+                </Typography>
+                
+              </Container>
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            spacing={2}
+            justifyContent="center"
+            className="mt-5"
+            style={{ marginBottom: "3em" }}
+          >
+            <Grid
+              item
+              xs={12}
+              md={6}
+              lg={4}
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <Card
+                data-aos="fade-right"
+                elevation={0}
+                style={{ width: "35%" }}
+              >
+                <CardMedia component="img" alt="green iguana" image={Gifbot} />
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={6} lg={5}>
+              <Container
+                data-aos="fade-left"
+                maxWidth="sm"
+                style={{
+                  backgroundColor: "#dfffff",
+                  margin: "auto",
+                  border: "2px solid white",
+                  padding: "2em",
+                  paddingTop: "2em",
+                  paddingBottom: "2em",
+                  borderRadius: "1em",
+                }}
+              >
+                <Typography
+                  variant="h5"
+                  gutterBottom
+                  style={{ fontWeight: "bold", textAlign: "center" }}
+                >
+                   Offer Users the ability to find answers about composting through a ChatBot
+
+                </Typography>
+                
+              </Container>
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            spacing={2}
+            justifyContent="center"
+            className="mt-5"
+            flexDirection="row-reverse"
+            style={{ marginBottom: "3em" }}
+          >
+            <Grid
+              item
+              xs={12}
+              md={6}
+              lg={4}
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <Card
+                data-aos="fade-right"
+                elevation={0}
+                style={{ width: "35%" }}
+              >
+                <CardMedia component="img" alt="green iguana" image={Gifpoint} />
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={6} lg={5}>
+              <Container
+                data-aos="fade-left"
+                maxWidth="sm"
+                style={{
+                  backgroundColor: "#dfffff",
+                  margin: "auto",
+                  border: "2px solid white",
+                  padding: "2em",
+                  paddingTop: "2em",
+                  paddingBottom: "2em",
+                  borderRadius: "1em",
+                }}
+              >
+                <Typography
+                  variant="h5"
+                  gutterBottom
+                  style={{ fontWeight: "bold", textAlign: "center" }}
+                >
+                  Reward Users with points for donating rotten foods to Composting Agencies
+                </Typography>
+                
+              </Container>
+            </Grid>
+          </Grid>
+          
+
         </Grid>
       </Box>
     </ThemeProvider>

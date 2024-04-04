@@ -50,7 +50,7 @@ export default function Home() {
         </>
       ) : (
         <>
-          <Temp />
+          {/* <Temp /> */}
         </>
       )}
       <ExtraInfo />
