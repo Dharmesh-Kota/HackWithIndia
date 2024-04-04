@@ -82,7 +82,7 @@ export const rewards = async (req, res) => {
     }
 }
 
-// Add a reward for the composite agency
+// Add a reward for the composite agency.
 export const add_reward = async (req, res) => {
     try {
         // console.log(req.body);

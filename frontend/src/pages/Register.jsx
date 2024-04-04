@@ -25,7 +25,8 @@ import axios from "axios";
 // import '../CSS/Login.css';
 
 import { Select, MenuItem } from "@mui/material";
-import config from '../config.js';
+import config from "../config.js";
+import { useAuth } from "../context/auth.jsx";
 
 const defaultTheme = createTheme();
 
@@ -60,6 +61,7 @@ export default function Register() {
   const [role, setRole] = useState("");
 
   const navigate = useNavigate();
+  const { LogOut } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -93,13 +95,10 @@ export default function Register() {
         })
         .catch((error) => {
           setIsAlert(true);
+          if (error.response.status === 403) {
+            LogOut();
+          }
           if (error.response.status === 409) {
-            // setUsername("");
-            // setEmail("");
-            // setName("");
-            // setPassword("");
-            // setRePassword("");
-            // setRole("");
           } else {
             console.error("Error: ", error);
           }
@@ -278,7 +277,7 @@ export default function Register() {
                     color: repassword !== password ? "#f44336" : "#25396F",
                   },
                 }}
-                error={justVerify && (repassword !== password)}
+                error={justVerify && repassword !== password}
                 helperText={
                   justVerify &&
                   (repassword !== password ? "password is not mathing" : "")

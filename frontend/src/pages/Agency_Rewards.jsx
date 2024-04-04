@@ -22,6 +22,7 @@ import TextField from "@mui/material/TextField";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import config from "../config.js";
+import { useAuth } from "../context/auth.jsx";
 
 const Rewards = () => {
   const [rewards, setRewards] = useState([]);
@@ -35,6 +36,7 @@ const Rewards = () => {
   const [justVerify, setJustVerify] = useState(false);
 
   const navigate = useNavigate();
+  const { setIsLoggedIn, setRole, LogOut } = useAuth();
 
   const headers = {
     "Content-Type": "application/json",
@@ -62,8 +64,11 @@ const Rewards = () => {
         }
       );
       setRewards(response.data.rewards.reward);
-    //   console.log(response.data);
+      //   console.log(response.data);
     } catch (err) {
+      if (err.response.status === 403) {
+        LogOut();
+      }
       console.log("Error -> ", err);
     }
   };
@@ -95,6 +100,9 @@ const Rewards = () => {
       // Assuming you want to refresh the rewards list after adding a reward
       getRewards();
     } catch (err) {
+      if (err.response.status === 403) {
+        LogOut();
+      }
       console.log("Error -> ", err);
     }
   };
