@@ -95,12 +95,13 @@ function Searchnearby() {
       await axios
         .post(
           (config.BACKEND_API || "http://localhost:8000") +
-            "/donor/donate-supplies",
+            "/donor/donate-supplies/",
           data,
           { headers }
         )
         .then((res) => {
-          // alert user that the transaction initallized successfully
+          alert('Donation equest sent successfully!');
+          handleCloseModal();
         })
         .catch((err) => {
           console.log(err);
