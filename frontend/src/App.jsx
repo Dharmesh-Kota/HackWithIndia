@@ -11,8 +11,8 @@ import Register from "./pages/Register";
 import Footer from "./components/Footer";
 import { useAuth } from "./context/auth";
 import AboutUS from "./pages/AboutUs";
-import UserRewards from "./pages/Agency_Rewards"
-import AgencyRewards from "./pages/User_Rewards"
+import AgencyRewards from "./pages/Agency_Rewards"
+import UserRewards from "./pages/User_Rewards"
 
 function App() {
   const { isLoggedIn } = useAuth();
