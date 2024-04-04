@@ -6,7 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../CSS/AboutUs.css";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/auth";
-import config from '../config.js';
+import config from "../config.js";
 function AboutUS() {
   const theme = createTheme({
     typography: {
@@ -59,8 +59,8 @@ function AboutUS() {
               <div className="row">
                 <div className="col-lg-6">
                   <div className="section-title">
-                    <h2>About US</h2>
-                    <p>
+                    <h2 style={{ fontFamily: "Quicksand" }}>About US</h2>
+                    <p style={{ fontFamily: "Quicksand" }}>
                       We design and develop services for customers of all sizes,
                       specializing in creating stylish, modern websites
                     </p>
@@ -74,11 +74,54 @@ function AboutUS() {
                       <i className="fa-solid fa-users"></i>
                     </div>
                     <div className="feature-content">
-                      <div className="mt-1 mb-1 my-div">Members</div>
-                      <h5>ABC</h5>
-                      <h5>ABC</h5>
-                      <h5>ABC</h5>
-                      <h5>ABC</h5>
+                      <div
+                        className="mt-1 mb-1 my-div"
+                        style={{ fontFamily: "Quicksand" }}
+                      >
+                        Members
+                      </div>
+                      <h5 style={{ fontFamily: "Quicksand" }}>
+                        <a
+                          href="https://www.linkedin.com/in/dharmesh-kota-8a9810268/"
+                          target="_blank"
+                        >
+                          Dharmesh Kota
+                        </a>
+                      </h5>
+                      <h5 style={{ fontFamily: "Quicksand" }}>
+                        <a
+                          href="https://www.linkedin.com/in/manoj-dhundhalva-62ba0b24b/"
+                          target="_blank"
+                        >
+                          Manoj Dhundhalva
+                        </a>
+                      </h5>
+                      <h5 style={{ fontFamily: "Quicksand" }}>
+                        <a
+                          href="https://www.linkedin.com/in/devangsvaghani/"
+                          target="_blank"
+                        >
+                          Devang Vaghani
+                        </a>
+                      </h5>
+                      <h5 style={{ fontFamily: "Quicksand" }}>
+                        <a
+                          href="https://www.linkedin.com/in/rhythm-panchal-108398253/"
+                          target="_blank"
+                        >
+                          Rythm Panchal
+                        </a>
+                      </h5>
+                      <h5 style={{ fontFamily: "Quicksand" }}>
+                        <a href="https://github.com/jeet0474" target="_blank">
+                          Jeet Patel
+                        </a>
+                      </h5>
+                      <h5 style={{ fontFamily: "Quicksand" }}>
+                        <a href="https://github.com/Jenil2514" target="_blank">
+                          Jenil Goswami
+                        </a>
+                      </h5>
                     </div>
                   </div>
                 </div>
@@ -88,7 +131,7 @@ function AboutUS() {
                       <i className="fa-brands fa-react"></i>
                     </div>
                     <div className="feature-content">
-                      <h5>React</h5>
+                      <h5 style={{ fontFamily: "Quicksand" }}>React</h5>
                     </div>
                   </div>
                 </div>
@@ -98,7 +141,7 @@ function AboutUS() {
                       <i class="fa-brands fa-node"></i>
                     </div>
                     <div className="feature-content">
-                      <h5>Node JS</h5>
+                      <h5 style={{ fontFamily: "Quicksand" }}>Node JS</h5>
                     </div>
                   </div>
                 </div>
@@ -108,7 +151,7 @@ function AboutUS() {
                       <i class="fa-solid fa-database"></i>
                     </div>
                     <div className="feature-content">
-                      <h5>MongoDB</h5>
+                      <h5 style={{ fontFamily: "Quicksand" }}>MongoDB</h5>
                     </div>
                   </div>
                 </div>
@@ -118,7 +161,7 @@ function AboutUS() {
                       <i class="fa-brands fa-node-js"></i>
                     </div>
                     <div className="feature-content">
-                      <h5>Express</h5>
+                      <h5 style={{ fontFamily: "Quicksand" }}>Express</h5>
                     </div>
                   </div>
                 </div>
@@ -128,7 +171,7 @@ function AboutUS() {
                       <i className="fa-brands fa-uikit"></i>
                     </div>
                     <div className="feature-content">
-                      <h5>Material UI</h5>
+                      <h5 style={{ fontFamily: "Quicksand" }}>Material UI</h5>
                     </div>
                   </div>
                 </div>
@@ -138,7 +181,7 @@ function AboutUS() {
                       <i className="fa-brands fa-bootstrap"></i>
                     </div>
                     <div className="feature-content">
-                      <h5>Bootstrap</h5>
+                      <h5 style={{ fontFamily: "Quicksand" }}>Bootstrap</h5>
                     </div>
                   </div>
                 </div>
