@@ -58,7 +58,6 @@ function Ngo() {
           headers,
         }
       );
-      console.log("results", results.data);
       setQueue(results.data.requests);
     } catch (error) {
       console.log(error);

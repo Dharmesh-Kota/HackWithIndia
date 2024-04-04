@@ -63,12 +63,12 @@ const Rewards = () => {
           headers,
         }
       );
+      console.log(response);
       setRewards(response.data.rewards.reward);
-      //   console.log(response.data);
     } catch (err) {
-      if (err.response.status === 403) {
-        LogOut();
-      }
+      // if (err.response.status === 403) {
+      //   LogOut();
+      // }
       console.log("Error -> ", err);
     }
   };
