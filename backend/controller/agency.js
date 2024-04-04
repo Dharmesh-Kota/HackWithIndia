@@ -101,3 +101,24 @@ export const add_reward = async (req, res) => {
         return res.status(500).json({ error: 'Server Error!' });
     }
 }
+
+// Delete a reward
+export const delete_reward = async (req, res) => {
+    try {
+        const { name, point } = req.body;
+
+        // Find and update the user's reward array to remove the specified reward
+        await Agency.findOneAndUpdate(
+            { user: req.user.id },
+            { 
+              $pull: { reward: { name: name, point: point } }
+            },
+            { new: true }
+        );
+
+        return res.status(200).json({ message: 'Reward deleted successfully!' });
+    } catch (error) {
+        console.log('Error: ', error.message);
+        return res.status(500).json({ error: 'Server Error!' });
+    }
+}

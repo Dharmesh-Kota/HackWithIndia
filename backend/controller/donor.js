@@ -14,7 +14,7 @@ export const nearby_agency = async (req, res) => {
     try {
         const role = req.params.role;
 
-        let users = await User.find({ role: role }, {name: 1, username: 1, role: 1, location: 1, contact: 1, address: 1});
+        let users = await User.find({ role: role }, {name: 1, username: 1, role: 1, location: 1, contact: 1, address: 1}).lean();
         let nearbyAgency = [];
     
         let location = await User.findById(req.user.id);
@@ -30,7 +30,6 @@ export const nearby_agency = async (req, res) => {
 
             const startCoordinates = location;
             const endCoordinates = user.location;
-            console.log(startCoordinates, '&', endCoordinates);
             if (!endCoordinates) {
                 continue;
             }
@@ -45,9 +44,12 @@ export const nearby_agency = async (req, res) => {
 
             if (route) {
                 const distance = route.summary.lengthInMeters / 1000; // in km
-                const travelTime = route.summary.travelTimeInSeconds / 3600; // in hrs
+                const travelTime = route.summary.travelTimeInSeconds / 60; // in mins
 
                 if (distance < 10) {
+                    user.distance = distance;
+                    user.travelTime = travelTime;
+                    console.log(user);
                     await nearbyAgency.push(user);
                 }
             } else {
