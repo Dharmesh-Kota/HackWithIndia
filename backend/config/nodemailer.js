@@ -1,8 +1,13 @@
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 import nodemailer from 'nodemailer';
 import path from 'path';
 import ejs from 'ejs';
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 export const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -30,4 +35,4 @@ export const renderTemplate = (data, relativePath) => {
         }
     );
     return mailHTML;
-}
+};

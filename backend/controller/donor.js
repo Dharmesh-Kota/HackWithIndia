@@ -49,7 +49,6 @@ export const nearby_agency = async (req, res) => {
                 if (distance < 10) {
                     user.distance = distance;
                     user.travelTime = travelTime;
-                    console.log(user);
                     await nearbyAgency.push(user);
                 }
             } else {
@@ -68,18 +67,16 @@ export const nearby_agency = async (req, res) => {
 // Making a donation request to compost agency or ngo
 export const donate_supplies = async (req, res) => {
     try {
-        console.log(data);
-        const { data } = req.body;
-        let agency = await User.findOne({ username: data.username });
+        let agency = await User.findOne({ username: req.body.username });
         let status = 'pending';
-        if (data.type === 'ngo')
+        if (req.body.type === 'ngo')
             status = 'confirm';
         let transaction = await Transaction.create({
-            sender: req.user.username,
-            receiver: req.data.username,
-            type: data.role,
-            quantity: data.quantity,
-            points: data.quantity*10, //1kg = 10points
+            sender: agency.username,
+            receiver: req.body.username,
+            type: req.body.type,
+            quantity: req.body.quantity,
+            points: req.body.quantity*10, //1kg = 10points
             status: status
         });
 

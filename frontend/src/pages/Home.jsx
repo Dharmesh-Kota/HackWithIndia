@@ -51,9 +51,9 @@ export default function Home() {
       ) : (
         <>
           {/* <Temp /> */}
+          <ExtraInfo />
         </>
       )}
-      {!isLoggedIn && <ExtraInfo />}
     </>
   );
 }
