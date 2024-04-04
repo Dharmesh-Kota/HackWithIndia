@@ -8,10 +8,11 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import Agency from "../components/Agency";
+import Ngo from "../components/Ngo.jsx";
 import Searchnearby from "../components/Searchnearby";
 import { useAuth } from "../context/auth";
 import Temp from "../components/Temp";
-import config from '../config.js';
+import config from "../config.js";
 
 export default function Home() {
   const { isLoggedIn, setIsLoggedIn, role, setRole } = useAuth();
@@ -39,6 +40,7 @@ export default function Home() {
           {window.localStorage.getItem("role") === '"compostAgency"' && (
             <Agency />
           )}
+          {window.localStorage.getItem("role") === '"ngo"' && <Ngo />}
           {window.localStorage.getItem("role") === '"donor"' && (
             <Searchnearby />
           )}

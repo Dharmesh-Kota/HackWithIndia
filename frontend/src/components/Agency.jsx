@@ -207,158 +207,148 @@ function Agency() {
                               justifyContent: "space-between",
                             }}
                           >
-                            <div>
+                            <Button
+                              className="mx-2 px-4"
+                              style={{
+                                backgroundColor: "rgb(234, 234, 255)",
+                                borderRadius: "1em",
+                                fontWeight: "bold",
+                                fontSize: "large",
+                                margin: "0.1em",
+                              }}
+                            >
+                              {index + 1}
+                            </Button>
+                            <Button
+                              className="mx-2 px-4"
+                              style={{
+                                backgroundColor: "rgb(234, 234, 255)",
+                                borderRadius: "1em",
+                                fontWeight: "600",
+                                fontSize: "large",
+                                margin: "0.1em",
+                              }}
+                            >
+                              User : {row.sender}
+                            </Button>
+                            <Button
+                              className="mx-2 px-4"
+                              style={{
+                                backgroundColor: "rgb(234, 234, 255)",
+                                borderRadius: "1em",
+                                fontWeight: "600",
+                                fontSize: "large",
+                                margin: "0.1em",
+                              }}
+                            >
+                              Quantity : {row.quantity}
+                            </Button>
+                            <Tooltip TransitionComponent={Zoom} title="Accept">
                               <Button
+                                onClick={handleClickOpen1}
                                 className="mx-2 px-4"
                                 style={{
-                                  backgroundColor: "rgb(234, 234, 255)",
-                                  borderRadius: "1em",
-                                  fontWeight: "bold",
-                                  fontSize: "large",
-                                  margin: "0.1em",
-                                }}
-                              >
-                                {index + 1}
-                              </Button>
-                              <Button
-                                className="mx-2 px-4"
-                                style={{
-                                  backgroundColor: "rgb(234, 234, 255)",
+                                  backgroundColor: "#83f28f",
+                                  color: "#00ab41",
                                   borderRadius: "1em",
                                   fontWeight: "600",
                                   fontSize: "large",
-                                  margin: "0.1em",
                                 }}
                               >
-                                User : {row.sender}
+                                <HowToRegIcon />
                               </Button>
+                            </Tooltip>
+                            <Dialog
+                              open={open1}
+                              onClose={handleClose1}
+                              aria-labelledby="alert-dialog-title"
+                              aria-describedby="alert-dialog-description"
+                            >
+                              <DialogTitle id="alert-dialog-title">
+                                Are you sure?
+                              </DialogTitle>
+                              <DialogContent>
+                                <DialogContentText id="alert-dialog-description">
+                                  Do you really want Accept this request? This
+                                  process cannot be undone.
+                                </DialogContentText>
+                              </DialogContent>
+                              <DialogActions>
+                                <Button
+                                  onClick={handleClose1}
+                                  style={{ fontWeight: "bold" }}
+                                  variant="outlined"
+                                  color="info"
+                                >
+                                  Ignore
+                                </Button>
+                                <Button
+                                  autoFocus
+                                  style={{ fontWeight: "bold" }}
+                                  onClick={() => {
+                                    handleClose1();
+                                    acceptSupply(row);
+                                  }}
+                                  variant="contained"
+                                  color="success"
+                                >
+                                  Accept
+                                </Button>
+                              </DialogActions>
+                            </Dialog>
+                            <Tooltip TransitionComponent={Zoom} title="Reject">
                               <Button
+                                onClick={handleClickOpen2}
                                 className="mx-2 px-4"
                                 style={{
-                                  backgroundColor: "rgb(234, 234, 255)",
+                                  backgroundColor: "#ffe5ec",
+                                  color: "red",
                                   borderRadius: "1em",
                                   fontWeight: "600",
                                   fontSize: "large",
-                                  margin: "0.1em",
                                 }}
                               >
-                                Quantity : {row.quantity}
+                                <NotInterestedIcon />
                               </Button>
-                            </div>
-                            <div>
-                              <Tooltip
-                                TransitionComponent={Zoom}
-                                title="Accept"
-                              >
+                            </Tooltip>
+                            <Dialog
+                              open={open2}
+                              onClose={handleClose2}
+                              aria-labelledby="alert-dialog-title"
+                              aria-describedby="alert-dialog-description"
+                            >
+                              <DialogTitle id="alert-dialog-title">
+                                Are you sure?
+                              </DialogTitle>
+                              <DialogContent>
+                                <DialogContentText id="alert-dialog-description">
+                                  Do you really want Deline the request? This
+                                  process cannot be undone.
+                                </DialogContentText>
+                              </DialogContent>
+                              <DialogActions>
                                 <Button
-                                  onClick={handleClickOpen1}
-                                  className="mx-2 px-4"
-                                  style={{
-                                    backgroundColor: "#83f28f",
-                                    color: "#00ab41",
-                                    borderRadius: "1em",
-                                    fontWeight: "600",
-                                    fontSize: "large",
-                                  }}
+                                  onClick={handleClose2}
+                                  style={{ fontWeight: "bold" }}
+                                  variant="outlined"
+                                  color="info"
                                 >
-                                  <HowToRegIcon />
+                                  Ignore
                                 </Button>
-                              </Tooltip>
-                              <Dialog
-                                open={open1}
-                                onClose={handleClose1}
-                                aria-labelledby="alert-dialog-title"
-                                aria-describedby="alert-dialog-description"
-                              >
-                                <DialogTitle id="alert-dialog-title">
-                                  Are you sure?
-                                </DialogTitle>
-                                <DialogContent>
-                                  <DialogContentText id="alert-dialog-description">
-                                    Do you really want Accept this request? This
-                                    process cannot be undone.
-                                  </DialogContentText>
-                                </DialogContent>
-                                <DialogActions>
-                                  <Button
-                                    onClick={handleClose1}
-                                    style={{ fontWeight: "bold" }}
-                                    variant="outlined"
-                                    color="info"
-                                  >
-                                    Ignore
-                                  </Button>
-                                  <Button
-                                    autoFocus
-                                    style={{ fontWeight: "bold" }}
-                                    onClick={() => {
-                                      handleClose1();
-                                      acceptSupply(row);
-                                    }}
-                                    variant="contained"
-                                    color="success"
-                                  >
-                                    Accept
-                                  </Button>
-                                </DialogActions>
-                              </Dialog>
-                              <Tooltip
-                                TransitionComponent={Zoom}
-                                title="Reject"
-                              >
                                 <Button
-                                  onClick={handleClickOpen2}
-                                  className="mx-2 px-4"
-                                  style={{
-                                    backgroundColor: "#ffe5ec",
-                                    color: "red",
-                                    borderRadius: "1em",
-                                    fontWeight: "600",
-                                    fontSize: "large",
+                                  autoFocus
+                                  style={{ fontWeight: "bold" }}
+                                  onClick={() => {
+                                    handleClose2();
+                                    rejectSupply(row);
                                   }}
+                                  variant="contained"
+                                  color="error"
                                 >
-                                  <NotInterestedIcon />
+                                  Decline
                                 </Button>
-                              </Tooltip>
-                              <Dialog
-                                open={open2}
-                                onClose={handleClose2}
-                                aria-labelledby="alert-dialog-title"
-                                aria-describedby="alert-dialog-description"
-                              >
-                                <DialogTitle id="alert-dialog-title">
-                                  Are you sure?
-                                </DialogTitle>
-                                <DialogContent>
-                                  <DialogContentText id="alert-dialog-description">
-                                    Do you really want Deline the request? This
-                                    process cannot be undone.
-                                  </DialogContentText>
-                                </DialogContent>
-                                <DialogActions>
-                                  <Button
-                                    onClick={handleClose2}
-                                    style={{ fontWeight: "bold" }}
-                                    variant="outlined"
-                                    color="info"
-                                  >
-                                    Ignore
-                                  </Button>
-                                  <Button
-                                    autoFocus
-                                    style={{ fontWeight: "bold" }}
-                                    onClick={() => {
-                                      handleClose2();
-                                      rejectSupply(row);
-                                    }}
-                                    variant="contained"
-                                    color="error"
-                                  >
-                                    Decline
-                                  </Button>
-                                </DialogActions>
-                              </Dialog>
-                            </div>
+                              </DialogActions>
+                            </Dialog>
                           </Typography>
                         </AccordionSummary>
                       </Accordion>
