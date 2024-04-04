@@ -5,6 +5,7 @@ import Profile from "./pages/Profile";
 import Store from "./pages/Store";
 import History from "./pages/History";
 import Navbar from "./components/Navbar";
+import Guidlines from "./pages/Guidlines";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Footer from "./components/Footer";
