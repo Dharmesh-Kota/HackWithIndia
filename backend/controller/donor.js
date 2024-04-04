@@ -5,7 +5,8 @@ import History from "../models/history.js";
 import Transaction from "../models/transaction.js";
 import { redeemReward } from "../mailer/rewardRedeem.js";
 import { suppliesRequest } from "../mailer/suppliesRequest.js";
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
+import axios from 'axios';
 dotenv.config();
 
 // Controller to provide the list of all nearby composting agencies to the user
@@ -13,7 +14,7 @@ export const nearby_agency = async (req, res) => {
     try {
         const role = req.params.role;
 
-        let users = await User.find({ role: role }, {name: 1, username: 1, role: 1});
+        let users = await User.find({ role: role }, {name: 1, username: 1, role: 1, location: 1, contact: 1, address: 1}).lean();
         let nearbyAgency = [];
     
         let location = await User.findById(req.user.id);
@@ -28,6 +29,10 @@ export const nearby_agency = async (req, res) => {
             const apiKey = process.env.apiKey;
 
             const startCoordinates = location;
+            const endCoordinates = user.location;
+            if (!endCoordinates) {
+                continue;
+            }
             const traffic = true;
 
             const tomtomApiEndpoint = 'https://api.tomtom.com/routing/1/calculateRoute/';
@@ -39,9 +44,11 @@ export const nearby_agency = async (req, res) => {
 
             if (route) {
                 const distance = route.summary.lengthInMeters / 1000; // in km
-                const travelTime = route.summary.travelTimeInSeconds / 3600; // in hrs
+                const travelTime = route.summary.travelTimeInSeconds / 60; // in mins
 
                 if (distance < 10) {
+                    user.distance = distance;
+                    user.travelTime = travelTime;
                     await nearbyAgency.push(user);
                 }
             } else {
@@ -60,18 +67,16 @@ export const nearby_agency = async (req, res) => {
 // Making a donation request to compost agency or ngo
 export const donate_supplies = async (req, res) => {
     try {
-        console.log(data);
-        const { data } = req.body;
-        let agency = await User.findOne({ username: data.username });
+        let agency = await User.findOne({ username: req.body.username });
         let status = 'pending';
-        if (data.type === 'ngo')
+        if (req.body.type === 'ngo')
             status = 'confirm';
         let transaction = await Transaction.create({
-            sender: req.user.username,
-            receiver: req.data.username,
-            type: data.role,
-            quantity: data.quantity,
-            points: data.quantity*10, //1kg = 10points
+            sender: agency.username,
+            receiver: req.body.username,
+            type: req.body.type,
+            quantity: req.body.quantity,
+            points: req.body.quantity*10, //1kg = 10points
             status: status
         });
 

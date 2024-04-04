@@ -25,7 +25,8 @@ import axios from "axios";
 // import '../CSS/Login.css';
 
 import { Select, MenuItem } from "@mui/material";
-import config from '../config.js';
+import config from "../config.js";
+import { useAuth } from "../context/auth.jsx";
 
 const defaultTheme = createTheme();
 
@@ -60,6 +61,7 @@ export default function Register() {
   const [role, setRole] = useState("");
 
   const navigate = useNavigate();
+  const { LogOut } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -93,13 +95,10 @@ export default function Register() {
         })
         .catch((error) => {
           setIsAlert(true);
+          // if (error.response.status === 403) {
+          //   LogOut();
+          // }
           if (error.response.status === 409) {
-            // setUsername("");
-            // setEmail("");
-            // setName("");
-            // setPassword("");
-            // setRePassword("");
-            // setRole("");
           } else {
             console.error("Error: ", error);
           }
@@ -113,7 +112,7 @@ export default function Register() {
   };
 
   return (
-    <div className="my-glass-effect" style={{ backgroundColor: "lightblue" }}>
+    <div className="my-glass-effect">
       <ThemeProvider theme={defaultTheme}>
         <Container
           component="main"
@@ -122,6 +121,10 @@ export default function Register() {
         >
           <CssBaseline />
           <Box
+            style={{
+              backgroundColor: "#caf0f8",
+              boxShadow: "0px 4px 8px #caf0f8",
+            }}
             sx={{
               marginTop: 12,
               marginBottom: 12,
@@ -132,6 +135,9 @@ export default function Register() {
               borderRadius: "2em",
               padding: "3em",
               height: "auto",
+              // "&:hover": {
+              //   border: "1px solid #03045e",
+              // },
             }}
           >
             <Avatar sx={{ m: 1 }} style={{ backgroundColor: "#25396F" }}>
@@ -278,13 +284,24 @@ export default function Register() {
                     color: repassword !== password ? "#f44336" : "#25396F",
                   },
                 }}
-                error={justVerify && (repassword !== password)}
+                error={justVerify && repassword !== password}
                 helperText={
                   justVerify &&
                   (repassword !== password ? "password is not mathing" : "")
                 }
                 autoComplete="off"
               />
+              <Grid
+                item
+                xs={10}
+                style={{ marginTop: "0.4em", fontFamily: "Quicksand" }}
+                sx={{
+                  fontWeight: "bold",
+                }}
+                id="searchBoxContainer"
+              >
+                Role *
+              </Grid>
               <Select
                 value={role}
                 onChange={(e) => {
@@ -337,6 +354,7 @@ export default function Register() {
                       fontWeight: "bold",
                       color: "ghostwhite",
                       textDecoration: "underline",
+                      color: "#03045e",
                     }}
                   >
                     Already have an account? Sign In

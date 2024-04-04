@@ -34,8 +34,10 @@ function Navbar() {
     position: "sticky",
     top: "0%",
     zIndex: 100,
-    backgroundColor: "#20247B",
+    backdropFilter: "blur(10px)",
     margin: 0,
+    overflowY: "hidden",
+    zIndex: 4,
   };
 
   return (
@@ -44,9 +46,13 @@ function Navbar() {
         <Link
           className="navbar-brand"
           to="/"
-          style={{ color: "white", fontWeight: "bold", fontSize: "x-large" }}
+          style={{
+            fontWeight: "bold",
+            fontSize: "xx-large",
+            fontFamily: "Quicksand",
+          }}
         >
-          Hack With India
+          <i className="fa-solid fa-seedling"></i> Compostify
         </Link>
         <button
           className="navbar-toggler"
@@ -57,105 +63,159 @@ function Navbar() {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <MenuIcon style={{ color: "white" }} />
+          <MenuIcon />
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <div className="my-button">
-                <Link
-                  className="nav-link active"
-                  to="/"
-                  style={{ color: "white" }}
-                >
-                  Home
-                </Link>
-              </div>
-            </li>
+            <Button
+              disableRipple
+              variant="text"
+              style={{ transition: "all 0.5s ease" }}
+              sx={{
+                "&:hover": {
+                  borderBottom: "1px solid #03045e",
+                  borderRadius: "5px",
+                },
+              }}
+            >
+              <Link
+                className="nav-link active"
+                to="/"
+                style={{ fontFamily: "Quicksand", transition: "all 0.5s ease" }}
+              >
+                Home
+              </Link>
+            </Button>
             {window.localStorage.getItem("role") === '"compostAgency"' && (
-              <li className="nav-item">
-                <div className="my-button">
+              <>
+                <Button
+                  disableRipple
+                  variant="text"
+                  style={{ transition: "all 0.5s ease" }}
+                  sx={{
+                    "&:hover": {
+                      borderBottom: "1px solid #03045e",
+                      borderRadius: "5px",
+                    },
+                  }}
+                >
                   <Link
-                    className="nav-link"
-                    to="/rewards"
-                    style={{ color: "white" }}
+                    className="nav-link active"
+                    to="/agency_rewards"
+                    style={{ fontFamily: "Quicksand" }}
                   >
                     Rewards
                   </Link>
-                </div>
-              </li>
-            )}
-            <li className="nav-item">
-              <div className="my-button">
-                <Link
-                  className="nav-link"
-                  to="/aboutus"
-                  style={{ color: "white" }}
+                </Button>
+                <Button
+                  disableRipple
+                  variant="text"
+                  style={{ transition: "all 0.5s ease" }}
+                  sx={{
+                    "&:hover": {
+                      borderBottom: "1px solid #03045e",
+                      borderRadius: "5px",
+                    },
+                  }}
                 >
-                  AboutUS
-                </Link>
-              </div>
-            </li>
-            <li className="nav-item">
-              {isLoggedIn ? (
-                <>
-                  <div>
-                    <IconButton
-                      size="large"
-                      aria-label="account of current user"
-                      aria-controls="menu-appbar"
-                      aria-haspopup="true"
-                      onClick={handleMenu}
-                      color="inherit"
-                    >
-                      <AccountCircleOutlinedIcon
-                        fontSize="large"
-                        style={{ color: "white" }}
-                      />
-                    </IconButton>
-                    <Menu
-                      id="menu-appbar"
-                      anchorEl={anchorEl}
-                      anchorOrigin={{
-                        vertical: "top",
-                        horizontal: "right",
-                      }}
-                      keepMounted
-                      transformOrigin={{
-                        vertical: "top",
-                        horizontal: "right",
-                      }}
-                      open={Boolean(anchorEl)}
-                      onClose={handleClose}
-                    >
-                      <MenuItem onClick={handleClose}>
-                        <Link className="nav-link" to="/profile">
-                          Profile
-                        </Link>
-                      </MenuItem>
-                      <MenuItem
-                        onClick={() => {
-                          handleClose();
-                          LogOut();
-                        }}
-                      >
-                        Logout
-                      </MenuItem>
-                    </Menu>
-                  </div>
-                </>
-              ) : (
-                <Button variant="outlined">
                   <Link
-                    className="nav-link"
-                    to="/login"
-                    style={{ color: "white" }}
+                    className="nav-link active"
+                    to="/history"
+                    style={{ fontFamily: "Quicksand" }}
                   >
-                    LogIn/SignUP
+                    History
                   </Link>
                 </Button>
-              )}
-            </li>
+              </>
+            )}
+            <Button
+              disableRipple
+              variant="text"
+              style={{ transition: "all 0.5s ease" }}
+              sx={{
+                "&:hover": {
+                  borderBottom: "1px solid #03045e",
+                  borderRadius: "5px",
+                },
+              }}
+            >
+              <Link
+                className="nav-link active"
+                to="/aboutus"
+                style={{ fontFamily: "Quicksand" }}
+              >
+                AboutUS
+              </Link>
+            </Button>
+
+            {isLoggedIn ? (
+              <>
+                <div>
+                  <IconButton
+                    size="large"
+                    aria-label="account of current user"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    onClick={handleMenu}
+                    color="inherit"
+                  >
+                    <AccountCircleOutlinedIcon
+                      fontSize="large"
+                      style={{ fontFamily: "Quicksand" }}
+                    />
+                  </IconButton>
+                  <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                  >
+                    <MenuItem onClick={handleClose}>
+                      <Link className="nav-link" to="/profile">
+                        Profile
+                      </Link>
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        handleClose();
+                        LogOut();
+                      }}
+                    >
+                      Logout
+                    </MenuItem>
+                  </Menu>
+                </div>
+              </>
+            ) : (
+              <Button
+                disableRipple
+                variant="outlined"
+                style={{ transition: "all 0.5s ease" }}
+                sx={{
+                  "&:hover": {
+                    borderBottom: "1px solid #03045e",
+                    borderRadius: "5px",
+                  },
+                }}
+              >
+                <Link
+                  className="nav-link"
+                  to="/login"
+                  style={{ fontFamily: "Quicksand" }}
+                >
+                  LogIn/SignUP
+                </Link>
+              </Button>
+            )}
           </ul>
         </div>
       </div>

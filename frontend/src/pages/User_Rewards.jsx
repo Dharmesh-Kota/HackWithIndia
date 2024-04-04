@@ -69,7 +69,9 @@ const Rewards =() => {
                         </div>
                     )) }
         </div>
-    )
-}
+      ))}
+    </div>
+  );
+};
 
-export default Rewards
+export default Rewards;
