@@ -105,7 +105,7 @@ export default function Login() {
   };
 
   return (
-    <div className="my-glass-effect" style={{ backgroundColor: "lightblue" }}>
+    <div className="my-glass-effect">
       <ThemeProvider theme={defaultTheme}>
         <Container
           component="main"
@@ -114,6 +114,10 @@ export default function Login() {
         >
           <CssBaseline />
           <Box
+            style={{
+              backgroundColor: "#caf0f8",
+              boxShadow: "0px 4px 8px #caf0f8",
+            }}
             sx={{
               marginTop: 12,
               display: "flex",
@@ -232,7 +236,7 @@ export default function Login() {
                     style={{
                       fontFamily: "Quicksand",
                       fontWeight: "bold",
-                      color: "ghostwhite",
+                      color: "#03045e",
                       textDecoration: "underline",
                     }}
                   >

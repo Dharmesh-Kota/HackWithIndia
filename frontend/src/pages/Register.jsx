@@ -112,7 +112,7 @@ export default function Register() {
   };
 
   return (
-    <div className="my-glass-effect" style={{ backgroundColor: "lightblue" }}>
+    <div className="my-glass-effect">
       <ThemeProvider theme={defaultTheme}>
         <Container
           component="main"
@@ -121,6 +121,10 @@ export default function Register() {
         >
           <CssBaseline />
           <Box
+            style={{
+              backgroundColor: "#caf0f8",
+              boxShadow: "0px 4px 8px #caf0f8",
+            }}
             sx={{
               marginTop: 12,
               marginBottom: 12,
@@ -131,6 +135,9 @@ export default function Register() {
               borderRadius: "2em",
               padding: "3em",
               height: "auto",
+              // "&:hover": {
+              //   border: "1px solid #03045e",
+              // },
             }}
           >
             <Avatar sx={{ m: 1 }} style={{ backgroundColor: "#25396F" }}>
@@ -284,6 +291,17 @@ export default function Register() {
                 }
                 autoComplete="off"
               />
+              <Grid
+                item
+                xs={10}
+                style={{ marginTop: "0.4em", fontFamily: "Quicksand" }}
+                sx={{
+                  fontWeight: "bold",
+                }}
+                id="searchBoxContainer"
+              >
+                Role *
+              </Grid>
               <Select
                 value={role}
                 onChange={(e) => {
@@ -336,6 +354,7 @@ export default function Register() {
                       fontWeight: "bold",
                       color: "ghostwhite",
                       textDecoration: "underline",
+                      color: "#03045e",
                     }}
                   >
                     Already have an account? Sign In
