@@ -11,6 +11,7 @@ import Register from "./pages/Register";
 import Footer from "./components/Footer";
 import { useAuth } from "./context/auth";
 import AboutUS from "./pages/AboutUs";
+import Rewards from "./pages/Rewards"
 
 function App() {
   const { isLoggedIn } = useAuth();
@@ -25,6 +26,7 @@ function App() {
         <Route exact path="/store" element={<Store />} />
         <Route exact path="/history" element={<History />} />
         <Route exact path="/aboutus" element={<AboutUS />} />
+        <Route exact path="/rewards" element={<Rewards />} />
       </Routes>
       <Footer />
     </>

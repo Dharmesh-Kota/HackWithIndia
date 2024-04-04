@@ -6,6 +6,7 @@ const authContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [theme, setTheme] = useState("light");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [role, setRole] = useState("");
   const navigate = useNavigate();
 
   const toggleTheme = () => {
@@ -14,11 +15,27 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     setIsLoggedIn(window.localStorage.getItem("token") !== null);
+    setRole(window.localStorage.getItem("role"));
+  }, []);
+
+  useEffect(() => {
+    if (
+      !(
+        window.localStorage.getItem("token") !== null &&
+        window.localStorage.getItem("role") !== null
+      )
+    ) {
+      window.localStorage.removeItem("token");
+      window.localStorage.removeItem("role");
+      setIsLoggedIn(false);
+      setRole("");
+      navigate("/");
+    }
   }, []);
 
   return (
     <authContext.Provider
-      value={{ theme, toggleTheme, isLoggedIn, setIsLoggedIn }}
+      value={{ theme, toggleTheme, isLoggedIn, setIsLoggedIn, role, setRole }}
     >
       {children}
     </authContext.Provider>

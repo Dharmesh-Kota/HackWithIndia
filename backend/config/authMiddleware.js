@@ -27,14 +27,16 @@ export const authenticateDonorToken = (req, res, next) => {
     if(!authHeader) {
         return res.status(401).json({ message: "Missing Token!" });
     }
-    const [bearer, token] = authHeader.split(" ");
+    let [bearer, token] = authHeader.split(" ");
     token = token.replace(/"/g, '');
+
     if(bearer != "Bearer" || !token) {
         return res.status(401).json({ message: "Invalid token format!" });
     }
 
     jwt.verify(token, secretKey, (err, user) => {
         if (err) {
+          console.log(err);
             return res.status(403).json({ message: "Invalid token!" });
         }
         if(user.role === 'donor'){
@@ -51,7 +53,7 @@ export const authenticateNgoToken = (req, res, next) => {
     if(!authHeader) {
         return res.status(401).json({ message: "Missing Token!" });
     }
-    const [bearer, token] = authHeader.split(" ");
+    let [bearer, token] = authHeader.split(" ");
     token = token.replace(/"/g, '');
 
     if(bearer != "Bearer" || !token) {
@@ -76,7 +78,7 @@ export const authenticateAgencyToken = (req, res, next) => {
     if(!authHeader) {
         return res.status(401).json({ message: "Missing Token!" });
     }
-    const [bearer, token] = authHeader.split(" ");
+    let [bearer, token] = authHeader.split(" ");
     token = token.replace(/"/g, '');
 
     if(bearer != "Bearer" || !token) {

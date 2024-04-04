@@ -7,6 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import config from '../config.js';
 
 const columns = [
  	{ 
@@ -91,6 +92,7 @@ export default function History() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
 
   return (
     <>

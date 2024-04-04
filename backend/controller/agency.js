@@ -43,7 +43,7 @@ export const cofirm_supplies = async (req, res) => {
 }
 
 // Reject the supplies request sent by a user
-export const reject_reward = async (req, res) => {
+export const reject_supplies = async (req, res) => {
     try {
         await Transaction.findOneAndUpdate(
             { sender: req.body.sender, receiver: req.user.username, quantity: req.body.quantity },
@@ -73,8 +73,9 @@ export const history = async (req, res) => {
 // Get the list of rewards by composit Agency
 export const rewards = async (req, res) => {
     try {
-        let rewards = await Agency.find({ user: req.user.id }, { reward: 1 });
-        return res.status(200).json({ message: 'Rewards sent seccussfully!', rewards: rewards });
+        let rewards = await Agency.findOne({ user: req.user.id }, { reward: 1 });
+        return res.status(200).json({ message: 'Rewards sent seccussfully!', rewards: rewards });   
+
     } catch (error) {
         console.log('Error: ', error.message);
         return res.status(500).json({ error: 'Server Error!' });
@@ -84,13 +85,15 @@ export const rewards = async (req, res) => {
 // Add a reward for the composite agency
 export const add_reward = async (req, res) => {
     try {
-        await Agency.findOneAndUpdate(
+        // console.log(req.body);
+        let reward = await Agency.findOneAndUpdate(
             { user: req.user.id },
             { 
-              $addToSet: { rewards: { name: req.body.name, point: req.body.points } }
+              $addToSet: { reward: { name: req.body.name, point: req.body.point } }
             },
             { upsert: true, new: true }
           );
+        //   console.log(reward);
         return res.status(200).json({ message: 'New Reward added sucessfully!' });
 
     } catch (error) {

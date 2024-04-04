@@ -7,6 +7,8 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CircularProgress from "@mui/material/CircularProgress";
+import PlaceIcon from "@mui/icons-material/Place";
+import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 
 import {
   Grid,
@@ -25,6 +27,7 @@ import "aos/dist/aos.css";
 import axios from "axios";
 
 import { useAuth } from "../context/auth";
+import config from "../config.js";
 
 const Profile = () => {
   const imageURL =
@@ -41,7 +44,7 @@ const Profile = () => {
 
   const [isValidPhone, setIsValidPhone] = useState(false);
   const navigate = useNavigate();
-  const { setIsLoggedIn } = useAuth();
+  const { setIsLoggedIn, setRole } = useAuth();
 
   const [justVerify, setJustVerify] = useState(false);
 
@@ -67,7 +70,7 @@ const Profile = () => {
   });
   const UpdateProfile = async () => {
     setJustVerify(true);
-    if (name == "" || address == "" || !isValidPhone || location === "") {
+    if (name === "" || address === "" || !isValidPhone || location === "") {
       return;
     }
     setLoading(true);
@@ -78,7 +81,7 @@ const Profile = () => {
     };
     try {
       const results = await axios.post(
-        "http://localhost:8000/update-profile",
+        (config.BACKEND_API || "http://localhost:8000") + "/update-profile",
         {
           name,
           username: userName,
@@ -90,8 +93,6 @@ const Profile = () => {
         },
         { headers }
       );
-
-      console.log(results);
     } catch (err) {
       console.log(err);
     }
@@ -105,10 +106,12 @@ const Profile = () => {
     };
 
     try {
-      const result = await axios.get("http://localhost:8000/profile", {
-        headers,
-      });
-      console.log("result", result.data.user);
+      const result = await axios.get(
+        (config.BACKEND_API || "http://localhost:8000") + "/profile",
+        {
+          headers,
+        }
+      );
       const { user } = result.data;
       setName(user.name);
       setEmail(user.email);
@@ -124,16 +127,92 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    getProfile();
+    if (
+      !(
+        window.localStorage.getItem("token") !== null &&
+        window.localStorage.getItem("role") !== null
+      )
+    ) {
+      window.localStorage.removeItem("token");
+      window.localStorage.removeItem("role");
+      setIsLoggedIn(false);
+      setRole("");
+      navigate("/");
+    }
   }, []);
 
   useEffect(() => {
+    getProfile();
     AOS.init({
       duration: 800,
       easing: "ease-in-out",
       once: true,
     });
   }, []);
+
+  const [apiKey, setApiKey] = useState("");
+
+  useEffect(() => {
+    const fetchApiKey = async () => {
+      try {
+        const headers = {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+        };
+
+        const response = await fetch(
+          (config.BACKEND_API || "http://localhost:8000") + "/getTomTomApiKey",
+          { headers }
+        );
+        const data = await response.json();
+        setApiKey(data.apiKey.trim());
+      } catch (error) {
+        console.error("Error fetching API key:", error);
+      }
+    };
+    fetchApiKey();
+  }, []);
+
+  const initializeTomTomSearchBox = (apiKey) => {
+    var options = {
+      searchOptions: {
+        key: apiKey,
+        language: "en-GB",
+        limit: 5,
+        placeholder: "Search for Nearby Location",
+      },
+      autocompleteOptions: {
+        key: apiKey,
+        language: "en-GB",
+      },
+    };
+
+    // Set the container to the ID of the div
+    options.container = "#searchBoxContainer";
+
+    var ttSearchBox = new window.tt.plugins.SearchBox(
+      window.tt.services,
+      options
+    );
+
+    ttSearchBox.on("tomtom.searchbox.resultselected", function (data) {
+      const newLocation =
+        String(data.data.result.position.lat) +
+        "," +
+        String(data.data.result.position.lng);
+      document.getElementById("location").value = newLocation;
+      setLocation(newLocation);
+    });
+
+    var searchBoxHTML = ttSearchBox.getSearchBoxHTML();
+    document.getElementById("searchBoxContainer").appendChild(searchBoxHTML);
+  };
+
+  useEffect(() => {
+    if (apiKey) {
+      initializeTomTomSearchBox(apiKey);
+    }
+  }, [apiKey]);
 
   return (
     <>
@@ -215,9 +294,10 @@ const Profile = () => {
                         autoComplete="off"
                         error={justVerify && name === ""}
                         helperText={
-                          name === "" && justVerify
+                          justVerify &&
+                          (name === ""
                             ? "Please enter a valid name containing only letters."
-                            : ""
+                            : "")
                         }
                       />
                     </Grid>
@@ -269,9 +349,8 @@ const Profile = () => {
                         autoComplete="off"
                         error={justVerify && address === ""}
                         helperText={
-                          address === "" && justVerify
-                            ? "address cnnnot be empty."
-                            : ""
+                          justVerify &&
+                          (address === "" ? "address cnnnot be empty." : "")
                         }
                         multiline
                         rows={3}
@@ -290,25 +369,43 @@ const Profile = () => {
                         autoComplete="off"
                         error={!isValidPhone && justVerify}
                         helperText={
-                          !isValidPhone && justVerify
+                          justVerify &&
+                          (!isValidPhone
                             ? "Please enter a 10-digit number."
-                            : ""
+                            : "")
                         }
                       />
                     </Grid>
+                    <Grid
+                      item
+                      xs={10}
+                      style={{ marginTop: "0.4em" }}
+                      id="searchBoxContainer"
+                    >
+                      <PlaceOutlinedIcon /> Location
+                    </Grid>
+                    <Grid
+                      item
+                      xs={10}
+                      style={{ marginTop: "0.4em" }}
+                      id="searchBoxContainer"
+                    ></Grid>
+
+                    <Grid></Grid>
+
                     <Grid item xs={10} style={{ marginTop: "0.4em" }}>
                       <TextField
-                        id="standard-helperText-8"
+                        id="location"
                         label="Location"
                         value={location}
                         onChange={(e) => {
                           setLocation(e.target.value);
                         }}
+                        style={{ visibility: "hidden" }}
                         error={justVerify && location === ""}
                         helperText={
-                          justVerify && location === ""
-                            ? "Please select your location"
-                            : ""
+                          justVerify &&
+                          (location === "" ? "Please select your location" : "")
                         }
                         fullWidth
                       />
