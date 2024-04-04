@@ -42,6 +42,23 @@ export const cofirm_supplies = async (req, res) => {
     }
 }
 
+// Reject the supplies request sent by a user
+export const reject_reward = async (req, res) => {
+    try {
+        await Transaction.findOneAndUpdate(
+            { sender: req.body.sender, receiver: req.user.username, quantity: req.body.quantity },
+            { $set: { status: 'rejected' } },
+            { new: true }
+          );
+
+        return res.status(200).json({ message: 'Request rejected!'});
+
+    } catch (error) {
+        console.log('Error: ', error.message);
+        return res.status(500).json({ error: 'Server Error!' });
+    }
+}
+
 // Get the history of rewards redeemed by different users
 export const history = async (req, res) => {
     try {

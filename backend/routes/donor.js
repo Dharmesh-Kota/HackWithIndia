@@ -12,7 +12,7 @@ const corsOptions = {
   
 router.use(cors(corsOptions));
 
-router.get('/nearby-agency', authenticateDonorToken, controller.nearby_agency);
+router.get('/nearby-agency/:role', authenticateDonorToken, controller.nearby_agency);
 router.get('/reward-store', authenticateDonorToken, controller.reward_store);
 router.post('/redeem-reward', authenticateDonorToken, controller.reedem_reward);
 router.post('/donate-supplies', authenticateDonorToken, controller.donate_supplies);

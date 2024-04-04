@@ -25,4 +25,4 @@
 /backend/node_modules
 
 # Environment Variables
-/.env
+/backend/.env

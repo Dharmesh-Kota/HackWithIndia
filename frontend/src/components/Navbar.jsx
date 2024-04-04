@@ -66,7 +66,7 @@ function Navbar() {
               <div className="my-button">
                 <Link
                   className="nav-link"
-                  to="/about"
+                  to="/aboutus"
                   style={{ color: "white" }}
                 >
                   AboutUS

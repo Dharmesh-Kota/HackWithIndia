@@ -9,69 +9,40 @@ import { suppliesRequest } from "../mailer/suppliesRequest.js";
 // Controller to provide the list of all nearby composting agencies to the user
 export const nearby_agency = async (req, res) => {
     try {
-        const role = req.body.role;
+        const role = req.params.role;
         let users = await User.find({ role: role }, {name: 1, username: 1, role: 1});
         let nearbyAgency = [];
     
-        if (Object.keys(req.query).length > 0) {
-            const lat = req.query.lat;
-            const lng = req.query.lng;
-    
-            // find the nearby hospitals
-            for (const user of users) {
-                const apiKey = process.env.apiKey;
-    
-                const startCoordinates = lat + ',' + lng;
-                const traffic = true;
-    
-                const tomtomApiEndpoint = 'https://api.tomtom.com/routing/1/calculateRoute/';
-                const url = `${tomtomApiEndpoint}${startCoordinates}:${endCoordinates}/json?key=${apiKey}&traffic=${traffic}`;
-    
-                const response = await axios.get(url);
-                const data = response.data;
-                const route = data.routes && data.routes[0];
-    
-                if (route) {
-                    const distance = route.summary.lengthInMeters / 1000; // in km
-                    const travelTime = route.summary.travelTimeInSeconds / 3600; // in hrs
-    
-                    if (distance < 10) {
-                        await nearbyAgency.push(user);
-                    }
-                } else {
-                    console.log('No route found.');
+        let location = await User.findById(req.user.id);
+        location = location.location;
+
+        if(!location) {
+            return res.status(422).json({message: "Location not updated!"});
+        }
+
+        // find the nearby hospitals
+        for (const user of users) {
+            const apiKey = process.env.apiKey;
+
+            const startCoordinates = location;
+            const traffic = true;
+
+            const tomtomApiEndpoint = 'https://api.tomtom.com/routing/1/calculateRoute/';
+            const url = `${tomtomApiEndpoint}${startCoordinates}:${endCoordinates}/json?key=${apiKey}&traffic=${traffic}`;
+
+            const response = await axios.get(url);
+            const data = response.data;
+            const route = data.routes && data.routes[0];
+
+            if (route) {
+                const distance = route.summary.lengthInMeters / 1000; // in km
+                const travelTime = route.summary.travelTimeInSeconds / 3600; // in hrs
+
+                if (distance < 10) {
+                    await nearbyAgency.push(user);
                 }
-            } 
-        } else {
-
-            let location = await User.findById(req.user.id);
-            location = location.location;
-
-
-            // find the nearby hospitals
-            for (const user of users) {
-                const apiKey = process.env.apiKey;
-    
-                const startCoordinates = location;
-                const traffic = true;
-    
-                const tomtomApiEndpoint = 'https://api.tomtom.com/routing/1/calculateRoute/';
-                const url = `${tomtomApiEndpoint}${startCoordinates}:${endCoordinates}/json?key=${apiKey}&traffic=${traffic}`;
-    
-                const response = await axios.get(url);
-                const data = response.data;
-                const route = data.routes && data.routes[0];
-    
-                if (route) {
-                    const distance = route.summary.lengthInMeters / 1000; // in km
-                    const travelTime = route.summary.travelTimeInSeconds / 3600; // in hrs
-    
-                    if (distance < 10) {
-                        await nearbyAgency.push(user);
-                    }
-                } else {
-                    console.error('No route found.');
-                }
+            } else {
+                console.error('No route found.');
             }
         }
     

@@ -10,7 +10,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Footer from "./components/Footer";
 import { useAuth } from "./context/auth";
-import Rewards from "./pages/Rewards"
+import AboutUS from "./pages/AboutUs";
+
 function App() {
   const { isLoggedIn } = useAuth();
   return (
@@ -23,8 +24,7 @@ function App() {
         <Route exact path="/profile" element={<Profile />} />
         <Route exact path="/store" element={<Store />} />
         <Route exact path="/history" element={<History />} />
-        <Route exact path="/reward" element={<Rewards />} />
-        <Route exact path="/history" element={<History />} />
+        <Route exact path="/aboutus" element={<AboutUS />} />
       </Routes>
       <Footer />
     </>
