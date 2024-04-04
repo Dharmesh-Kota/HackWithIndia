@@ -68,8 +68,6 @@ const Rewards =() => {
                             <AgencyReward name="Agency Name" rewards={reward} />                         
                         </div>
                     )) }
-        </div>
-      ))}
     </div>
   );
 };
