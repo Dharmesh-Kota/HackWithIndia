@@ -73,7 +73,7 @@ export const history = async (req, res) => {
 // Get the list of rewards by composit Agency
 export const rewards = async (req, res) => {
     try {
-        let rewards = await Agency.find({ user: req.user.id }, { reward: 1 });
+        let rewards = await Agency.findOne({ user: req.user.id }, { reward: 1 });
         return res.status(200).json({ message: 'Rewards sent seccussfully!', rewards: rewards });   
 
     } catch (error) {
