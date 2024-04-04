@@ -18,7 +18,7 @@ const corsOptions = {
 router.use(cors(corsOptions));
 
 router.get('/', (req, res) => {
-  return res.send('Hello!');
+  return res.json('Hello!');
 })
 router.use('/donor', donorRouter);
 router.use('/agency', agencyRouter);
