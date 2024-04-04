@@ -37,6 +37,7 @@ function Navbar() {
     backdropFilter: "blur(10px)",
     margin: 0,
     overflowY: "hidden",
+    zIndex: 4,
   };
 
   return (

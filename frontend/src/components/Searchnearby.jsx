@@ -101,7 +101,6 @@ function Searchnearby() {
         )
         .then((res) => {
           // alert user that the transaction initallized successfully
-          // redirect to home page or history page
         })
         .catch((err) => {
           console.log(err);
@@ -166,6 +165,10 @@ function Searchnearby() {
           </FormControl>
         </Box>
       </Modal>
+
+      <Typography gutterBottom variant="h6" component="div">
+        Search Nearby Agencies/NGOs
+      </Typography>
 
       <Box sx={{ minWidth: 120 }}>
         <FormControl fullWidth>
