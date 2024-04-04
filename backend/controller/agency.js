@@ -89,7 +89,7 @@ export const add_reward = async (req, res) => {
         let reward = await Agency.findOneAndUpdate(
             { user: req.user.id },
             { 
-              $addToSet: { rewards: { name: req.body.name, point: req.body.point } }
+              $addToSet: { reward: { name: req.body.name, point: req.body.point } }
             },
             { upsert: true, new: true }
           );

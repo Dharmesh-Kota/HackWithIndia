@@ -91,7 +91,7 @@ function Agency() {
     };
     try {
       const results = await axios.get(
-        (config.BACKEND_API || "http://localhost:8000") + "/reject-request",
+        (config.BACKEND_API || "http://localhost:8000") + "/reject-supplies",
         {
           sender: e.sender,
           quantity: e.quantity,

@@ -16,7 +16,7 @@ router.use(cors(corsOptions));
 
 router.get('/', authenticateAgencyToken, controller.queue);
 router.post('/confirm-supplies', authenticateAgencyToken, controller.cofirm_supplies);
-router.post('/reject-supplies', authenticateAgencyToken, controller.reject_reward);
+router.post('/reject-supplies', authenticateAgencyToken, controller.reject_supplies);
 router.get('/history', authenticateAgencyToken, controller.history);
 router.post('/add-reward', authenticateAgencyToken, controller.add_reward);
 router.get('/rewards', authenticateAgencyToken, controller.rewards);
