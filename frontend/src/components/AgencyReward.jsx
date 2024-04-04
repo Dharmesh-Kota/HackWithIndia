@@ -29,8 +29,11 @@ const DemoPaper = styled(Paper)(({ theme }) => ({
 }));
 
 const accordionSummaryStyle = {
-    maxWidth: '30%',
-    margin: "auto"
+  maxWidth: '100%',
+	background:'#DFFFFF',
+  margin: "auto",
+  border:"2px solid black",
+  borderRadius: '10px',
 };
 const accordiondetailsstyles = {
     //   display: "grid",
@@ -38,29 +41,21 @@ const accordiondetailsstyles = {
     //   gap: "20px"
 };
 const handleclick =async ()=>{
-
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+    };
     try {
-        const results = await axios.post('http://localhost:8000/redeem-reward' , {});
+        const results = await axios.post('http://localhost:8000/donor/redeem-reward' , {headers});
         //send alert that reward redeemed 
     } catch (error) {
         //send alert that reward redeemed process failed
     }
-    
-    // .then(result =>{
-		// })              
-		// .catch(error=>console.log(error));
-	
+  
 }
 
 const AgencyReward = (props) => {
-  const [Rewards, setRewards] = useState([props.rewards]);
   let Validation = true;
-
-  useEffect(() => {
-    setRewards(props.rewards);
-  }, [props]);
-
-  
   return (
     <div>
       <Accordion style={accordionSummaryStyle}>
@@ -70,23 +65,18 @@ const AgencyReward = (props) => {
           id="panel1-header"
 
         >
-        {Rewards.name}
+        <div style={{fontFamily: 'Arial, sans-serif',  fontWeight: 'bold',fontSize: '20px'}}>{props.rewards.name}</div>
         </AccordionSummary>
         <AccordionDetails style={accordiondetailsstyles}>
                 {props.rewards.rewards.map((group, index) => (
-                    <div key={index} style={{ display: 'flex', flexDirection: 'row', marginBottom: '10px' }}>
+                    <div key={index} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', marginBottom: '10px' }}>
                     {group.map((reward, innerIndex) => (
-                        <div key={innerIndex} style={{ marginRight: '10px' }}>{reward}
-                        {/* {innerIndex === 1 && reward > props.rewards.userPoint ? (
-                        setValidation(false)
-                        ) : (
-                        setValidation(true)
-                        )} */}
+                        <div key={innerIndex} style={{ marginRight: '10px',fontFamily: 'Arial, sans-serif',  fontWeight: 'bold',fontSize: '20px'}}>{reward}
                         </div>
 
                     )) }
                     {group[1] > props.rewards.userPoints ? Validation = true: Validation = false}
-                    <button onClick={handleclick} disabled = {Validation}>buy</button>
+                    <button onClick={handleclick} disabled = {Validation} style={{background:'#25396F' , border:"2px solid black" , borderRadius:"2px" , fontFamily: 'Arial, sans-serif',  fontWeight: 'bold',fontSize: '20px'}}>buy</button>
                     </div>
                 ))}
         </AccordionDetails>

@@ -62,8 +62,11 @@ export const reject_supplies = async (req, res) => {
 // Get the history of rewards redeemed by different users
 export const history = async (req, res) => {
     try {
-        let history = History.findOne({ sender: req.user.username });
-        return res.status(200).json({ message: 'Redeem history sent!', history: history });
+        let history = await History.findOne({ sender: req.user.username });
+        if (history) {
+            return res.status(200).json({ message: 'Redeem history sent!', history: history });
+        }
+        return res.status(200).json({ message: 'Redeem history sent!' });
     } catch (error) {
         console.log('Error: ', error.message);
         return res.status(500).json({ error: 'Server Error!' });

@@ -91,13 +91,15 @@ export const reward_store = async (req, res) => {
         let agencies = await Points.findOne({ user: req.user.id }, { availablePoints: 1 }); 
         
         let userRewards = [];
-        for (let agency of agencies) {
-            let rewards = await Agency.find({ user: agency.agency }, { reward: 1 });
-            let { username, name } = await User.findById(agency.agency, {username: 1, name: 1});
-            userRewards.push({ username: username, name: name, rewards: rewards, userPoints: agency.point });
+        if (agencies) {
+            for (let agency of agencies) {
+                let rewards = await Agency.find({ user: agency.agency }, { reward: 1 });
+                let { username, name } = await User.findById(agency.agency, {username: 1, name: 1});
+                userRewards.push({ username: username, name: name, rewards: rewards, userPoints: agency.point });
+            }
+            return res.status(200).json({ message: 'Agency data fetched!', userRewards: userRewards});
         }
-
-        return res.status(200).json({ message: 'Agency data fetched!', userRewards: userRewards});
+        return res.status(200).json({ message: 'Agency data fetched!', userRewards: null});
 
     } catch (error) {
         console.log('Error: ', error);
