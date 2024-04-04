@@ -148,16 +148,3 @@ export default function History() {
     </>
   );
 }
-
-
-// const history = () => {
-//   return (
-//     <div>
-//       This is the history Page which shows the history to agencies of the user who have redeemed rewards from them. 
-
-
-//     </div>
-//   )
-// }
-
-// export default history
