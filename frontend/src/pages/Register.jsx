@@ -98,10 +98,12 @@ export default function Register() {
           // if (error.response.status === 403) {
           //   LogOut();
           // }
-          if (error.response.status === 409) {
-          } else {
-            console.error("Error: ", error);
-          }
+          // if (error.response?.status === 409) {
+          // } else {
+          //   console.error("Error: ", error);
+          // }
+
+          console.error("Error: ", error);
         });
     } else {
       setPassword("");

@@ -92,14 +92,16 @@ export default function Login() {
         // if (error.response.status === 403) {
         //   LogOut();
         // }
-        if (error.response.status === 401) {
-          // setEmailUsername("");
-          // setPassword("");
-          //   alert("Invalid Username/Email or Password!");
-          console.log("Error: 401 -> Login");
-        } else {
-          console.error("Error: ", error);
-        }
+        // if (error.response?.status === 401) {
+        //   // setEmailUsername("");
+        //   // setPassword("");
+        //   //   alert("Invalid Username/Email or Password!");
+        //   console.log("Error: 401 -> Login");
+        // } else {
+        //   console.error("Error: ", error);
+        // }
+
+        console.error("Error: ", error);
       });
     setloading(false);
   };
