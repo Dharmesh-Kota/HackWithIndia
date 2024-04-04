@@ -18,6 +18,14 @@ export const AuthProvider = ({ children }) => {
     setRole(window.localStorage.getItem("role"));
   }, []);
 
+  const LogOut = () => {
+    window.localStorage.removeItem("token");
+    window.localStorage.removeItem("role");
+    setIsLoggedIn(false);
+    setRole("");
+    navigate("/");
+  };
+
   useEffect(() => {
     if (
       !(
@@ -35,7 +43,15 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <authContext.Provider
-      value={{ theme, toggleTheme, isLoggedIn, setIsLoggedIn, role, setRole }}
+      value={{
+        theme,
+        toggleTheme,
+        isLoggedIn,
+        setIsLoggedIn,
+        role,
+        setRole,
+        LogOut,
+      }}
     >
       {children}
     </authContext.Provider>

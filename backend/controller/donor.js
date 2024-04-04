@@ -14,7 +14,7 @@ export const nearby_agency = async (req, res) => {
     try {
         const role = req.params.role;
 
-        let users = await User.find({ role: role }, {name: 1, username: 1, role: 1, location: 1}).lean();
+        let users = await User.find({ role: role }, {name: 1, username: 1, role: 1, location: 1, contact: 1, address: 1}).lean();
         let nearbyAgency = [];
     
         let location = await User.findById(req.user.id);

@@ -73,17 +73,30 @@ function Navbar() {
               </div>
             </li>
             {window.localStorage.getItem("role") === '"compostAgency"' && (
-              <li className="nav-item">
-                <div className="my-button">
-                  <Link
-                    className="nav-link"
-                    to="/rewards"
-                    style={{ color: "white" }}
-                  >
-                    Rewards
-                  </Link>
-                </div>
-              </li>
+              <>
+                <li className="nav-item">
+                  <div className="my-button">
+                    <Link
+                      className="nav-link"
+                      to="/agency_rewards"
+                      style={{ color: "white" }}
+                    >
+                      Rewards
+                    </Link>
+                  </div>
+                </li>
+                <li className="nav-item">
+                  <div className="my-button">
+                    <Link
+                      className="nav-link"
+                      to="/history"
+                      style={{ color: "white" }}
+                    >
+                      History
+                    </Link>
+                  </div>
+                </li>
+              </>
             )}
             <li className="nav-item">
               <div className="my-button">
