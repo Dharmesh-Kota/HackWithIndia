@@ -49,10 +49,15 @@ const Profile = () => {
   const [justVerify, setJustVerify] = useState(false);
 
   const validatePhoneNumber = (input) => {
-    const value = input.replace(/\D/g, "");
-    const isvalid = /^\d{10}$/.test(value);
-    setIsValidPhone(isvalid);
+    if (input) {
+      const value = input.replace(/\D/g, "");
+      const isValid = /^\d{10}$/.test(value);
+      setIsValidPhone(isValid);
+    } else {
+      setIsValidPhone(false); // Set to false if input is undefined
+    }
   };
+  
 
   const theme = createTheme({
     typography: {
@@ -88,9 +93,9 @@ const Profile = () => {
         { headers }
       );
     } catch (err) {
-      if (err.response.status === 403) {
-        LogOut();
-      }
+      // if (err.results.status === 403) {
+      //   LogOut();
+      // }
       console.log(err);
     }
     setLoading(false);
@@ -119,9 +124,9 @@ const Profile = () => {
       setLocation(user.location);
       validatePhoneNumber(user.contact);
     } catch (err) {
-      if (err.response.status === 403) {
-        LogOut();
-      }
+      // if (err.result.status === 403) {
+      //   LogOut();
+      // }
       console.log(err);
     }
   };
