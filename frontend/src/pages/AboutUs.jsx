@@ -81,7 +81,7 @@ function AboutUS() {
                         Members
                       </div>
                       <h5 style={{ fontFamily: "Quicksand" }}>
-                        <a
+                        <a style={{ textDecoration: "none" }}
                           href="https://www.linkedin.com/in/dharmesh-kota-8a9810268/"
                           target="_blank"
                         >
@@ -89,7 +89,7 @@ function AboutUS() {
                         </a>
                       </h5>
                       <h5 style={{ fontFamily: "Quicksand" }}>
-                        <a
+                        <a style={{ textDecoration: "none" }}
                           href="https://www.linkedin.com/in/manoj-dhundhalva-62ba0b24b/"
                           target="_blank"
                         >
@@ -97,7 +97,7 @@ function AboutUS() {
                         </a>
                       </h5>
                       <h5 style={{ fontFamily: "Quicksand" }}>
-                        <a
+                        <a style={{ textDecoration: "none" }}
                           href="https://www.linkedin.com/in/devangsvaghani/"
                           target="_blank"
                         >
@@ -105,7 +105,7 @@ function AboutUS() {
                         </a>
                       </h5>
                       <h5 style={{ fontFamily: "Quicksand" }}>
-                        <a
+                        <a style={{ textDecoration: "none" }}
                           href="https://www.linkedin.com/in/rhythm-panchal-108398253/"
                           target="_blank"
                         >
@@ -113,12 +113,12 @@ function AboutUS() {
                         </a>
                       </h5>
                       <h5 style={{ fontFamily: "Quicksand" }}>
-                        <a href="https://github.com/jeet0474" target="_blank">
+                        <a style={{ textDecoration: "none" }} href="https://github.com/jeet0474" target="_blank">
                           Jeet Patel
                         </a>
                       </h5>
                       <h5 style={{ fontFamily: "Quicksand" }}>
-                        <a href="https://github.com/Jenil2514" target="_blank">
+                        <a style={{ textDecoration: "none" }} href="https://github.com/Jenil2514" target="_blank">
                           Jenil Goswami
                         </a>
                       </h5>
