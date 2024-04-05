@@ -3,6 +3,7 @@ import { secretKey } from './jwtConfig.js'
 
 export const authenticateToken = (req, res, next) => {
     const authHeader = req.header("Authorization");
+    const role = req.header("Role");
     if(!authHeader) {
         return res.status(401).json({ message: "Missing Token!" });
     }
@@ -14,9 +15,10 @@ export const authenticateToken = (req, res, next) => {
     }
 
     jwt.verify(token, secretKey, (err, user) => {
-        if (err) {
-            return res.status(403).json({ message: "Invalid token!" });
+        if (err || user.role !== role) {
+            return res.status(403).json({ message: "Invalid token/role!" });
         }
+
         req.user = user;
         next();
     });
@@ -24,6 +26,7 @@ export const authenticateToken = (req, res, next) => {
 
 export const authenticateDonorToken = (req, res, next) => {
     const authHeader = req.header("Authorization");
+    const role = req.header("Role");
     if(!authHeader) {
         return res.status(401).json({ message: "Missing Token!" });
     }
@@ -35,7 +38,7 @@ export const authenticateDonorToken = (req, res, next) => {
     }
 
     jwt.verify(token, secretKey, (err, user) => {
-        if (err) {
+        if (err || user.role !== role) {
           console.log(err);
             return res.status(403).json({ message: "Invalid token!" });
         }
@@ -50,6 +53,7 @@ export const authenticateDonorToken = (req, res, next) => {
 
 export const authenticateNgoToken = (req, res, next) => {
     const authHeader = req.header("Authorization");
+    const role = req.header("Role");
     if(!authHeader) {
         return res.status(401).json({ message: "Missing Token!" });
     }
@@ -61,7 +65,7 @@ export const authenticateNgoToken = (req, res, next) => {
     }
 
     jwt.verify(token, secretKey, (err, user) => {
-        if (err) {
+        if (err || user.role !== role) {
             return res.status(403).json({ message: "Invalid token!" });
         }
         if(user.role === 'ngo'){
@@ -75,6 +79,7 @@ export const authenticateNgoToken = (req, res, next) => {
 
 export const authenticateAgencyToken = (req, res, next) => {
     const authHeader = req.header("Authorization");
+    const role = req.header("Role");
     if(!authHeader) {
         return res.status(401).json({ message: "Missing Token!" });
     }
@@ -86,7 +91,7 @@ export const authenticateAgencyToken = (req, res, next) => {
     }
 
     jwt.verify(token, secretKey, (err, user) => {
-        if (err) {
+        if (err || user.role !== role) {
             return res.status(403).json({ message: "Invalid token!" });
         }
         if(user.role === 'compostAgency'){

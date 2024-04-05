@@ -9,7 +9,7 @@ dotenv.config();
 
 const corsOptions = {
     origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-    allowedHeaders: ['Authorization', 'Content-Type'],
+    allowedHeaders: ['Authorization', 'Content-Type', 'Role'],
   };
   
 router.use(cors(corsOptions));
