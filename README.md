@@ -82,31 +82,27 @@ You can explore the functionalities of Compostify by visiting our website using 
    🟢 **Community Events and Restaurants with Surplus Food**
    <br>
     -Efficiently connect surplus food producers with NGOs and compost agencies to minimize wastage.
-    ![Community Events and Restaurants](frontend/public/image/community_events.png)
+    ![Community Events and Restaurants](frontend/public/image/community_events.jpg)
 
    🟢 **Govt. Scheme "Madhyan Bhojan" Surplus Food**
    <br>
      -Facilitate redistribution of surplus food from government schemes to other needy organizations.
-    ![Madhyan Bhojan Scheme](frontend/public/image/madhyan_bhojan.png)
+    ![Madhyan Bhojan Scheme](frontend/public/image/madhyahan_bhojan.webp)
 
    🟢 **Vegetable Market**
    <br>
      -Manage rotten vegetables by directing them to compost agencies for proper disposal.
-    ![Vegetable Market](frontend/public/image/vegetable_market.png)
-
-🟢 **Interactive Chatbot Assistance**
-<br>
--Real-time guidance on handling leftover or soon-to-expire food.
-![Chatbot Assistance](frontend/public/image/chatbot_assistance.png)
+    ![Vegetable Market](frontend/public/image/vegetable_market.jpg)
 
 <a name="team"></a>
 
 ## Team 
-1. Alice Smith
-2. Bob Johnson
-3. Carol Davis
-4. David Brown
-5. Emma Wilson
+1. Dharmesh Kota
+2. Manoj Dhundhalva
+3. Devang Vaghani
+4. Rhythm Panchal
+5. Jenil Goswami
+6. Jeet Patel
 
 🌱💚Together, let's compostify our world for a greener future!💚🌱
 
