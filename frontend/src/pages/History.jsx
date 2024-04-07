@@ -131,7 +131,7 @@ const History = () => {
 		<div>
 			{/* This is the history Page which shows the history to agencies of the user who have redeemed rewards from them. */}
 			<div >
-				{data ? (
+				{data.length > 0 ? (
 					// Render your component with the fetched data
 					<div >
 
