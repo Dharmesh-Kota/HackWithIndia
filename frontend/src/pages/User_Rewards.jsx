@@ -14,9 +14,29 @@ const listStyle = {
     margin: "10px",
     
 }
+const dummyObject = [
+    {
+        username: "username",
+        name: "name",
+        rewards: [["tshirt",100], ["shirt", 200]],
+        userPoints: 100
+    },
+    {
+        username: "username",
+        name: "name",
+        rewards: [["tshirt",1000], ["shirt", 2000]],
+        userPoints: 1000
+    },
+    {
+        username: "username",
+        name: "name",
+        rewards: [["tshirt",10000], ["shirt", 20000]],
+        userPoints: 10000
+    }
+]
 
 const Rewards =() => {
-    const [rewardlist, setrewardlist] = useState();
+    const [rewardlist, setrewardlist] = useState([]);
     
     useEffect(() => {
       const fetchData = async () => {
@@ -28,7 +48,7 @@ const Rewards =() => {
 
           const response = await axios.get("http://localhost:8000/donor/reward-store", { headers });
           console.log(response.data);
-          setrewardlist(response.data);
+          setrewardlist(dummyObject);
         } catch (err) {
           console.error('Failed to fetch data', err);
         }
@@ -38,36 +58,22 @@ const Rewards =() => {
 
     
 
-    // const dummyObject = [
-    //     {
-    //         username: "username",
-    //         name: "name",
-    //         rewards: [["tshirt",100], ["shirt", 200]],
-    //         userPoints: 100
-    //     },
-    //     {
-    //         username: "username",
-    //         name: "name",
-    //         rewards: [["tshirt",1000], ["shirt", 2000]],
-    //         userPoints: 1000
-    //     },
-    //     {
-    //         username: "username",
-    //         name: "name",
-    //         rewards: [["tshirt",10000], ["shirt", 20000]],
-    //         userPoints: 10000
-    //     }
-    // ]
 
           
     return (
         <div>
+            
             This is rewards page
-            {rewardlist.map((reward,index) => (
-                        <div style={RewardCardStyle} key={index}>
-                            <AgencyReward name="Agency Name" rewards={reward} />                         
-                        </div>
-                    )) }
+            <div>
+              {rewardlist.map((reward,index) => (
+                          <div style={RewardCardStyle} key={index}>
+                              <AgencyReward name="Agency Name" rewards={reward} />                         
+                          </div>
+                      )) }
+
+            </div>
+                    
+                    
     </div>
   );
 };
