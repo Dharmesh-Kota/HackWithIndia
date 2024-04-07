@@ -50,8 +50,10 @@ Compostify is a revolutionary platform designed to streamline waste management p
 - MongoDB
 - Node.js
 - Express.js
-- React
+- ReactJS
 - Redux
+- Material UI
+- Bootstrap
 
 ## Demo
 You can explore the functionalities of Compostify by visiting our website using the following link:
