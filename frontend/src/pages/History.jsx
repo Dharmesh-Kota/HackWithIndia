@@ -8,7 +8,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-
+import config from "../config";
 
 const dummy_data = [
 
@@ -113,7 +113,7 @@ const History = () => {
 					"Content-Type": "application/json",
 					Authorization: `Bearer ${window.localStorage.getItem("token")}`,
 				};
-				const response = await axios.get('http://localhost:8000/agency/history', { headers });
+				const response = await axios.get((config.BACKEND_API || "http://localhost:8000") + "/agency/history", { headers });
 				setdata(response.data);  
 				//currenty setting to dummy data
 				console.log(response.data);

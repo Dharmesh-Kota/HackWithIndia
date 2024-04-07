@@ -1,6 +1,7 @@
 import React , {useState, useEffect} from 'react'
 import AgencyReward from '../components/AgencyReward.jsx'
 import axios from 'axios';
+import config from '../config.js';
 
 
 const RewardCardStyle = {
@@ -95,7 +96,7 @@ const Rewards =() => {
           Authorization: `Bearer ${window.localStorage.getItem("token")}`,
         };
 
-        const response = await axios.get("http://localhost:8000/donor/reward-store", { headers });
+        const response = await axios.get((config.BACKEND_API || "http://localhost:8000") + "/donor/reward-store", { headers });
         console.log(response.data);
         // console.log(rewardlist);
         setrewardlist(dummy);

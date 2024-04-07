@@ -11,6 +11,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Button from '@mui/material/Button';
 import axios from 'axios';
+import config from '../config.js';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -46,7 +47,7 @@ const handleclick = async () => {
     Authorization: `Bearer ${window.localStorage.getItem("token")}`,
   };
   try {
-    const results = await axios.post('http://localhost:8000/donor/redeem-reward', { headers });
+    const results = await axios.post((config.BACKEND_API || "http://localhost:8000") + "/donor/redeem-reward", { headers });
     //send alert that reward redeemed 
   } catch (error) {
     //send alert that reward redeemed process failed
