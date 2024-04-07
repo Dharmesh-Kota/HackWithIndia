@@ -61,11 +61,12 @@ You can explore the functionalities of Compostify by visiting our website using 
    https://compostify.vercel.app/
 
 ### Features Showcase
-   ▪️ **User Login**
-  ![User Login](frontend/public/image/login.png)
 
    ▪️ **User Dashboard**
   ![User Dashboard](frontend/public/image/dashboard.png)
+  
+   ▪️ **User Login**
+  ![User Login](frontend/public/image/login.png)
 
   ▪️ **Nearby Compost Agencies/NGOs**
   ![Nearby Compost Agencies/NGOs](frontend/public/image/compost_agencies.png)
