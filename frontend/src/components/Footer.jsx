@@ -44,12 +44,10 @@ export default function Footer() {
               <MDBCol md="3" lg="4" xl="3" className="mx-auto mb-4">
                 <h6 className="text-uppercase fw-bold mb-4">
                   <MDBIcon icon="gem" className="me-3" />
-                  HACK-WITH-INDIA
+                  TEAM-BLITZ
                 </h6>
                 <p>
-                  Here you can use rows and columns to organize your footer
-                  content. Lorem ipsum dolor sit amet, consectetur adipisicing
-                  elit.
+                Designed with passion and dedication by Team Blitz for the <strong>HACK-WITH-INDIA</strong> hackathon. Our team's hard work and eagerness shine through in every detail of this platform. Thank you for being a part of our journey.
                 </p>
               </MDBCol>
               <MDBCol md="4" lg="3" xl="3" className="mx-auto mb-md-0 mb-4">
@@ -62,6 +60,10 @@ export default function Footer() {
                   <MDBIcon icon="envelope" className="me-3" />
                   abc@daiict.ac.in
                 </p>
+                <p>
+                  <MDBIcon icon="phone" className="me-3" />
+                  (+91) 9999999999
+                </p>
               </MDBCol>
             </MDBRow>
           </MDBContainer>
@@ -71,8 +73,8 @@ export default function Footer() {
           className="text-center p-4"
           style={{ backgroundColor: "rgba(0, 0, 0, 0.05)" }}
         >
-          <a className="text-reset fw-bold" href="https://mdbootstrap.com/">
-            HACK-WITH-INDIA
+          <a className="text-reset fw-bold" href="https://github.com/Dharmesh-Kota/HackWithIndia">
+            TEAM-BLITZ
           </a>
         </div>
       </MDBFooter>

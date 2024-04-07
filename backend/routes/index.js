@@ -12,11 +12,14 @@ const router = express.Router();
 
 const corsOptions = {
     origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-    allowedHeaders: ['Authorization', 'Content-Type'],
+    allowedHeaders: ['Authorization', 'Content-Type', 'Role'],
   };
   
 router.use(cors(corsOptions));
 
+router.get('/', (req, res) => {
+  return res.json('Hello!');
+})
 router.use('/donor', donorRouter);
 router.use('/agency', agencyRouter);
 router.use('/ngo', ngoRouter);
