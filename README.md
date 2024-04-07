@@ -64,6 +64,9 @@ You can explore the functionalities of Compostify by visiting our website using 
 
    ▪️ **User Dashboard**
   ![User Dashboard](frontend/public/image/dashboard.png)
+  
+   ▪️ **User Profile**
+  ![User Profile](frontend/public/image/profile.png)
 
   ▪️ **Nearby Compost Agencies/NGOs**
   ![Nearby Compost Agencies/NGOs](frontend/public/image/compost_agencies.png)
@@ -75,7 +78,7 @@ You can explore the functionalities of Compostify by visiting our website using 
   ![Reward Monitoring](frontend/public/image/agency_rewards.png)
 
   ▪️ **Reward store for Users to redeem Rewards**
-  ![Reward Monitoring](frontend/public/image/user_rewards.png)
+  ![Reward Store](frontend/public/image/user_rewards.png)
 
 ### Specific Use Case Illustrations
 
