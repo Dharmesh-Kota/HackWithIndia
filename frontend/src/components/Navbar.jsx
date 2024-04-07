@@ -128,6 +128,48 @@ function Navbar() {
                 </Button>
               </>
             )}
+            {window.localStorage.getItem("role") === '"donor"' && (
+              <>
+                <Button
+                  disableRipple
+                  variant="text"
+                  style={{ transition: "all 0.5s ease" }}
+                  sx={{
+                    "&:hover": {
+                      borderBottom: "1px solid #03045e",
+                      borderRadius: "5px",
+                    },
+                  }}
+                >
+                  <Link
+                    className="nav-link active"
+                    to="/user_rewards"
+                    style={{ fontFamily: "Quicksand" }}
+                  >
+                    Rewards
+                  </Link>
+                </Button>
+                <Button
+                  disableRipple
+                  variant="text"
+                  style={{ transition: "all 0.5s ease" }}
+                  sx={{
+                    "&:hover": {
+                      borderBottom: "1px solid #03045e",
+                      borderRadius: "5px",
+                    },
+                  }}
+                >
+                  <Link
+                    className="nav-link active"
+                    to="/history"
+                    style={{ fontFamily: "Quicksand" }}
+                  >
+                    History
+                  </Link>
+                </Button>
+              </>
+            )}
             <Button
               disableRipple
               variant="text"
