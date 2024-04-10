@@ -20,7 +20,7 @@ export const cofirm_supplies = async (req, res) => {
     try {
         await Transaction.findOneAndUpdate(
             { sender: req.body.sender, receiver: req.user.username, quantity: req.body.quantity },
-            { $set: { status: 'confirm' } },
+            { $set: { status: 'accepted' } },
             { new: true }
           );
 
@@ -79,7 +79,7 @@ export const history = async (req, res) => {
 // Get the list of rewards by composit Agency
 export const rewards = async (req, res) => {
     try {
-        let rewards = await Agency.findOne({ user: req.user.id }, { reward: 1 });
+        let rewards = await Agency.findOne({ user: req.user.username }, { reward: 1 });
         return res.status(200).json({ message: 'Rewards sent seccussfully!', rewards: rewards });   
 
     } catch (error) {
@@ -93,7 +93,7 @@ export const add_reward = async (req, res) => {
     try {
         // console.log(req.body);
         let reward = await Agency.findOneAndUpdate(
-            { user: req.user.id },
+            { user: req.user.username },
             { 
               $addToSet: { reward: { name: req.body.name, point: req.body.point } }
             },
@@ -115,7 +115,7 @@ export const delete_reward = async (req, res) => {
 
         // Find and update the user's reward array to remove the specified reward
         await Agency.findOneAndUpdate(
-            { user: req.user.id },
+            { user: req.user.username },
             { 
               $pull: { reward: { name: name, point: point } }
             },

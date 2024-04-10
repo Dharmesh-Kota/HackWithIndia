@@ -69,8 +69,8 @@ function Agency() {
       Authorization: `Bearer ${window.localStorage.getItem("token")}`,
     };
     try {
-      const results = await axios.get(
-        (config.BACKEND_API || "http://localhost:8000") + "/confirm-supplies",
+      const results = await axios.post(
+        (config.BACKEND_API || "http://localhost:8000") + "/agency/confirm-supplies",
         {
           sender: e.sender,
           quantity: e.quantity,
@@ -79,6 +79,7 @@ function Agency() {
           headers,
         }
       );
+      setQueue(queue.filter(item => item !== e));
       //   console.log("results", results);
     } catch (error) {
       console.log(error);
@@ -90,8 +91,8 @@ function Agency() {
       Authorization: `Bearer ${window.localStorage.getItem("token")}`,
     };
     try {
-      const results = await axios.get(
-        (config.BACKEND_API || "http://localhost:8000") + "/reject-supplies",
+      const results = await axios.post(
+        (config.BACKEND_API || "http://localhost:8000") + "/agency/reject-supplies",
         {
           sender: e.sender,
           quantity: e.quantity,
@@ -100,6 +101,7 @@ function Agency() {
           headers,
         }
       );
+      setQueue(queue.filter(item => item !== e));
       //   console.log("results", results);
     } catch (error) {
       console.log(error);
@@ -164,7 +166,7 @@ function Agency() {
           >
             Queues
           </Typography>
-          {queue.length == 0 ? (
+          {queue.length === 0 ? (
             <>
               <Card sx={{ maxWidth: 345, margin: "auto" }}>
                 <CardMedia

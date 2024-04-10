@@ -61,12 +61,3 @@ export const update_profile = async (req, res) => {
         return res.status(500).json({ error: error });
     }
 }
-
-// export const logout = (req, res) => {
-//     req.logout(function (err) {
-//         if (err) {
-//             return res.status(401).send({error: err});
-//         }
-//         res.status(200).send({ message: 'Logged Out Successfully!' });
-//     });
-// };
