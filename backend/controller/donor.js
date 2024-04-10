@@ -72,7 +72,7 @@ export const donate_supplies = async (req, res) => {
         if (req.body.type === 'ngo')
             status = 'confirm';
         let transaction = await Transaction.create({
-            sender: agency.username,
+            sender: req.user.username,
             receiver: req.body.username,
             type: req.body.type,
             quantity: req.body.quantity,

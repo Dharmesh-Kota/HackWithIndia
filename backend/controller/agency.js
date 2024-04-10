@@ -24,16 +24,19 @@ export const cofirm_supplies = async (req, res) => {
             { new: true }
           );
 
-        let user = await User.findOne({username: req.body.username});
-        await Points.findOneAndUpdate(
-            { user: user.id, "availablePoints.agency": req.user.id },
+          await Points.findOneAndUpdate(
+            { user: req.body.sender },
             { 
-              $inc: { "availablePoints.$.points": req.body.quantity*10 },
-              $setOnInsert: { user: username },
+                $set: { user: req.body.sender }, // Set user
+                $setOnInsert: { "availablePoints.agency": req.user.username }, // Set agency if the document is inserted
+                $inc: { "availablePoints.points": req.body.quantity * 10 } // Increment points for specific agency
             },
-            { upsert: true, new: true }
-          );
-
+            { 
+                upsert: true, // Create new document if not found
+                new: true // Return updated document
+            }
+        );
+        
         return res.status(200).json({ message: 'Points updated for the user!'});
 
     } catch (error) {
