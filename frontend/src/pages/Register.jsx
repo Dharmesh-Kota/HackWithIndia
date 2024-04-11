@@ -309,14 +309,30 @@ export default function Register() {
                 onChange={(e) => {
                   setRole(e.target.value);
                 }}
+                style={{ fontWeight: "bold", fontFamily: "Quicksand" }}
                 displayEmpty
                 inputProps={{ "aria-label": "Without label" }}
                 fullWidth
                 error={justVerify && role === ""}
               >
-                <MenuItem value="compostAgency">Compost Agency</MenuItem>
-                <MenuItem value="ngo">NGO</MenuItem>
-                <MenuItem value="donor">Donor</MenuItem>
+                <MenuItem
+                  value="compostAgency"
+                  style={{ fontWeight: "bold", fontFamily: "Quicksand" }}
+                >
+                  Compost Agency
+                </MenuItem>
+                <MenuItem
+                  value="ngo"
+                  style={{ fontWeight: "bold", fontFamily: "Quicksand" }}
+                >
+                  NGO
+                </MenuItem>
+                <MenuItem
+                  value="donor"
+                  style={{ fontWeight: "bold", fontFamily: "Quicksand" }}
+                >
+                  Donor
+                </MenuItem>
               </Select>
 
               <Button
