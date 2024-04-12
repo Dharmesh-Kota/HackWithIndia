@@ -4,6 +4,7 @@ import Transaction from "../models/transaction.js";
 export const requests = async (req, res) => {
     try {
         let requests = await Transaction.find({ status: 'accepted', receiver: req.user.username }, {sender: 1, quantity: 1});
+        console.log(requests);
         return res.status(200).json({ message: 'Requests data sent!', requests: requests });
     } catch (error) {
         console.log('Error: ', error.message);

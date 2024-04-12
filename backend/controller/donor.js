@@ -70,9 +70,9 @@ export const donate_supplies = async (req, res) => {
         let agency = await User.findOne({ username: req.body.username });
         let status = 'pending';
         if (req.body.type === 'ngo')
-            status = 'confirm';
+            status = 'accepted';
         let transaction = await Transaction.create({
-            sender: agency.username,
+            sender: req.user.username,
             receiver: req.body.username,
             type: req.body.type,
             quantity: req.body.quantity,
@@ -93,14 +93,16 @@ export const donate_supplies = async (req, res) => {
 // Displaying the list of agencies where user has donated from where he can get the reward
 export const reward_store = async (req, res) => {
     try {
-        let agencies = await Points.findOne({ user: req.user.id }, { availablePoints: 1 }); 
-        
+        let agencies = await Points.findOne({ user: req.user.username }, { availablePoints: 1 }); 
+        agencies = agencies.availablePoints;
         let userRewards = [];
         if (agencies) {
             for (let agency of agencies) {
-                let rewards = await Agency.find({ user: agency.agency }, { reward: 1 });
-                let { username, name } = await User.findById(agency.agency, {username: 1, name: 1});
-                userRewards.push({ username: username, name: name, rewards: rewards, userPoints: agency.point });
+                let rewards = await Agency.findOne({ user: agency.agency }, { reward: 1 });
+                rewards = rewards.reward;
+                let { username, name } = await User.findOne({ username: agency.agency }, {username: 1, name: 1});
+                console.log(username, name, agency.points, rewards);
+                userRewards.push({ username: username, name: name, rewards: rewards, userPoints: agency.points });
             }
             return res.status(200).json({ message: 'Agency data fetched!', userRewards: userRewards});
         }

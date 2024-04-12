@@ -4,8 +4,8 @@ const pointsScehma = new mongoose.Schema({
     availablePoints: [
         {
             agency: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'User'
+                type: String,
+                required: true
             },
             points: {
                 type: Number,
@@ -14,8 +14,8 @@ const pointsScehma = new mongoose.Schema({
         }
     ],
     user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        type: String,
+        required: true
     }
 },{
     timestamps: true
