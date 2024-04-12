@@ -54,8 +54,8 @@ const AgencyReward = (props) => {
     console.log(params);
     try {
       const postdata = {
-        username : props.agencyname, 
-        rewards: params
+        sender : props.agencyname, 
+        reward: params
       }
       const results = await axios.post((config.BACKEND_API || "http://localhost:8000") + "/donor/redeem-reward",postdata,{ headers });
       //send alert that reward redeemed 
