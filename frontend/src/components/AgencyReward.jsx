@@ -40,22 +40,31 @@ const accordiondetailsstyles = {
   //   gridTemplateColumns: "repeat(3, 1fr)", // Two columns with equal width
   //   gap: "20px"
 };
-const handleclick = async () => {
-  const headers = {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${window.localStorage.getItem("token")}`,
-  };
-  try {
-    const results = await axios.post('http://localhost:8000/donor/redeem-reward', { headers });
-    //send alert that reward redeemed 
-  } catch (error) {
-    //send alert that reward redeemed process failed
-  }
-
-}
 
 const AgencyReward = (props) => {
   let Validation = true;
+  
+  
+  const handleclick = async (params) => {
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+    };
+    console.log(params);
+    try {
+      const postdata = {
+        username : props.agencyname, 
+        rewards: params
+      }
+      const results = await axios.post('http://localhost:8000/donor/redeem-reward',postdata,{ headers });
+      //send alert that reward redeemed 
+    } catch (error) {
+      //send alert that reward redeemed process failed
+    }
+  
+  }
+
+
   return (
     <div>
       <Accordion style={accordionSummaryStyle}>
@@ -77,7 +86,7 @@ const AgencyReward = (props) => {
                             {reward.points}
                         </div>
                         {reward.points > props.rewards.userPoints ? Validation = true: Validation = false}
-                        <button onClick={handleclick} disabled = {Validation} style={{background:'#25396F' , border:"2px solid black" , borderRadius:"2px" , fontFamily: 'Arial, sans-serif',fontSize: '20px', height:'35px'}}>buy</button>
+                        <button onClick={()=>handleclick(reward)} disabled = {Validation} style={{background:'#25396F' , border:"2px solid black" , borderRadius:"2px" , fontFamily: 'Arial, sans-serif',fontSize: '20px', height:'35px'}}>buy</button>
                     </div>
                   ))}
         </AccordionDetails>

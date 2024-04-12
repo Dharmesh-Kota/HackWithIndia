@@ -105,7 +105,6 @@ const Rewards =() => {
 };
 useEffect(() => {
     fetchData();
-    
 }, []);
     return (
         <div>
@@ -113,7 +112,7 @@ useEffect(() => {
               <div>
                 {rewardlist.map((reward,index) => (
                   <div style={RewardCardStyle} key={index}>
-                      <AgencyReward name="Agency Name" rewards={reward} />                         
+                      <AgencyReward name="Agency Name" rewards={reward} agencyname={rewardlist.username} />                         
                   </div>
               ))}
             </div>
